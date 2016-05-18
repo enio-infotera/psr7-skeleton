@@ -3,8 +3,6 @@
 /**
  * Simple as possible PSR-7 application
  *
- * Hello world
- *
  * @license MIT
  * @author odan
  */
@@ -13,43 +11,24 @@ require_once __DIR__ . '/vendor/autoload.php';
 use Relay\Runner;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\Response\SapiEmitter;
-use Zend\Diactoros\ServerRequest as Request;
 use Zend\Diactoros\ServerRequestFactory;
-
-//use Zend\Diactoros\Response\RedirectResponse;
-//use Zend\Diactoros\Response\HtmlResponse;
-//use Zend\Diactoros\Response\JsonResponse;
 
 //
 // Create a queue array of middleware callables
 //
 $queue = [];
 
-$queue[] = \App\Middleware\ExceptionMiddleware::class;
+// Error handler
+$queue[] = new \App\Middleware\ExceptionMiddleware(['verbose' => true, 'logger' => null]);
 
-$queue[] = function (Request $request, Response $response, callable $next) {
-    // Hello world middleware
-    // Append content to response
-    $response->getBody()->write('Hello world');
-
-    // Uncomment this line to test the ExceptionMiddleware
-    //throw new Exception('My error', 1234);
-    //
-    // Invoke the $next middleware and get back a new response
-    $response = $next($request, $response);
-    return $response;
-};
+// Router
+$routes = require_once __DIR__ . '/src/Config/routes.php';
+$queue[] = new \App\Middleware\FastRouteMiddleware(['routes' => $routes]);
 
 //
 // Invoke the relay queue with a request and response.
 //
-$runner = new Runner($queue, function($class) {
-    if (is_string($class)) {
-        return new $class();
-    } else {
-        return $class;
-    }
-});
+$runner = new Runner($queue);
 $response = $runner(ServerRequestFactory::fromGlobals(), new Response());
 
 //

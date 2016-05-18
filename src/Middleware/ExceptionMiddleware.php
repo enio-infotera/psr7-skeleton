@@ -16,6 +16,27 @@ class ExceptionMiddleware
 {
 
     /**
+     * Options
+     *
+     * @var array
+     */
+    protected $options = array();
+
+    /**
+     * Set the Middleware instance.
+     *
+     * @param array $options
+     */
+    public function __construct(array $options = array())
+    {
+        $default = [
+            'verbose' => false,
+            'logger' => 1,
+        ];
+        $this->options = $options + $default;
+    }
+
+    /**
      * Wrap the remaining middleware with error handling.
      *
      * @param Request $request The request.
@@ -42,13 +63,20 @@ class ExceptionMiddleware
      */
     public function handleException(Exception $ex, Request $request, Response $response)
     {
-        $message = sprintf(
-                "[%s] %s\n%s", // Keeping same message format
-                get_class($ex), $ex->getMessage(), $ex->getTraceAsString()
-        );
-        //Log::error($message);
+        $message = sprintf("[%s] %s\n%s", get_class($ex), $ex->getMessage(), $ex->getTraceAsString());
+
+        // Must be PSR logger (Monolog)
+        if (!empty($this->options['logger'])) {
+            $this->options['logger']->error($message);
+        }
         $stream = new Stream('php://temp', 'wb+');
         $stream->write('An Internal Server Error Occurred');
+
+        // Verbose error output
+        if (!empty($this->options['verbose'])) {
+            $stream->write("\n<br>$message");
+        }
+
         $response = $response->withStatus(500)->withBody($stream);
         return $response;
     }
