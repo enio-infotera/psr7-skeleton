@@ -1,7 +1,6 @@
 <?php
 
 // Add routes: httpMethod, route, handler
-
 $routes = [];
 
 // Default page
