@@ -36,5 +36,3 @@ class UserController
         return $response;
     }
 }
-
-
