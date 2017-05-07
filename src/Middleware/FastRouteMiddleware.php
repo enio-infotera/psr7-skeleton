@@ -2,7 +2,7 @@
 
 namespace App\Middleware;
 
-use App\Http\RequestContext;
+use App\Http\ActionContext;
 use Exception;
 use RuntimeException;
 use FastRoute\Dispatcher;
@@ -123,7 +123,7 @@ class FastRouteMiddleware
         ob_start();
         $level = ob_get_level();
         try {
-            $ctx = new RequestContext($request, $response);
+            $ctx = new ActionContext($request, $response);
             $arguments = $this->options['arguments'];
             $return = call_user_func_array($target, [$ctx, $arguments]);
             if ($return instanceof Response) {

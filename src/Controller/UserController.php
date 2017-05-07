@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Http\RequestContext;
+use App\Http\ActionContext;
 use Zend\Diactoros\Response;
 
 /**
@@ -14,10 +14,10 @@ class UserController
     /**
      * Index page.
      *
-     * @param RequestContext $ctx Request context
+     * @param ActionContext $ctx Request context
      * @return Response
      */
-    public function index(RequestContext $ctx)
+    public function index(ActionContext $ctx)
     {
         // Append content to response
         $response = $ctx->getResponse();
@@ -28,10 +28,10 @@ class UserController
     /**
      * Edit page.
      *
-     * @param RequestContext $ctx Request context
+     * @param ActionContext $ctx Request context
      * @return Response
      */
-    public function edit(RequestContext $ctx)
+    public function edit(ActionContext $ctx)
     {
         // Simple echo is also possible.
         // The middleware will catch it and convert it to a response object.
@@ -44,10 +44,10 @@ class UserController
     /**
      * Test page.
      *
-     * @param RequestContext $ctx Request context
+     * @param ActionContext $ctx Request context
      * @return Response
      */
-    public static function test(RequestContext $ctx)
+    public static function test(ActionContext $ctx)
     {
         $response = $ctx->getResponse();
         $response->getBody()->write("Static test action<br>");

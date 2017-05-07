@@ -6,7 +6,7 @@ use Exception;
 use Zend\Diactoros\ServerRequest as Request;
 use Zend\Diactoros\Response;
 
-class RequestContext
+class ActionContext
 {
     protected $request;
 
