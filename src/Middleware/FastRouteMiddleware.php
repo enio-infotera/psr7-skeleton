@@ -99,10 +99,9 @@ class FastRouteMiddleware
         $scriptName = $server['SCRIPT_NAME'];
 
         if (isset($scriptName)) {
-            $dirname = dirname($scriptName);
-            //$dirname = dirname($dirname);
-            $len = strlen($dirname);
-            if ($len > 0 && $dirname != '/') {
+            $path = dirname($scriptName);
+            $len = strlen($path);
+            if ($len > 0 && $path != '/') {
                 $uri = substr($uri, $len);
             }
         }
@@ -112,21 +111,20 @@ class FastRouteMiddleware
     /**
      * Execute the callable.
      *
-     * @param mixed $target
+     * @param callable $target
      * @param Request $request
      * @param Response $response
      * @throws Exception On error
      *
      * @return Response
      */
-    private function executeCallable($target, Request $request, Response $response)
+    private function executeCallable(callable $target, Request $request, Response $response)
     {
         ob_start();
         $level = ob_get_level();
         try {
             $ctx = new RequestContext($request, $response);
             $arguments = $this->options['arguments'];
-            $target = $this->getCallable($target);
             $return = call_user_func_array($target, [$ctx, $arguments]);
             if ($return instanceof Response) {
                 $response = $return;
@@ -142,34 +140,6 @@ class FastRouteMiddleware
             $this->getOutput($level);
             throw $exception;
         }
-    }
-
-    /**
-     * Resolves the target of the route and returns a callable.
-     *
-     * @param mixed $target
-     *
-     * @throws RuntimeException If the target is not callable
-     *
-     * @return callable
-     */
-    protected function getCallable($target)
-    {
-        if (empty($target)) {
-            throw new RuntimeException('No callable provided');
-        }
-        if (is_string($target)) {
-            if (strpos($target, '->') !== false) {
-                // Object method call
-                list($class, $method) = explode('->', $target, 2);
-                $target = array(new $class, $method);
-            }
-        }
-        // If it's callable as is
-        if (is_callable($target)) {
-            return $target;
-        }
-        throw new RuntimeException('Invalid callable provided');
     }
 
     /**
