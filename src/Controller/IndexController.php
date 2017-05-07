@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use Zend\Diactoros\ServerRequest as Request;
+use App\Http\RequestContext;
 use Zend\Diactoros\Response;
 
 /**
@@ -11,13 +11,22 @@ use Zend\Diactoros\Response;
 class IndexController
 {
 
-    public function index(Request $request = null, Response $response = null)
+    /**
+     * Index page.
+     *
+     * @param RequestContext $ctx Request context
+     * @return Response
+     */
+    public function index(RequestContext $ctx)
     {
+        $response = $ctx->getResponse();
         $body = $response->getBody();
+        
         $body->write("Hello world<br>Default index page<br><br>");
-        $body->write('Testlink 1: <a href="users">users/</a><br>');
-        $body->write('Testlink 2: <a href="user/1234">users/1234</a><br>');
-        $body->write('Testlink 2: <a href="user/test">users/test</a><br>');
+        $body->write('Users: <a href="users">users/</a><br>');
+        $body->write('User 1234: <a href="user/1234">users/1234</a><br>');
+        $body->write('Users test: <a href="user/test">users/test</a><br>');
+
         return $response;
     }
 }

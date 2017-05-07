@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use Zend\Diactoros\ServerRequest as Request;
+use App\Http\RequestContext;
 use Zend\Diactoros\Response;
 
 /**
@@ -11,24 +11,45 @@ use Zend\Diactoros\Response;
 class UserController
 {
 
-    public function index(Request $request = null, Response $response = null)
+    /**
+     * Index page.
+     *
+     * @param RequestContext $ctx Request context
+     * @return Response
+     */
+    public function index(RequestContext $ctx)
     {
         // Append content to response
+        $response = $ctx->getResponse();
         $response->getBody()->write("User index action<br>");
         return $response;
     }
 
-    public function edit(Request $request = null, Response $response = null)
+    /**
+     * Edit page.
+     *
+     * @param RequestContext $ctx Request context
+     * @return Response
+     */
+    public function edit(RequestContext $ctx)
     {
         // Simple echo is also possible.
         // The middleware will catch it and convert it to a response object.
+        $request = $ctx->getRequest();
         $id = $request->getAttribute('id');
         echo "Edit user with ID: $id<br>";
         //return $response;
     }
 
-    public static function test(Request $request = null, Response $response = null)
+    /**
+     * Test page.
+     *
+     * @param RequestContext $ctx Request context
+     * @return Response
+     */
+    public static function test(RequestContext $ctx)
     {
+        $response = $ctx->getResponse();
         $response->getBody()->write("Static test action<br>");
 
         /// Uncomment this line to test the ExceptionMiddleware

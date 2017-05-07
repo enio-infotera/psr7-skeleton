@@ -1,6 +1,6 @@
 <?php
 
-// Create a queue array of middleware callables
+// Create a queue array of middleware callable's
 $queue = [];
 
 // Error handler

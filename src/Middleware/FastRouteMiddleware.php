@@ -2,6 +2,7 @@
 
 namespace App\Middleware;
 
+use App\Http\RequestContext;
 use Exception;
 use RuntimeException;
 use FastRoute\Dispatcher;
@@ -16,7 +17,7 @@ use Zend\Diactoros\Stream;
 class FastRouteMiddleware
 {
 
-        /**
+    /**
      * Options
      *
      * @var array
@@ -83,8 +84,9 @@ class FastRouteMiddleware
 
     /**
      * Returns the url path leading up to the current script.
-     * Used to make the webapp portable to other locations.
+     * Used to make the web app portable to other locations.
      *
+     * @param Request $request
      * @return string uri
      */
     public function getBaseUri(Request $request)
@@ -113,6 +115,7 @@ class FastRouteMiddleware
      * @param mixed $target
      * @param Request $request
      * @param Response $response
+     * @throws Exception On error
      *
      * @return Response
      */
@@ -121,9 +124,10 @@ class FastRouteMiddleware
         ob_start();
         $level = ob_get_level();
         try {
-            $arguments = array_merge([$request, $response], $this->options['arguments']);
-            $target = $this->getCallable($target, $arguments);
-            $return = call_user_func_array($target, $arguments);
+            $ctx = new RequestContext($request, $response);
+            $arguments = $this->options['arguments'];
+            $target = $this->getCallable($target);
+            $return = call_user_func_array($target, [$ctx, $arguments]);
             if ($return instanceof Response) {
                 $response = $return;
                 $return = '';
@@ -144,13 +148,12 @@ class FastRouteMiddleware
      * Resolves the target of the route and returns a callable.
      *
      * @param mixed $target
-     * @param array $construct_args
      *
      * @throws RuntimeException If the target is not callable
      *
      * @return callable
      */
-    protected function getCallable($target, array $construct_args)
+    protected function getCallable($target)
     {
         if (empty($target)) {
             throw new RuntimeException('No callable provided');
