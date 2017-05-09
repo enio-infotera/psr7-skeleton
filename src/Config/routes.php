@@ -4,28 +4,29 @@
 $routes = [];
 
 // Default page
-$routes[] = ['GET', '/', function ($ctx) {
-    $ctrl = new App\Controller\IndexController();
-    return $ctrl->index($ctx);
+$routes[] = ['GET', '/', function ($request, $response) {
+    $ctrl = new App\Controller\IndexController($request, $response);
+    return $ctrl->index();
 }];
 
 // Controller action
 // Object method call with Class->method
-$routes[] = ['GET', '/users',function ($ctx) {
-    $ctrl = new App\Controller\UserController();
-    return $ctrl->index($ctx);
+$routes[] = ['GET', '/users',function ($request, $response) {
+    $ctrl = new App\Controller\UserController($request, $response);
+    return $ctrl->indexPage();
 }];
 
-// Static class method call with Class::method
-$routes[] = ['GET', '/user/test', function ($ctx) {
-    $ctrl = new App\Controller\UserController();
-    return $ctrl->test($ctx);
-}];
 
 // {id} must be a number (\d+)
-$routes[] = ['GET', '/user/{id:\d+}', function ($ctx) {
-    $ctrl = new App\Controller\UserController();
-    return $ctrl->edit($ctx);
+$routes[] = ['GET', '/users/{id:\d+}', function ($request, $response) {
+    $ctrl = new App\Controller\UserController($request, $response);
+    return $ctrl->editPage();
+}];
+
+// Sub-Resource
+$routes[] = ['GET', '/users/{id:\d+}/reviews', function ($request, $response) {
+    $ctrl = new App\Controller\UserController($request, $response);
+    return $ctrl->reviewPage();
 }];
 
 return $routes;

@@ -2,30 +2,28 @@
 
 namespace App\Controller;
 
-use App\Http\ActionContext;
 use Zend\Diactoros\Response;
 
 /**
  * IndexController
  */
-class IndexController
+class IndexController extends AppController
 {
 
     /**
      * Index page.
      *
-     * @param ActionContext $ctx Request context
      * @return Response
      */
-    public function index(ActionContext $ctx)
+    public function index()
     {
-        $response = $ctx->getResponse();
+        $response = $this->getResponse();
         $body = $response->getBody();
 
         $body->write("Hello world<br>Default index page<br><br>");
         $body->write('Users: <a href="users">users/</a><br>');
-        $body->write('User 1234: <a href="user/1234">users/1234</a><br>');
-        $body->write('Users test: <a href="user/test">users/test</a><br>');
+        $body->write('User 1234: <a href="users/1234">users/1234</a><br>');
+        $body->write('User 1234 reviews: <a href="users/1234/reviews">users/1234/reviews</a><br>');
 
         return $response;
     }

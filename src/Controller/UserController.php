@@ -2,25 +2,23 @@
 
 namespace App\Controller;
 
-use App\Http\ActionContext;
 use Zend\Diactoros\Response;
 
 /**
  * UserController
  */
-class UserController
+class UserController extends AppController
 {
 
     /**
      * Index page.
      *
-     * @param ActionContext $ctx Request context
      * @return Response
      */
-    public function index(ActionContext $ctx)
+    public function indexPage()
     {
         // Append content to response
-        $response = $ctx->getResponse();
+        $response = $this->getResponse();
         $response->getBody()->write("User index action<br>");
         return $response;
     }
@@ -28,32 +26,34 @@ class UserController
     /**
      * Edit page.
      *
-     * @param ActionContext $ctx Request context
      * @return Response
      */
-    public function edit(ActionContext $ctx)
+    public function editPage()
     {
-        // Simple echo is also possible.
-        // The middleware will catch it and convert it to a response object.
-        $request = $ctx->getRequest();
+        $request = $this->getRequest();
         $id = $request->getAttribute('id');
-        echo "Edit user with ID: $id<br>";
-        //return $response;
+
+        $response = $this->getResponse();
+        $response->getBody()->write("Edit user with ID: $id<br>");
+        return $response;
     }
 
     /**
      * Test page.
      *
-     * @param ActionContext $ctx Request context
      * @return Response
      */
-    public static function test(ActionContext $ctx)
+    public function reviewPage()
     {
-        $response = $ctx->getResponse();
-        $response->getBody()->write("Static test action<br>");
+        $request = $this->getRequest();
+        $id = $request->getAttribute('id');
+
+        $response = $this->getResponse();
+        $response->getBody()->write("Action: Show all reviews of User: $id<br>");
 
         /// Uncomment this line to test the ExceptionMiddleware
         //throw new \Exception('My error', 1234);
+
         return $response;
     }
 }

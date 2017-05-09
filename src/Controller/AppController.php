@@ -1,15 +1,23 @@
 <?php
 
-namespace App\Http;
+namespace App\Controller;
 
-use Exception;
 use Zend\Diactoros\ServerRequest as Request;
 use Zend\Diactoros\Response;
 
-class ActionContext
+/**
+ * AppController
+ */
+class AppController
 {
+    /**
+     * @var Request
+     */
     protected $request;
 
+    /**
+     * @var Response
+     */
     protected $response;
 
     public function __construct(Request $request = null, Response $response = null)
@@ -18,25 +26,13 @@ class ActionContext
         $this->response = $response;
     }
 
-    public function getRequest()
+    protected function getRequest()
     {
         return $this->request;
     }
 
-    public function getResponse()
+    protected function getResponse()
     {
         return $this->response;
-    }
-
-    public function getCookie()
-    {
-        // todo
-        throw new Exception('Not implemented');
-    }
-
-    public function getSession()
-    {
-        // todo
-        throw new Exception('Not implemented');
     }
 }

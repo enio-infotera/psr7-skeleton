@@ -83,32 +83,6 @@ class FastRouteMiddleware
     }
 
     /**
-     * Returns the url path leading up to the current script.
-     * Used to make the web app portable to other locations.
-     *
-     * @param Request $request
-     * @return string uri
-     */
-    public function getBaseUri(Request $request)
-    {
-        // Get URI from URL
-        $uri = $request->getUri()->getPath();
-
-        // Detect and remove subfolder from URI
-        $server = $request->getServerParams();
-        $scriptName = $server['SCRIPT_NAME'];
-
-        if (isset($scriptName)) {
-            $path = dirname($scriptName);
-            $len = strlen($path);
-            if ($len > 0 && $path != '/') {
-                $uri = substr($uri, $len);
-            }
-        }
-        return $uri;
-    }
-
-    /**
      * Execute the callable.
      *
      * @param callable $target
@@ -120,41 +94,37 @@ class FastRouteMiddleware
      */
     private function executeCallable(callable $target, Request $request, Response $response)
     {
-        ob_start();
-        $level = ob_get_level();
-        try {
-            $ctx = new ActionContext($request, $response);
-            $arguments = $this->options['arguments'];
-            $return = call_user_func_array($target, [$ctx, $arguments]);
-            if ($return instanceof Response) {
-                $response = $return;
-                $return = '';
-            }
-            $return = $this->getOutput($level) . $return;
-            $body = $response->getBody();
-            if ($return !== '' && $body->isWritable()) {
-                $body->write($return);
-            }
-            return $response;
-        } catch (Exception $exception) {
-            $this->getOutput($level);
-            throw $exception;
+        $arguments = $this->options['arguments'];
+        $response = call_user_func_array($target, [$request, $response, $arguments]);
+        if (!($response instanceof Response)) {
+            throw new Exception('Invalid response type');
         }
+        return $response;
     }
 
     /**
-     * Return the output buffer.
+     * Returns the url path leading up to the current script.
+     * Used to make the web app portable to other locations.
      *
-     * @param int $level
-     *
-     * @return string
+     * @param Request $request
+     * @return string uri
      */
-    public static function getOutput($level)
+    public function getBaseUri(Request $request)
     {
-        $output = '';
-        while (ob_get_level() >= $level) {
-            $output .= ob_get_clean();
+        // Get URI from URL
+        $uri = $request->getUri()->getPath();
+
+        // Detect and remove sub-folder from URI
+        $server = $request->getServerParams();
+        $scriptName = $server['SCRIPT_NAME'];
+
+        if (isset($scriptName)) {
+            $path = dirname($scriptName);
+            $len = strlen($path);
+            if ($len > 0 && $path != '/') {
+                $uri = substr($uri, $len);
+            }
         }
-        return $output;
+        return $uri;
     }
 }
