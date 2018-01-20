@@ -7,7 +7,6 @@ $queue = [];
 $queue[] = new \App\Middleware\ExceptionMiddleware(['verbose' => true, 'logger' => null]);
 
 // Router
-$routes = require_once __DIR__ . '/routes.php';
-$queue[] = new \App\Middleware\FastRouteMiddleware(['routes' => $routes]);
+$queue[] = new \App\Middleware\FastRouteMiddleware(['routes' => require __DIR__ . '/routes.php']);
 
 return $queue;

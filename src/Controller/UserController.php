@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use Psr\Http\Message\ResponseInterface;
+use Zend\Diactoros\ServerRequest as Request;
 use Zend\Diactoros\Response;
 
 /**
@@ -13,12 +15,13 @@ class UserController extends AppController
     /**
      * Index page.
      *
-     * @return Response
+     * @param Request $request
+     * @param Response $response
+     * @return ResponseInterface
      */
-    public function indexPage()
+    public function indexPage(Request $request, Response $response): ResponseInterface
     {
         // Append content to response
-        $response = $this->getResponse();
         $response->getBody()->write("User index action<br>");
         return $response;
     }
@@ -26,14 +29,13 @@ class UserController extends AppController
     /**
      * Edit page.
      *
+     * @param Request $request
+     * @param Response $response
      * @return Response
      */
-    public function editPage()
+    public function editPage(Request $request, Response $response): ResponseInterface
     {
-        $request = $this->getRequest();
         $id = $request->getAttribute('id');
-
-        $response = $this->getResponse();
         $response->getBody()->write("Edit user with ID: $id<br>");
         return $response;
     }
@@ -41,14 +43,13 @@ class UserController extends AppController
     /**
      * Test page.
      *
+     * @param Request $request
+     * @param Response $response
      * @return Response
      */
-    public function reviewPage()
+    public function reviewPage(Request $request, Response $response): ResponseInterface
     {
-        $request = $this->getRequest();
         $id = $request->getAttribute('id');
-
-        $response = $this->getResponse();
         $response->getBody()->write("Action: Show all reviews of User: $id<br>");
 
         /// Uncomment this line to test the ExceptionMiddleware
