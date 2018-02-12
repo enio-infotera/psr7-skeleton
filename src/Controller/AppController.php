@@ -7,5 +7,4 @@ namespace App\Controller;
  */
 class AppController
 {
-    
 }
