@@ -1,6 +1,6 @@
 <?php
 
-// Create a queue array of middleware callable's
+// Create a stack array of middleware handler
 $stack = [];
 
 // Error handler
