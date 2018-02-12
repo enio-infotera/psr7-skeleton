@@ -54,8 +54,6 @@ class UserController extends AppController
      */
     public function reviewPage(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        throw new \RuntimeException('xxx');
-
         $response = $handler->handle($request);
 
         $id = $request->getAttribute('id');

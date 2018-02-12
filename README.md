@@ -12,6 +12,7 @@ composer update
 ## Starting
 
 ```
+cd public/
 php -S localhost:8080
 ```
 
