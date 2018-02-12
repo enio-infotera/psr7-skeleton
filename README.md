@@ -1,13 +1,18 @@
-# PSR-7 Hello world
+# PSR-7 and PSR-15 Hello world
 
-Simple as possible PSR-7 application (Hello World).
+Simple as possible PSR-7 / PSR-15 application (Hello World) with FastRoute and ErrorHandler middleware.
 
-# Installation
+## Installation
 
 ```
 git clone https://github.com/odan/psr7-hello-world.git .
-composer install
-php index.php
+composer update
+```
+
+## Starting
+
+```
+php -S localhost:8080
 ```
 
 # License
