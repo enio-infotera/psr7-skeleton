@@ -1,12 +1,19 @@
 <?php
 
 // Create a queue array of middleware callable's
-$queue = [];
+$stack = [];
 
 // Error handler
-$queue[] = new \App\Middleware\ExceptionMiddleware(['verbose' => true, 'logger' => null]);
+$stack[] = new \App\Middleware\ExceptionMiddleware(['verbose' => true, 'logger' => null]);
 
 // Router
-$queue[] = new \App\Middleware\FastRouteMiddleware(['routes' => require __DIR__ . '/routes.php']);
+$stack[] = new Middlewares\FastRoute(FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
+    foreach (require __DIR__ . '/routes.php' as $route) {
+        $r->addRoute($route[0], $route[1], $route[2]);
+    }
+}));
 
-return $queue;
+// Must be the last middleware
+$stack[] = new Middlewares\RequestHandler();
+
+return $stack;

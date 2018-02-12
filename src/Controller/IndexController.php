@@ -3,8 +3,8 @@
 namespace App\Controller;
 
 use Psr\Http\Message\ResponseInterface;
-use Zend\Diactoros\ServerRequest as Request;
-use Zend\Diactoros\Response;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
 /**
  * IndexController
@@ -15,12 +15,14 @@ class IndexController extends AppController
     /**
      * Index page.
      *
-     * @param Request $request
-     * @param Response $response
+     * @param ServerRequestInterface $request
+     * @param RequestHandlerInterface $handler
      * @return ResponseInterface
      */
-    public function index(Request $request, Response $response): ResponseInterface
+    public function index(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
+        $response = $handler->handle($request);
+
         $body = $response->getBody();
 
         $body->write("Hello world<br>Default index page<br><br>");

@@ -3,6 +3,10 @@
 namespace App\Middleware;
 
 use Exception;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use Zend\Diactoros\ServerRequest as Request;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\Stream;
@@ -12,7 +16,7 @@ use Zend\Diactoros\Stream;
  *
  * Traps exceptions and converts them into a error page.
  */
-class ExceptionMiddleware
+class ExceptionMiddleware implements MiddlewareInterface
 {
 
     /**
@@ -39,17 +43,16 @@ class ExceptionMiddleware
     /**
      * Wrap the remaining middleware with error handling.
      *
-     * @param Request $request The request.
-     * @param Response $response The response.
-     * @param callable $next Callback to invoke the next middleware.
+     * @param ServerRequestInterface $request The request.
+     * @param RequestHandlerInterface $handler The next handler.
      * @return Response A response
      */
-    public function __invoke(Request $request, Response $response, callable $next)
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         try {
-            return $next($request, $response);
+            return $handler->handle($request);
         } catch (Exception $e) {
-            return $this->handleException($e, $request, $response);
+            return $this->handleException($e, $request, new Response());
         }
     }
 
@@ -77,7 +80,6 @@ class ExceptionMiddleware
             $stream->write("\n<br>$message");
         }
 
-        $response = $response->withStatus(500)->withBody($stream);
-        return $response;
+        return $response->withStatus(500)->withBody($stream);
     }
 }

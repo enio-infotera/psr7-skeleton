@@ -3,7 +3,8 @@
 namespace App\Controller;
 
 use Psr\Http\Message\ResponseInterface;
-use Zend\Diactoros\ServerRequest as Request;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use Zend\Diactoros\Response;
 
 /**
@@ -15,12 +16,14 @@ class UserController extends AppController
     /**
      * Index page.
      *
-     * @param Request $request
-     * @param Response $response
+     * @param ServerRequestInterface $request
+     * @param RequestHandlerInterface $handler
      * @return ResponseInterface
      */
-    public function indexPage(Request $request, Response $response): ResponseInterface
+    public function indexPage(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
+        $response = $handler->handle($request);
+
         // Append content to response
         $response->getBody()->write("User index action<br>");
         return $response;
@@ -29,12 +32,14 @@ class UserController extends AppController
     /**
      * Edit page.
      *
-     * @param Request $request
-     * @param Response $response
+     * @param ServerRequestInterface $request
+     * @param RequestHandlerInterface $handler
      * @return Response
      */
-    public function editPage(Request $request, Response $response): ResponseInterface
+    public function editPage(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
+        $response = $handler->handle($request);
+
         $id = $request->getAttribute('id');
         $response->getBody()->write("Edit user with ID: $id<br>");
         return $response;
@@ -43,12 +48,16 @@ class UserController extends AppController
     /**
      * Test page.
      *
-     * @param Request $request
-     * @param Response $response
+     * @param ServerRequestInterface $request
+     * @param RequestHandlerInterface $handler
      * @return Response
      */
-    public function reviewPage(Request $request, Response $response): ResponseInterface
+    public function reviewPage(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
+        throw new \RuntimeException('xxx');
+
+        $response = $handler->handle($request);
+
         $id = $request->getAttribute('id');
         $response->getBody()->write("Action: Show all reviews of User: $id<br>");
 

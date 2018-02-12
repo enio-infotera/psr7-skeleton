@@ -1,8 +1,9 @@
 {
   "require": {
     "zendframework/zend-diactoros": "^1.7",
-    "relay/relay": "^1.1",
-    "nikic/fast-route": "^1.2"
+    "nikic/fast-route": "^1.2",
+    "middlewares/fast-route": "^1.0",
+    "middlewares/request-handler": "^1.1"
   },
   "scripts": {
     "fix-style": "phpcbf -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit -n --no-patch 1 src tests config"
