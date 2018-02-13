@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Controller;
+namespace App\Action;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 /**
- * IndexController
+ * HomeIndexAction
  */
-class IndexController extends AppController
+class HomeIndexAction extends AbstractAction
 {
 
     /**
@@ -19,7 +19,7 @@ class IndexController extends AppController
      * @param RequestHandlerInterface $handler
      * @return ResponseInterface
      */
-    public function index(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $response = $handler->handle($request);
 
