@@ -27,5 +27,4 @@ class UserEditAction extends AbstractAction
         $response->getBody()->write("Edit user with ID: $id<br>");
         return $response;
     }
-
 }
