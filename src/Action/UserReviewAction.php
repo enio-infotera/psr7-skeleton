@@ -31,5 +31,4 @@ class UserReviewAction extends AbstractAction
 
         return $response;
     }
-
 }

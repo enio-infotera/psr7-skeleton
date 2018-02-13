@@ -27,5 +27,4 @@ class UserIndexAction extends AbstractAction
         $response->getBody()->write("User index action<br>");
         return $response;
     }
-
 }
