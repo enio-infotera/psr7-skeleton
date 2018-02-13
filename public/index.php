@@ -16,8 +16,7 @@ $dispatcher = new \Middlewares\Utils\Dispatcher(require __DIR__ . '/../config/mi
 // Optional: change the request uri to run the app in a subdirectory.
 $_SERVER['REQUEST_URI'] = call_user_func(function () {
     $path = parse_url($_SERVER['REQUEST_URI'])['path'];
-    $scriptName = dirname(dirname($_SERVER['SCRIPT_NAME']));
-    $scriptName = str_replace('\\', '/', $scriptName);
+    $scriptName = str_replace('\\', '/', dirname(dirname($_SERVER['SCRIPT_NAME'])));
     $len = strlen($scriptName);
     if ($len > 0 && $scriptName !== '/') {
         $path = substr($path, $len);
