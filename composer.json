@@ -1,4 +1,14 @@
 {
+  "name": "odan/psr7-hello-world",
+  "type": "project",
+  "description": "A skeleton project for PSR-7 and PSR-15",
+  "keywords": [
+    "psr7",
+    "psr15",
+    "skeleton"
+  ],
+  "homepage": "https://github.com/odan/psr7-hello-world",
+  "license": "MIT",
   "require": {
     "league/container": "^3.2",
     "league/route": "^4.2",
