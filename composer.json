@@ -1,12 +1,10 @@
 {
   "require": {
-    "middlewares/fast-route": "^1.0",
-    "middlewares/request-handler": "^1.1",
-    "nikic/fast-route": "^1.2",
+    "league/container": "^3.2",
+    "league/route": "^4.2",
     "nyholm/psr7": "^1.1",
     "nyholm/psr7-server": "^0.3.0",
-    "pimple/pimple": "^3.2",
-    "relay/relay": "^2.0",
+    "psr/log": "^1.1",
     "zendframework/zend-httphandlerrunner": "^1.1"
   },
   "autoload": {

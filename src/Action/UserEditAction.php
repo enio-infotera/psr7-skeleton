@@ -5,12 +5,11 @@ namespace App\Action;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\RequestHandlerInterface;
 
 /**
  * Action
  */
-final class UserEditAction implements RequestHandlerInterface
+final class UserEditAction implements ActionInterface
 {
     /**
      * @var ResponseFactoryInterface
@@ -31,14 +30,15 @@ final class UserEditAction implements RequestHandlerInterface
      * User edit page.
      *
      * @param ServerRequestInterface $request
+     * @param array $args
      *
      * @return ResponseInterface
      */
-    public function handle(ServerRequestInterface $request): ResponseInterface
+    public function __invoke(ServerRequestInterface $request, array $args = []): ResponseInterface
     {
         $response = $this->responseFactory->createResponse();
 
-        $id = $request->getAttribute('id');
+        $id = (int)$args['id'];
         $response->getBody()->write("Edit user with ID: $id<br>");
 
         return $response;

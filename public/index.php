@@ -9,7 +9,6 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use Psr\Http\Message\ServerRequestInterface;
-use Relay\Relay;
 use Zend\HttpHandlerRunner\Emitter\SapiEmitter;
 
 // Optional: change the request uri to run the app in a subdirectory.
@@ -23,7 +22,15 @@ $_SERVER['REQUEST_URI'] = call_user_func(function () {
     return $path;
 });
 
-$container = require __DIR__ . '/../config/container.php';
+// Emit response
+(new SapiEmitter())->emit(call_user_func(function () {
+    // Bootstrap
+    $container = require __DIR__ . '/../config/container.php';
 
-$relay = new Relay(require __DIR__ . '/../config/middleware.php');
-(new SapiEmitter())->emit($relay->handle($container->get(ServerRequestInterface::class)));
+    require __DIR__ . '/../config/middleware.php';
+
+    $router = require __DIR__ . '/../config/routes.php';
+
+    // Dispatch
+    return $router->dispatch($container->get(ServerRequestInterface::class));
+}));

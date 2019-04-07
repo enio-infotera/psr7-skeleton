@@ -5,12 +5,11 @@ namespace App\Action;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\RequestHandlerInterface;
 
 /**
  * Action
  */
-final class HomeIndexAction implements RequestHandlerInterface
+final class HomeIndexAction implements ActionInterface
 {
 
     /**
@@ -35,7 +34,7 @@ final class HomeIndexAction implements RequestHandlerInterface
      *
      * @return ResponseInterface
      */
-    public function handle(ServerRequestInterface $request): ResponseInterface
+    public function __invoke(ServerRequestInterface $request): ResponseInterface
     {
         $response = $this->responseFactory->createResponse();
         $body = $response->getBody();
