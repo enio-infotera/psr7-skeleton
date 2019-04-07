@@ -22,7 +22,6 @@ $_SERVER['REQUEST_URI'] = call_user_func(function () {
     return $path;
 });
 
-// Emit response
 (new SapiEmitter())->emit(call_user_func(function () {
     // Bootstrap
     $container = require __DIR__ . '/../config/container.php';
