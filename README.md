@@ -1,6 +1,6 @@
 # PSR-7 and PSR-15 Hello world
 
-Simple as possible PSR-7 / PSR-15 application (Hello World) with FastRoute and ErrorHandler middleware.
+Simple as possible PSR-7 / PSR-15 application.
 
 ## Requirements
 
