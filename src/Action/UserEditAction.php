@@ -2,29 +2,45 @@
 
 namespace App\Action;
 
+use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 /**
- * UserEditAction
+ * Action
  */
-class UserEditAction extends AbstractAction
+final class UserEditAction implements RequestHandlerInterface
 {
+    /**
+     * @var ResponseFactoryInterface
+     */
+    private $responseFactory;
+
+    /**
+     * Constructor.
+     *
+     * @param ResponseFactoryInterface $responseFactory
+     */
+    public function __construct(ResponseFactoryInterface $responseFactory)
+    {
+        $this->responseFactory = $responseFactory;
+    }
 
     /**
      * User edit page.
      *
      * @param ServerRequestInterface $request
-     * @param RequestHandlerInterface $handler
+     *
      * @return ResponseInterface
      */
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $response = $handler->handle($request);
+        $response = $this->responseFactory->createResponse();
 
         $id = $request->getAttribute('id');
         $response->getBody()->write("Edit user with ID: $id<br>");
+
         return $response;
     }
 }

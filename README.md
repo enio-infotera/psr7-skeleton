@@ -2,19 +2,16 @@
 
 Simple as possible PSR-7 / PSR-15 application (Hello World) with FastRoute and ErrorHandler middleware.
 
+## Requirements
+
+* PHP 7
+* Composer
+
 ## Installation
 
-```
-git clone https://github.com/odan/psr7-hello-world.git .
-composer update
-```
-
-## Starting
-
-```
-cd public/
-php -S localhost:8080
-```
+* [Download ZIP](https://github.com/odan/psr7-hello-world/archive/master.zip)
+* Run `composer update`
+* Open the application in your browser
 
 ## License
 

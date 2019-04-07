@@ -2,29 +2,45 @@
 
 namespace App\Action;
 
+use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 /**
- * UserIndexAction
+ * Action
  */
-class UserIndexAction extends AbstractAction
+final class UserIndexAction implements RequestHandlerInterface
 {
+    /**
+     * @var ResponseFactoryInterface
+     */
+    private $responseFactory;
+
+    /**
+     * Constructor.
+     *
+     * @param ResponseFactoryInterface $responseFactory
+     */
+    public function __construct(ResponseFactoryInterface $responseFactory)
+    {
+        $this->responseFactory = $responseFactory;
+    }
 
     /**
      * User index page.
      *
      * @param ServerRequestInterface $request
-     * @param RequestHandlerInterface $handler
+     *
      * @return ResponseInterface
      */
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $response = $handler->handle($request);
+        $response = $this->responseFactory->createResponse();
 
         // Append content to response
-        $response->getBody()->write("User index action<br>");
+        $response->getBody()->write('User index action<br>');
+
         return $response;
     }
 }

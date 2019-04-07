@@ -2,26 +2,41 @@
 
 namespace App\Action;
 
+use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 /**
- * UserReviewAction
+ * Action
  */
-class UserReviewAction extends AbstractAction
+final class UserReviewAction implements RequestHandlerInterface
 {
+    /**
+     * @var ResponseFactoryInterface
+     */
+    private $responseFactory;
+
+    /**
+     * Constructor.
+     *
+     * @param ResponseFactoryInterface $responseFactory
+     */
+    public function __construct(ResponseFactoryInterface $responseFactory)
+    {
+        $this->responseFactory = $responseFactory;
+    }
 
     /**
      * User review page.
      *
      * @param ServerRequestInterface $request
-     * @param RequestHandlerInterface $handler
+     *
      * @return ResponseInterface
      */
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $response = $handler->handle($request);
+        $response = $this->responseFactory->createResponse();
 
         $id = $request->getAttribute('id');
         $response->getBody()->write("Action: Show all reviews of User: $id<br>");

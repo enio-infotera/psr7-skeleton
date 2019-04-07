@@ -3,13 +3,13 @@
 namespace App\Middleware;
 
 use Exception;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Zend\Diactoros\ServerRequest as Request;
-use Zend\Diactoros\Response;
-use Zend\Diactoros\Stream;
 
 /**
  * Error handling middleware.
@@ -18,6 +18,9 @@ use Zend\Diactoros\Stream;
  */
 class ExceptionMiddleware implements MiddlewareInterface
 {
+
+    private $responseFactory;
+    private $streamFactory;
 
     /**
      * Options
@@ -31,13 +34,16 @@ class ExceptionMiddleware implements MiddlewareInterface
      *
      * @param array $options
      */
-    public function __construct(array $options = array())
+    public function __construct(array $options = array(), ResponseFactoryInterface $responseFactory, StreamFactoryInterface $streamFactory)
     {
         $default = [
             'verbose' => false,
             'logger' => 1,
         ];
         $this->options = $options + $default;
+
+        $this->responseFactory = $responseFactory;
+        $this->streamFactory = $streamFactory;
     }
 
     /**
@@ -52,7 +58,7 @@ class ExceptionMiddleware implements MiddlewareInterface
         try {
             return $handler->handle($request);
         } catch (Exception $e) {
-            return $this->handleException($e, $request, new Response());
+            return $this->handleException($e, $request);
         }
     }
 
@@ -64,7 +70,7 @@ class ExceptionMiddleware implements MiddlewareInterface
      * @param Response $response The response.
      * @return Response A response
      */
-    public function handleException(Exception $ex, Request $request, Response $response)
+    public function handleException(Exception $ex, RequestInterface $request)
     {
         $message = sprintf("[%s] %s\n%s", get_class($ex), $ex->getMessage(), $ex->getTraceAsString());
 
@@ -72,7 +78,7 @@ class ExceptionMiddleware implements MiddlewareInterface
         if (!empty($this->options['logger'])) {
             $this->options['logger']->error($message);
         }
-        $stream = new Stream('php://temp', 'wb+');
+        $stream = $this->streamFactory->createStream();
         $stream->write('An Internal Server Error Occurred');
 
         // Verbose error output
@@ -80,6 +86,6 @@ class ExceptionMiddleware implements MiddlewareInterface
             $stream->write("\n<br>$message");
         }
 
-        return $response->withStatus(500)->withBody($stream);
+        return $this->responseFactory->createResponse()->withStatus(500)->withBody($stream);
     }
 }

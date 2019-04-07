@@ -8,10 +8,9 @@
  */
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use Zend\Diactoros\Response\SapiEmitter;
-use Zend\Diactoros\ServerRequestFactory;
-
-$dispatcher = new \Middlewares\Utils\Dispatcher(require __DIR__ . '/../config/middleware.php');
+use Psr\Http\Message\ServerRequestInterface;
+use Relay\Relay;
+use Zend\HttpHandlerRunner\Emitter\SapiEmitter;
 
 // Optional: change the request uri to run the app in a subdirectory.
 $_SERVER['REQUEST_URI'] = call_user_func(function () {
@@ -24,8 +23,7 @@ $_SERVER['REQUEST_URI'] = call_user_func(function () {
     return $path;
 });
 
-$response = $dispatcher->dispatch(ServerRequestFactory::fromGlobals());
+$container = require __DIR__ . '/../config/container.php';
 
-// Output response
-$emitter = new SapiEmitter();
-$emitter->emit($response);
+$relay = new Relay(require __DIR__ . '/../config/middleware.php');
+(new SapiEmitter())->emit($relay->handle($container->get(ServerRequestInterface::class)));

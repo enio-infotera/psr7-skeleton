@@ -1,10 +1,5 @@
-nbproject/
 .idea/
-composer.phar
 composer.lock
 .DS_STORE
 cache.properties
-
-!vendor/
-vendor/*
-!vendor/.htaccess
+vendor/
