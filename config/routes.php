@@ -6,8 +6,7 @@ $routes = [];
 // Default page
 $routes[] = ['GET', '/', App\Action\HomeIndexAction::class];
 
-// Controller action
-// Object method call with Class->method
+// Users
 $routes[] = ['GET', '/users', App\Action\UserIndexAction::class];
 
 // {id} must be a number (\d+)
