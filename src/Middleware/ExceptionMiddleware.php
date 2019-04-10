@@ -64,7 +64,7 @@ final class ExceptionMiddleware implements MiddlewareInterface
      * Wrap the remaining middleware with error handling.
      *
      * @param ServerRequestInterface $request The request
-     * @param RequestHandlerInterface $handler The next handler
+     * @param RequestHandlerInterface $handler The handler
      *
      * @return ResponseInterface The response
      */

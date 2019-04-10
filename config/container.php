@@ -1,7 +1,9 @@
 <?php
 
 use App\Middleware\ExceptionMiddleware;
+use App\Middleware\NotFoundMiddleware;
 use League\Container\Container;
+use League\Route\Http\Exception\NotFoundException;
 use League\Route\Router;
 use League\Route\Strategy\ApplicationStrategy;
 use Nyholm\Psr7\Factory\Psr17Factory;
@@ -10,6 +12,7 @@ use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamFactoryInterface;
+use Psr\Http\Server\MiddlewareInterface;
 
 $container = new Container();
 
@@ -21,9 +24,20 @@ $container->share(ExceptionMiddleware::class, function (Container $container) {
     );
 })->addArgument($container);
 
+$container->share(NotFoundMiddleware::class, function (Container $container) {
+    return new NotFoundMiddleware($container->get(ResponseFactoryInterface::class));
+})->addArgument($container);
+
 $container->share(Router::class, function (Container $container) {
     $router = new Router();
-    $router->setStrategy((new ApplicationStrategy())->setContainer($container));
+
+    $router->setStrategy((new class() extends ApplicationStrategy
+    {
+        public function getNotFoundDecorator(NotFoundException $exception): MiddlewareInterface
+        {
+            return $this->getContainer()->get(NotFoundMiddleware::class);
+        }
+    })->setContainer($container));
 
     return $router;
 })->addArgument($container);
