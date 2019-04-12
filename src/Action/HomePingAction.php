@@ -7,9 +7,9 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * Action
+ * Action.
  */
-final class UserReviewAction implements ActionInterface
+class HomePingAction implements ActionInterface
 {
     /**
      * @var ResponseFactoryInterface
@@ -27,22 +27,17 @@ final class UserReviewAction implements ActionInterface
     }
 
     /**
-     * User review page.
+     * Action.
      *
-     * @param ServerRequestInterface $request
-     * @param array $args
+     * @param ServerRequestInterface $request the request
      *
-     * @return ResponseInterface
+     * @return ResponseInterface the response
      */
-    public function __invoke(ServerRequestInterface $request, array $args = []): ResponseInterface
+    public function __invoke(ServerRequestInterface $request): ResponseInterface
     {
         $response = $this->responseFactory->createResponse();
-
-        $id = (int)$args['id'];
-        $response->getBody()->write("Action: Show all reviews of User: $id<br>");
-
-        /// Uncomment this line to test the ExceptionMiddleware
-        //throw new \Exception('My error', 1234);
+        $response = $response->withHeader('Content-Type', 'application/json;charset=utf-8');
+        $response->getBody()->write(json_encode($request->getParsedBody()) ?: '');
 
         return $response;
     }

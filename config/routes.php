@@ -1,28 +1,48 @@
 <?php
 
+//
+// Define the routes
+//
+
+use App\Middleware\AuthenticationMiddleware;
+use App\Middleware\LanguageMiddleware;
+use App\Middleware\SessionMiddleware;
 use League\Route\RouteGroup;
 use League\Route\Router;
 
 $router = $container->get(Router::class);
 
-// Default page
-$router->get('/', App\Action\HomeIndexAction::class);
+$router->post('/ping', \App\Action\HomePingAction::class);
 
-// Users
-$router->get('/users', App\Action\UserIndexAction::class);
+// Login, no auth check for this actions required
+$router->group('/users', function (RouteGroup $group) {
+    $group->post('/login', \App\Action\UserLoginSubmitAction::class);
+    $group->get('/login', \App\Action\UserLoginIndexAction::class)->setName('login');
+    $group->get('/logout', \App\Action\UserLogoutAction::class);
+})
+    ->middleware($container->get(SessionMiddleware::class))
+    //->middleware(CsrfMiddleware::class)
+;
 
-// {id} must be a number (\d+)
-$router->get('/users/{id:\d+}', App\Action\UserEditAction::class);
+// Routes with authentication
+$router->group('', function (RouteGroup $group) {
+    // Default page
+    $group->get('/', \App\Action\HomeIndexAction::class)->setName('root');
 
-// Sub-Resource
-$router->get('/users/{id:\d+}/reviews', App\Action\UserReviewAction::class);
+    $group->get('/users', \App\Action\UserIndexAction::class);
 
-// Routing group
-$router->group('/admin', function (RouteGroup $group) {
-    $group->get('', 'handler');
-    $group->get('/do-something', 'handler');
-    $group->get('/do-another-thing', 'handler');
-    $group->get('/do-something-else', 'handler');
-});
+    $group->post('/users/list', \App\Action\UserListAction::class);
+
+    // This route will only match if {id} is numeric
+    $group->get('/users/{id:[0-9]+}', \App\Action\UserEditAction::class)->setName('users.edit');
+
+    // Json request
+    $group->post('/home/load', \App\Action\HomeLoadAction::class);
+})
+    ->middleware($container->get(SessionMiddleware::class))
+    ->middleware($container->get(LanguageMiddleware::class))
+    ->middleware($container->get(AuthenticationMiddleware::class))
+    // ->middleware(CsrfMiddleware::class)
+;
 
 return $router;

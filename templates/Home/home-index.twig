@@ -1,0 +1,31 @@
+{% extends "Layout/layout.twig" %}
+
+{% block assets %}
+    {{ assets({files: ['Home/home-index.js'], name: 'home-index.js'}) }}
+    {{ assets({files: ['Home/home-index.css'], name: 'home-index.css'}) }}
+{% endblock %}
+
+{% block content %}
+
+    <div id="app"></div>
+
+    <template id="user-template">
+        <div id="content" class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>{{ __('Hello World') }}</h1>
+
+                    {{ __('Users') }}: <a href="users">users</a><br>
+                    {{ __('User ID') }}: {user.id}<br>
+                    {{ __('Message') }}: {message}<br>
+
+                    <br>
+                    {{ __('Current time') }}: {now}<br>
+                </div>
+            </div>
+        </div>
+    </template>
+
+{% endblock %}
+
+

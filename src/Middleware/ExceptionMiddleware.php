@@ -18,7 +18,6 @@ use Psr\Log\LoggerInterface;
  */
 final class ExceptionMiddleware implements MiddlewareInterface
 {
-
     /**
      * @var ResponseFactoryInterface
      */
@@ -30,7 +29,7 @@ final class ExceptionMiddleware implements MiddlewareInterface
     private $streamFactory;
 
     /**
-     * @var LoggerInterface
+     * @var LoggerInterface|null
      */
     private $logger;
 
@@ -52,8 +51,7 @@ final class ExceptionMiddleware implements MiddlewareInterface
         StreamFactoryInterface $streamFactory,
         bool $verbose = false,
         LoggerInterface $logger = null
-    )
-    {
+    ) {
         $this->responseFactory = $responseFactory;
         $this->streamFactory = $streamFactory;
         $this->logger = $logger;
@@ -80,7 +78,7 @@ final class ExceptionMiddleware implements MiddlewareInterface
     /**
      * Handle an exception and generate an error response.
      *
-     * @param Exception $exception The exception to handle.
+     * @param Exception $exception the exception to handle
      *
      * @return ResponseInterface the response
      */

@@ -15,7 +15,6 @@ use Psr\Http\Server\RequestHandlerInterface;
  */
 final class NotFoundMiddleware implements MiddlewareInterface
 {
-
     /**
      * @var ResponseFactoryInterface
      */
@@ -42,9 +41,8 @@ final class NotFoundMiddleware implements MiddlewareInterface
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $response = $this->responseFactory->createResponse(404);
-        $response->getBody()->write('Error 404 Not found');
+        $response->getBody()->write('<h1>Page Not Found</h1>');
 
         return $response;
     }
-
 }

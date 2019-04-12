@@ -10,19 +10,48 @@
   "homepage": "https://github.com/odan/psr7-hello-world",
   "license": "MIT",
   "require": {
+    "php": "^7.2",
+    "cakephp/chronos": "^1.2",
+    "cakephp/database": "^3.7",
+    "fig/http-message-util": "^1.1",
     "league/container": "^3.2",
     "league/route": "^4.2",
+    "monolog/monolog": "^1.18",
     "nyholm/psr7": "^1.1",
     "nyholm/psr7-server": "^0.3.0",
+    "odan/phinx-migrations-generator": "^4",
+    "odan/session": "^3.1",
+    "odan/twig-assets": "^2.1.1",
+    "odan/twig-translation": "^1.2",
     "psr/log": "^1.1",
+    "symfony/console": "^4",
+    "symfony/translation": "^4",
     "zendframework/zend-httphandlerrunner": "^1.1"
+  },
+  "require-dev": {
+    "gettext/gettext": "^4.6",
+    "odan/docblock-checker": "^1.1",
+    "phpunit/phpunit": "^7.0",
+    "phpstan/phpstan-shim": "^0.11"
   },
   "autoload": {
     "psr-4": {
       "App\\": "src/"
+    },
+    "files": [
+      "src/Utility/functions.php"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "App\\Test\\": "tests/"
     }
   },
   "config": {
     "sort-packages": true
+  },
+  "scripts": {
+    "test": "phpunit --configuration ./phpunit.xml",
+    "test-coverage": "phpunit --configuration ./phpunit.xml --coverage-text --coverage-clover ./build/logs/clover.xml --coverage-html ./build/coverage"
   }
 }

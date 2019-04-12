@@ -3,7 +3,7 @@
 namespace App\Action;
 
 /**
- * Action
+ * Action Interface.
  */
 interface ActionInterface
 {
