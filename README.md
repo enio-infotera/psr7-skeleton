@@ -1,9 +1,9 @@
-# PSR-7 and PSR-15 Skeleton App
+# PHP Skeleton Application
 
-Simple as possible PSR-7 / PSR-15 application.
+A very basic PSR-7 / PSR-15 application for PHP.
 
 [![Latest Version on Packagist](https://img.shields.io/github/release/odan/psr7-skeleton.svg)](https://github.com/odan/psr7-skeleton/releases)
-[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE.md)
+[![Software License](https://img.shields.io/badge/license-BSD-brightgreen.svg)](LICENSE.md)
 [![Build Status](https://travis-ci.org/odan/psr7-skeleton.svg?branch=master)](https://travis-ci.org/odan/psr7-skeleton)
 [![Quality Score](https://scrutinizer-ci.com/g/odan/psr7-skeleton/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/odan/psr7-skeleton/?branch=master)
 [![Total Downloads](https://poser.pugx.org/odan/psr7-skeleton/downloads)](https://packagist.org/packages/odan/psr7-skeleton)
