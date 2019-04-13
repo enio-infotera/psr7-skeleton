@@ -1,5 +1,5 @@
 {
-  "name": "odan/psr7-hello-world",
+  "name": "odan/psr7-skeleton",
   "type": "project",
   "description": "A skeleton project for PSR-7 and PSR-15",
   "keywords": [
@@ -7,7 +7,7 @@
     "psr15",
     "skeleton"
   ],
-  "homepage": "https://github.com/odan/psr7-hello-world",
+  "homepage": "https://github.com/odan/psr7-skeleton",
   "license": "MIT",
   "require": {
     "php": "^7.2",
