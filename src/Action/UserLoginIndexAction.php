@@ -5,8 +5,6 @@ namespace App\Action;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Slim\Http\Request;
-use Slim\Http\Response;
 use Twig\Environment as Twig;
 
 /**

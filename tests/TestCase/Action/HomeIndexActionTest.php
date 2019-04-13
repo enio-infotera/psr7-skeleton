@@ -14,10 +14,6 @@ class HomeIndexActionTest extends ApiTestCase
     /**
      * Verify a non-authenticated user gets redirected to your login page.
      *
-     * @throws \Exception
-     * @throws \Slim\Exception\MethodNotAllowedException
-     * @throws \Slim\Exception\NotFoundException
-     *
      * @return void
      */
     public function testIndexAction(): void
@@ -31,7 +27,7 @@ class HomeIndexActionTest extends ApiTestCase
     }
 
     /**
-     * Test.
+     * Test invalid link.
      *
      * @return void
      */
