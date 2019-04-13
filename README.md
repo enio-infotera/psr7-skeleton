@@ -1,30 +1,79 @@
-# PSR-7 and PSR-15 Hello world
+# PSR-7 and PSR-15 Skeleton App
 
 Simple as possible PSR-7 / PSR-15 application.
 
 ## Requirements
 
-* PHP 7
+* PHP 7.2+
 * Composer
+* MySQL 5.7+
+* Apache with mod_rewrite
+* [Apache Ant](https://ant.apache.org/)
 
 ## Features
+
+This project comes configured with:
 
 * Dependency injection container (PSR-11)
 * HTTP request and response (PSR-7)
 * Middleware (PSR-15)
-* DocBlocks (PSR-5)
-* Coding styles (PSR-1, PSR-2, PSR-12)
 * Routes with groups and middleware
 * Single action controllers
+* Logging (Monolog)
+* Translations
+* Sessions
+* Authentication and Authorization
+* Database Query Builder (cakephp/database)
+* Database Migrations (Phinx)
+* Database Migration Generator
+* Date and time (Chronos)
+* Console Commands (Symfony)
+* Unit testing (phpunit)
 
-> Total size of this micro-framework is < 500 KB
+**Middleware:**
+
+* CSRF protection
+* CORS
+* Session
+* Language
+* Authentication
+
+**Rendering:**
+
+* Twig
+* Assets (js, css) minification and caching
+* Twig translations
+
+**Continous integration:**
+
+* Tested on Travis CI and Scrutinizer CI
+* Unit tests
+* Integration tests (http and database)
+* PHPStan
+* Code style checker and fixer (PSR-1, PSR-2, PSR-12)
+* DocBlock checker (PSR-5)
+* Ant scripts
+* Deployment scripts
 
 ## Installation
 
+### Manual
+
 * [Download ZIP](https://github.com/odan/psr7-hello-world/archive/master.zip)
+* Create a new database
 * Run `composer update`
+* Run `php bin/cli.php install`
 * Open the application in your browser
+
+### Using Composer
+
+Read more: [Install the application with Composer.](https://odan.github.io/psr7-skeleton/#installation)
+
+## Documentation
+
+Full documentation of this application can be found here: <https://odan.github.io/psr7-skeleton/>.
 
 ## License
 
-MIT
+The BSD 2-Clause License. Please see [License File](LICENSE) for more information.
+
