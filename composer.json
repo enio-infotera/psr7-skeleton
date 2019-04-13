@@ -19,6 +19,7 @@
         "monolog/monolog": "^1.18",
         "nyholm/psr7": "^1.1",
         "nyholm/psr7-server": "^0.3.0",
+        "odan/csrf": "^3.0",
         "odan/phinx-migrations-generator": "^4",
         "odan/session": "^3.1",
         "odan/twig-assets": "^2.1.1",

@@ -9,6 +9,7 @@ use App\Middleware\LanguageMiddleware;
 use App\Middleware\SessionMiddleware;
 use League\Route\RouteGroup;
 use League\Route\Router;
+use Odan\Csrf\CsrfMiddleware;
 
 $router = $container->get(Router::class);
 
@@ -21,8 +22,7 @@ $router->group('/users', function (RouteGroup $group) {
     $group->get('/logout', \App\Action\UserLogoutAction::class);
 })
     ->middleware($container->get(SessionMiddleware::class))
-    //->middleware(CsrfMiddleware::class)
-;
+    ->middleware($container->get(CsrfMiddleware::class));
 
 // Routes with authentication
 $router->group('', function (RouteGroup $group) {
@@ -42,7 +42,6 @@ $router->group('', function (RouteGroup $group) {
     ->middleware($container->get(SessionMiddleware::class))
     ->middleware($container->get(LanguageMiddleware::class))
     ->middleware($container->get(AuthenticationMiddleware::class))
-    // ->middleware(CsrfMiddleware::class)
-;
+    ->middleware($container->get(CsrfMiddleware::class));
 
 return $router;

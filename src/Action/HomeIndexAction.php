@@ -63,6 +63,7 @@ final class HomeIndexAction implements ActionInterface
 
         // Render template
         $response = $this->responseFactory->createResponse();
+        $response = $response->withHeader('Content-Type', 'text/html');
         $response->getBody()->write($this->twig->render('Home/home-index.twig', $viewData));
 
         return $response;

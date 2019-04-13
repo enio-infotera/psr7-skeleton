@@ -65,6 +65,7 @@ class HomeLoadAction implements ActionInterface
         ];
 
         $response = $this->responseFactory->createResponse();
+        $response = $response->withHeader('Content-Type', 'application/json;charset=utf-8');
         $response->getBody()->write(json_encode($result) ?: '');
 
         return $response;

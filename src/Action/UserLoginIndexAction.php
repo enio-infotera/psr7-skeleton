@@ -44,6 +44,7 @@ class UserLoginIndexAction implements ActionInterface
     public function __invoke(ServerRequestInterface $request): ResponseInterface
     {
         $response = $this->responseFactory->createResponse();
+        $response = $response->withHeader('Content-Type', 'text/html');
         $response->getBody()->write($this->twig->render('User/user-login.twig'));
 
         return $response;

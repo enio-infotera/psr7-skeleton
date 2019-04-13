@@ -67,6 +67,18 @@ $container->share(SessionMiddleware::class, function (Container $container) {
     return new SessionMiddleware($container->get(SessionInterface::class));
 })->addArgument($container);
 
+$container->share(CsrfMiddleware::class, function (Container $container) {
+    $psr17Factory = $container->get(Psr17Factory::class);
+    $session = $container->get(SessionInterface::class);
+
+    // Workaround, until thephpleague/route offers support for lazy loading middleware #218
+    if (!$session->isStarted()) {
+        $session->start();
+    }
+
+    return new CsrfMiddleware($psr17Factory, $session->getId());
+})->addArgument($container);
+
 $container->share(Psr17Factory::class, function () {
     return new Psr17Factory();
 });
@@ -246,8 +258,8 @@ $container->share(Twig::class, function (Container $container) {
     }
 
     // Add CSRF token as global template variable
-    //$csrfToken = $container->get(CsrfMiddleware::class)->getToken();
-    //$twig->addGlobal('csrf_token', $csrfToken);
+    $csrfToken = $container->get(CsrfMiddleware::class)->getToken();
+    $twig->addGlobal('csrf_token', $csrfToken);
 
     $twig->addGlobal('base_url', $container->get(RouterUrl::class)->pathFor('root'));
     $twig->addGlobal('globalText', $container->get('globalText'));

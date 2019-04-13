@@ -83,6 +83,7 @@ final class UserEditAction implements ActionInterface
         ];
 
         $response = $this->responseFactory->createResponse();
+        $response = $response->withHeader('Content-Type', 'text/html');
         $response->getBody()->write($this->twig->render('User/user-edit.twig', $viewData));
 
         return $response;

@@ -47,6 +47,7 @@ class UserListAction implements ActionInterface
         $result = $this->service->listAllUsers($params);
 
         $response = $this->responseFactory->createResponse();
+        $response = $response->withHeader('Content-Type', 'application/json;charset=utf-8');
         $response->getBody()->write(json_encode($result) ?: '');
 
         return $response;
