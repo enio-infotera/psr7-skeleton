@@ -33,9 +33,6 @@ class HomeIndexActionTest extends ApiTestCase
     /**
      * Test.
      *
-     * @throws \Slim\Exception\MethodNotAllowedException
-     * @throws \Slim\Exception\NotFoundException
-     *
      * @return void
      */
     public function testPageNotFound(): void
