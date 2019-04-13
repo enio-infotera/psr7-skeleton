@@ -8,6 +8,16 @@ body {
   color: #24292e;
 }
 
+h1, h2, h3, h4, h5 {
+  font-weight: 300;
+  font-style: normal;
+  color: #0366d6
+}
+
+.main-content h1,.main-content h2,.main-content h3,.main-content h4,.main-content h5,.main-content h6 {
+  color: #0366d6;
+}
+
 .page-header {
   color: #fff;
   text-align: center;
@@ -29,12 +39,6 @@ a:hover, a:focus {
   text-decoration: underline;
 }
 
-h1, h2, h3, h4, h5 {
-  font-weight: 300;
-  font-style: normal;
-  color: #0366d6
-}
-
 .main-content pre {
   background-color: #eff0f1;
   border: solid 0px;
@@ -42,5 +46,9 @@ h1, h2, h3, h4, h5 {
 }
 
 .main-content code {
+  color: #24292e;
+}
+
+.main-content pre>code {
   color: #24292e;
 }
