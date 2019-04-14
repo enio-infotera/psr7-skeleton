@@ -30,6 +30,7 @@ return PhpCsFixer\Config::create()
         'phpdoc_align' => false,
         'phpdoc_no_empty_return' => false,
         'phpdoc_order' => true, // psr-5
+        'phpdoc_no_useless_inheritdoc' => false,
         'protected_to_private' => false,
         'yoda_style' => false,
         'method_argument_space' => ['on_multiline' => 'ensure_fully_multiline'],
