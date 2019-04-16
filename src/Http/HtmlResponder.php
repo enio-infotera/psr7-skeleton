@@ -43,8 +43,9 @@ class HtmlResponder
      */
     public function render(string $name, array $viewData = []): ResponseInterface
     {
-        $response = $this->responseFactory->createResponse();
-        $response = $response->withStatus(200)->withHeader('Content-Type', 'text/html; charset=utf-8');
+        $response = $this->responseFactory->createResponse()
+            ->withHeader('Content-Type', 'text/html; charset=utf-8');
+
         $response->getBody()->write($this->twig->render($name, $viewData));
 
         return $response;
