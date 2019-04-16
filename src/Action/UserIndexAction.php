@@ -4,7 +4,6 @@ namespace App\Action;
 
 use App\Domain\User\UserService;
 use App\Http\HtmlResponder;
-use Twig\Environment as Twig;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -19,11 +18,6 @@ final class UserIndexAction implements ActionInterface
     private $responder;
 
     /**
-     * @var Twig
-     */
-    protected $twig;
-
-    /**
      * @var UserService
      */
     protected $userService;
@@ -32,13 +26,11 @@ final class UserIndexAction implements ActionInterface
      * Constructor.
      *
      * @param HtmlResponder $responder
-     * @param Twig $twig
      * @param UserService $userService
      */
-    public function __construct(HtmlResponder $responder, Twig $twig, UserService $userService)
+    public function __construct(HtmlResponder $responder, UserService $userService)
     {
         $this->responder = $responder;
-        $this->twig = $twig;
         $this->userService = $userService;
     }
 

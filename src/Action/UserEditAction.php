@@ -8,7 +8,6 @@ use Odan\Session\SessionInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
-use Twig\Environment as Twig;
 
 /**
  * Action.
@@ -19,11 +18,6 @@ final class UserEditAction implements ActionInterface
      * @var HtmlResponder
      */
     private $responder;
-
-    /**
-     * @var Twig
-     */
-    protected $twig;
 
     /**
      * @var SessionInterface
@@ -44,20 +38,17 @@ final class UserEditAction implements ActionInterface
      * Constructor.
      *
      * @param HtmlResponder $responder
-     * @param Twig $twig
      * @param SessionInterface $session
      * @param LoggerInterface $logger
      * @param UserService $userService
      */
     public function __construct(
         HtmlResponder $responder,
-        Twig $twig,
         SessionInterface $session,
         LoggerInterface $logger,
         UserService $userService
     ) {
         $this->responder = $responder;
-        $this->twig = $twig;
         $this->session = $session;
         $this->logger = $logger;
         $this->userService = $userService;
