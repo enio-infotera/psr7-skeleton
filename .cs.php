@@ -34,6 +34,10 @@ return PhpCsFixer\Config::create()
         'protected_to_private' => false,
         'yoda_style' => false,
         'method_argument_space' => ['on_multiline' => 'ensure_fully_multiline'],
+        'ordered_imports' => [
+            'sort_algorithm' => 'alpha',
+            'imports_order' => ['class', 'const', 'function']
+        ],
     ])
     ->setFinder(PhpCsFixer\Finder::create()
         ->in(__DIR__ . '/src')
