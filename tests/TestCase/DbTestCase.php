@@ -4,10 +4,10 @@ namespace App\Test\TestCase;
 
 use Cake\Database\Connection;
 use PDO;
-use ReflectionException;
-use RuntimeException;
 use Phinx\Console\Command\Migrate;
 use PHPUnit\Framework\TestCase;
+use ReflectionException;
+use RuntimeException;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 

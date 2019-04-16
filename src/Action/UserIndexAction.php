@@ -3,10 +3,10 @@
 namespace App\Action;
 
 use App\Domain\User\UserService;
-use Twig\Environment as Twig;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Twig\Environment as Twig;
 
 /**
  * Action.

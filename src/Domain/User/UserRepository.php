@@ -2,9 +2,9 @@
 
 namespace App\Domain\User;
 
-use App\Repository\TableRepository;
 use App\Repository\QueryFactory;
 use App\Repository\RepositoryInterface;
+use App\Repository\TableRepository;
 use DomainException;
 use InvalidArgumentException;
 

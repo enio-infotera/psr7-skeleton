@@ -3,8 +3,8 @@
 namespace App\Test\TestCase\Domain\User;
 
 use App\Domain\User\UserRepository;
-use App\Test\TestCase\DbTestCase;
 use App\Test\Fixture\UserFixture;
+use App\Test\TestCase\DbTestCase;
 
 /**
  * Tests.

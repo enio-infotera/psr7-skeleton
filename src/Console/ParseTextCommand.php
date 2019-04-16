@@ -4,7 +4,6 @@ namespace App\Console;
 
 use Exception;
 use FilesystemIterator;
-use Twig\Environment as Twig;
 use Gettext\Merge;
 use Gettext\Translations;
 use MultipleIterator;
@@ -15,6 +14,7 @@ use RegexIterator;
 use SplFileInfo;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Twig\Environment as Twig;
 
 /**
  * Command.

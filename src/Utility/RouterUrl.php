@@ -2,11 +2,11 @@
 
 namespace App\Utility;
 
-use InvalidArgumentException;
-use Psr\Http\Message\RequestInterface;
-use League\Route\Router;
 use FastRoute\RouteParser;
 use FastRoute\RouteParser\Std as StdParser;
+use InvalidArgumentException;
+use League\Route\Router;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * Creating URLs for a named route.
