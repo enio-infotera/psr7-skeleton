@@ -3,7 +3,7 @@
 namespace App\Action;
 
 use App\Domain\User\Auth;
-use App\Utility\RouterUrl;
+use App\Http\RouterUrl;
 use Fig\Http\Message\StatusCodeInterface as StatusCode;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;

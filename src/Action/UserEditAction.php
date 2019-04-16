@@ -3,8 +3,8 @@
 namespace App\Action;
 
 use App\Domain\User\UserService;
+use App\Http\HtmlResponder;
 use Odan\Session\SessionInterface;
-use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
@@ -16,9 +16,9 @@ use Twig\Environment as Twig;
 final class UserEditAction implements ActionInterface
 {
     /**
-     * @var ResponseFactoryInterface
+     * @var HtmlResponder
      */
-    private $responseFactory;
+    private $responder;
 
     /**
      * @var Twig
@@ -43,20 +43,20 @@ final class UserEditAction implements ActionInterface
     /**
      * Constructor.
      *
-     * @param ResponseFactoryInterface $responseFactory
+     * @param HtmlResponder $responder
      * @param Twig $twig
      * @param SessionInterface $session
      * @param LoggerInterface $logger
      * @param UserService $userService
      */
     public function __construct(
-        ResponseFactoryInterface $responseFactory,
+        HtmlResponder $responder,
         Twig $twig,
         SessionInterface $session,
         LoggerInterface $logger,
         UserService $userService
     ) {
-        $this->responseFactory = $responseFactory;
+        $this->responder = $responder;
         $this->twig = $twig;
         $this->session = $session;
         $this->logger = $logger;
@@ -82,10 +82,6 @@ final class UserEditAction implements ActionInterface
             'username' => $user->getUsername(),
         ];
 
-        $response = $this->responseFactory->createResponse();
-        $response = $response->withHeader('Content-Type', 'text/html');
-        $response->getBody()->write($this->twig->render('User/user-edit.twig', $viewData));
-
-        return $response;
+        return $this->responder->render('User/user-edit.twig', $viewData);
     }
 }

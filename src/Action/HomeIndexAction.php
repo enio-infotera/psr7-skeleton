@@ -2,11 +2,10 @@
 
 namespace App\Action;
 
+use App\Http\HtmlResponder;
 use Odan\Session\SessionInterface;
-use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Twig\Environment as Twig;
 
 /**
  * Action.
@@ -14,14 +13,9 @@ use Twig\Environment as Twig;
 final class HomeIndexAction implements ActionInterface
 {
     /**
-     * @var ResponseFactoryInterface
+     * @var HtmlResponder
      */
-    private $responseFactory;
-
-    /**
-     * @var Twig
-     */
-    protected $twig;
+    private $responder;
 
     /**
      * @var SessionInterface
@@ -31,14 +25,12 @@ final class HomeIndexAction implements ActionInterface
     /**
      * Constructor.
      *
-     * @param ResponseFactoryInterface $responseFactory the response factory
-     * @param Twig $twig twig
+     * @param HtmlResponder $responder the responder
      * @param SessionInterface $session the session handler
      */
-    public function __construct(ResponseFactoryInterface $responseFactory, Twig $twig, SessionInterface $session)
+    public function __construct(HtmlResponder $responder, SessionInterface $session)
     {
-        $this->responseFactory = $responseFactory;
-        $this->twig = $twig;
+        $this->responder = $responder;
         $this->session = $session;
     }
 
@@ -62,11 +54,7 @@ final class HomeIndexAction implements ActionInterface
         ];
 
         // Render template
-        $response = $this->responseFactory->createResponse();
-        $response = $response->withHeader('Content-Type', 'text/html');
-        $response->getBody()->write($this->twig->render('Home/home-index.twig', $viewData));
-
-        return $response;
+        return $this->responder->render('Home/home-index.twig', $viewData);
     }
 
     /**

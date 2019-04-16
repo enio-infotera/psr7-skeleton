@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Utility;
+namespace App\Http;
 
 use FastRoute\RouteParser;
 use FastRoute\RouteParser\Std as StdParser;

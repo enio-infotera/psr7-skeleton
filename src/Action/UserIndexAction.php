@@ -3,10 +3,10 @@
 namespace App\Action;
 
 use App\Domain\User\UserService;
-use Psr\Http\Message\ResponseFactoryInterface;
+use App\Http\HtmlResponder;
+use Twig\Environment as Twig;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Twig\Environment as Twig;
 
 /**
  * Action.
@@ -14,9 +14,9 @@ use Twig\Environment as Twig;
 final class UserIndexAction implements ActionInterface
 {
     /**
-     * @var ResponseFactoryInterface
+     * @var HtmlResponder
      */
-    private $responseFactory;
+    private $responder;
 
     /**
      * @var Twig
@@ -31,13 +31,13 @@ final class UserIndexAction implements ActionInterface
     /**
      * Constructor.
      *
-     * @param ResponseFactoryInterface $responseFactory
+     * @param HtmlResponder $responder
      * @param Twig $twig
      * @param UserService $userService
      */
-    public function __construct(ResponseFactoryInterface $responseFactory, Twig $twig, UserService $userService)
+    public function __construct(HtmlResponder $responder, Twig $twig, UserService $userService)
     {
-        $this->responseFactory = $responseFactory;
+        $this->responder = $responder;
         $this->twig = $twig;
         $this->userService = $userService;
     }
@@ -55,10 +55,6 @@ final class UserIndexAction implements ActionInterface
             'users' => $this->userService->findAllUsers(),
         ];
 
-        $response = $this->responseFactory->createResponse();
-        $response = $response->withHeader('Content-Type', 'text/html');
-        $response->getBody()->write($this->twig->render('User/user-index.twig', $viewData));
-
-        return $response;
+        return $this->responder->render('User/user-index.twig', $viewData);
     }
 }

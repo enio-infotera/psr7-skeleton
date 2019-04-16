@@ -10,7 +10,7 @@ use App\Middleware\LanguageMiddleware;
 use App\Middleware\NotFoundMiddleware;
 use App\Middleware\SessionMiddleware;
 use App\Repository\QueryFactory;
-use App\Utility\RouterUrl;
+use App\Http\RouterUrl;
 use Cake\Chronos\Chronos;
 use Cake\Database\Connection;
 use Cake\Database\Driver\Mysql;

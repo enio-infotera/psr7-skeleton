@@ -2,7 +2,7 @@
 
 namespace App\Action;
 
-use Psr\Http\Message\ResponseFactoryInterface;
+use App\Http\JsonResponder;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -12,18 +12,18 @@ use Psr\Http\Message\ServerRequestInterface;
 class HomePingAction implements ActionInterface
 {
     /**
-     * @var ResponseFactoryInterface
+     * @var JsonResponder
      */
-    private $responseFactory;
+    private $responder;
 
     /**
      * Constructor.
      *
-     * @param ResponseFactoryInterface $responseFactory
+     * @param JsonResponder $responder
      */
-    public function __construct(ResponseFactoryInterface $responseFactory)
+    public function __construct(JsonResponder $responder)
     {
-        $this->responseFactory = $responseFactory;
+        $this->responder = $responder;
     }
 
     /**
@@ -35,10 +35,6 @@ class HomePingAction implements ActionInterface
      */
     public function __invoke(ServerRequestInterface $request): ResponseInterface
     {
-        $response = $this->responseFactory->createResponse();
-        $response = $response->withHeader('Content-Type', 'application/json;charset=utf-8');
-        $response->getBody()->write(json_encode($request->getParsedBody()) ?: '');
-
-        return $response;
+        return $this->responder->encode($request->getParsedBody());
     }
 }

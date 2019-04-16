@@ -4,8 +4,8 @@ namespace App\Action;
 
 use App\Domain\User\Auth;
 use App\Domain\User\UserService;
+use App\Http\JsonResponder;
 use Cake\Chronos\Chronos;
-use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -15,9 +15,9 @@ use Psr\Http\Message\ServerRequestInterface;
 class HomeLoadAction implements ActionInterface
 {
     /**
-     * @var ResponseFactoryInterface
+     * @var JsonResponder
      */
-    private $responseFactory;
+    private $responder;
 
     /**
      * @var Auth
@@ -32,13 +32,13 @@ class HomeLoadAction implements ActionInterface
     /**
      * Constructor.
      *
-     * @param ResponseFactoryInterface $responseFactory
+     * @param JsonResponder $responder
      * @param Auth $auth
      * @param UserService $userService
      */
-    public function __construct(ResponseFactoryInterface $responseFactory, Auth $auth, UserService $userService)
+    public function __construct(JsonResponder $responder, Auth $auth, UserService $userService)
     {
-        $this->responseFactory = $responseFactory;
+        $this->responder = $responder;
         $this->auth = $auth;
         $this->userService = $userService;
     }
@@ -64,10 +64,6 @@ class HomeLoadAction implements ActionInterface
             ],
         ];
 
-        $response = $this->responseFactory->createResponse();
-        $response = $response->withHeader('Content-Type', 'application/json;charset=utf-8');
-        $response->getBody()->write(json_encode($result) ?: '');
-
-        return $response;
+        return $this->responder->encode($result);
     }
 }

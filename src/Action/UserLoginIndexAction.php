@@ -2,7 +2,7 @@
 
 namespace App\Action;
 
-use Psr\Http\Message\ResponseFactoryInterface;
+use App\Http\HtmlResponder;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Twig\Environment as Twig;
@@ -13,9 +13,9 @@ use Twig\Environment as Twig;
 class UserLoginIndexAction implements ActionInterface
 {
     /**
-     * @var ResponseFactoryInterface
+     * @var HtmlResponder
      */
-    private $responseFactory;
+    private $responder;
 
     /**
      * @var Twig
@@ -25,12 +25,12 @@ class UserLoginIndexAction implements ActionInterface
     /**
      * Constructor.
      *
-     * @param ResponseFactoryInterface $responseFactory
+     * @param HtmlResponder $responder
      * @param Twig $twig
      */
-    public function __construct(ResponseFactoryInterface $responseFactory, Twig $twig)
+    public function __construct(HtmlResponder $responder, Twig $twig)
     {
-        $this->responseFactory = $responseFactory;
+        $this->responder = $responder;
         $this->twig = $twig;
     }
 
@@ -43,10 +43,6 @@ class UserLoginIndexAction implements ActionInterface
      */
     public function __invoke(ServerRequestInterface $request): ResponseInterface
     {
-        $response = $this->responseFactory->createResponse();
-        $response = $response->withHeader('Content-Type', 'text/html');
-        $response->getBody()->write($this->twig->render('User/user-login.twig'));
-
-        return $response;
+        return $this->responder->render('User/user-login.twig');
     }
 }

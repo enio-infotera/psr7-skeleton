@@ -3,7 +3,7 @@
 namespace App\Middleware;
 
 use App\Domain\User\Auth;
-use App\Utility\RouterUrl;
+use App\Http\RouterUrl;
 use Fig\Http\Message\StatusCodeInterface as StatusCode;
 use League\Route\Router;
 use Psr\Http\Message\ResponseFactoryInterface;

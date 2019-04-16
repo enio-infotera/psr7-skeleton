@@ -3,7 +3,7 @@
 namespace App\Action;
 
 use App\Domain\User\UserList;
-use Psr\Http\Message\ResponseFactoryInterface;
+use App\Http\JsonResponder;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -13,9 +13,9 @@ use Psr\Http\Message\ServerRequestInterface;
 class UserListAction implements ActionInterface
 {
     /**
-     * @var ResponseFactoryInterface
+     * @var JsonResponder
      */
-    private $responseFactory;
+    private $responder;
 
     /**
      * @var UserList
@@ -25,12 +25,12 @@ class UserListAction implements ActionInterface
     /**
      * Constructor.
      *
-     * @param ResponseFactoryInterface $responseFactory
+     * @param JsonResponder $responder
      * @param UserList $service
      */
-    public function __construct(ResponseFactoryInterface $responseFactory, UserList $service)
+    public function __construct(JsonResponder $responder, UserList $service)
     {
-        $this->responseFactory = $responseFactory;
+        $this->responder = $responder;
         $this->service = $service;
     }
 
@@ -46,10 +46,6 @@ class UserListAction implements ActionInterface
         $params = (array)$request->getParsedBody();
         $result = $this->service->listAllUsers($params);
 
-        $response = $this->responseFactory->createResponse();
-        $response = $response->withHeader('Content-Type', 'application/json;charset=utf-8');
-        $response->getBody()->write(json_encode($result) ?: '');
-
-        return $response;
+        return $this->responder->encode($result);
     }
 }
