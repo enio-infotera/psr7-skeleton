@@ -43,7 +43,7 @@ class JsonResponder
         }
 
         $response = $this->responseFactory->createResponse()
-            ->withHeader('Content-Type', 'application/json;charset=utf-8');
+            ->withHeader('Content-Type', 'application/json');
 
         $response->getBody()->write($json);
 
