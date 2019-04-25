@@ -33,6 +33,8 @@ final class LoggerFactory
      * @param string $name The logging channel
      * @param array $options The options
      *
+     * @throws RuntimeException
+     *
      * @return LoggerInterface The logger
      */
     public function createLogger(string $name, array $options = []): LoggerInterface
