@@ -15,7 +15,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 /**
  * Middleware.
  */
-class AuthenticationMiddleware implements MiddlewareInterface
+final class AuthenticationMiddleware implements MiddlewareInterface
 {
     /**
      * @var ResponseFactoryInterface
@@ -25,17 +25,17 @@ class AuthenticationMiddleware implements MiddlewareInterface
     /**
      * @var Router
      */
-    protected $router;
+    private $router;
 
     /**
      * @var RouterUrl
      */
-    protected $routerUrl;
+    private $routerUrl;
 
     /**
      * @var Auth
      */
-    protected $auth;
+    private $auth;
 
     /**
      * Constructor.

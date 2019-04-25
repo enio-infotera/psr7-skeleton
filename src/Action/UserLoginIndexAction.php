@@ -9,7 +9,7 @@ use Psr\Http\Message\ServerRequestInterface;
 /**
  * Action.
  */
-class UserLoginIndexAction implements ActionInterface
+final class UserLoginIndexAction implements ActionInterface
 {
     /**
      * @var HtmlResponder

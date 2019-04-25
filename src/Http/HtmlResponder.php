@@ -9,7 +9,7 @@ use Twig\Environment as Twig;
 /**
  * A generic HTML Responder.
  */
-class HtmlResponder
+final class HtmlResponder
 {
     /**
      * @var ResponseFactoryInterface
@@ -19,7 +19,7 @@ class HtmlResponder
     /**
      * @var Twig
      */
-    protected $twig;
+    private $twig;
 
     /**
      * Constructor.

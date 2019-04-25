@@ -7,7 +7,7 @@ use App\Service\ServiceInterface;
 /**
  * Service.
  */
-class UserService implements ServiceInterface
+final class UserService implements ServiceInterface
 {
     /**
      * @var UserRepository

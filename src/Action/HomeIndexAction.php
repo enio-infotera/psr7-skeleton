@@ -20,7 +20,7 @@ final class HomeIndexAction implements ActionInterface
     /**
      * @var SessionInterface
      */
-    protected $session;
+    private $session;
 
     /**
      * Constructor.

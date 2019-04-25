@@ -20,7 +20,7 @@ final class UserIndexAction implements ActionInterface
     /**
      * @var UserService
      */
-    protected $userService;
+    private $userService;
 
     /**
      * Constructor.

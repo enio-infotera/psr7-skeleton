@@ -9,12 +9,12 @@ use RuntimeException;
 /**
  * Repository.
  */
-class DataTableRepository implements RepositoryInterface
+final class DataTableRepository implements RepositoryInterface
 {
     /**
      * @var QueryFactory
      */
-    protected $queryFactory;
+    private $queryFactory;
 
     /**
      * Constructor.
@@ -73,7 +73,7 @@ class DataTableRepository implements RepositoryInterface
      *
      * @return Query query
      */
-    protected function buildQuery(Query $query, array $params): Query
+    private function buildQuery(Query $query, array $params): Query
     {
         $order = (array)($params['order'] ?? []);
         $searchValue = trim($params['search']['value'] ?? '');
@@ -129,7 +129,7 @@ class DataTableRepository implements RepositoryInterface
      *
      * @return string the escaped string
      */
-    protected function escapeLike(string $value): string
+    private function escapeLike(string $value): string
     {
         $result = str_replace(['%', '_'], ['\%', '\_'], $value);
 
@@ -149,7 +149,7 @@ class DataTableRepository implements RepositoryInterface
      *
      * @return string full field name
      */
-    protected function getFieldName(string $table, string $field, array $fields): string
+    private function getFieldName(string $table, string $field, array $fields): string
     {
         if (isset($fields[$field]) && strpos($field, '.') === false) {
             $field = "$table.$field";
@@ -167,7 +167,7 @@ class DataTableRepository implements RepositoryInterface
      *
      * @return array Fields
      */
-    protected function getTableFields(string $table): array
+    private function getTableFields(string $table): array
     {
         $query = $this->queryFactory->newSelect('information_schema.columns');
         $query->select(['column_name', 'data_type', 'character_maximum_length']);

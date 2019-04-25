@@ -10,7 +10,7 @@ use Psr\Http\Message\ServerRequestInterface;
 /**
  * Action.
  */
-class UserListAction implements ActionInterface
+final class UserListAction implements ActionInterface
 {
     /**
      * @var JsonResponder
@@ -20,7 +20,7 @@ class UserListAction implements ActionInterface
     /**
      * @var UserList
      */
-    protected $service;
+    private $service;
 
     /**
      * Constructor.

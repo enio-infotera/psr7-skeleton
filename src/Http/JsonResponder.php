@@ -9,7 +9,7 @@ use RuntimeException;
 /**
  * A generic JSON responder.
  */
-class JsonResponder
+final class JsonResponder
 {
     /**
      * @var ResponseFactoryInterface

@@ -8,12 +8,12 @@ use App\Repository\RepositoryInterface;
 /**
  * Repository.
  */
-class UserRegisterRepository implements RepositoryInterface
+final class UserRegisterRepository implements RepositoryInterface
 {
     /**
      * @var QueryFactory
      */
-    protected $queryFactory;
+    private $queryFactory;
 
     /**
      * Constructor.

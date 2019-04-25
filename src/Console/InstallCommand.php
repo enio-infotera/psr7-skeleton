@@ -5,7 +5,9 @@ namespace App\Console;
 use Exception;
 use PDO;
 use PDOException;
+use Psr\Container\ContainerInterface;
 use RuntimeException;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -14,8 +16,25 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 /**
  * Command.
  */
-class InstallCommand extends AbstractCommand
+final class InstallCommand extends Command
 {
+    /**
+     * @var ContainerInterface
+     */
+    private $container;
+
+    /**
+     * Constructor.
+     *
+     * @param ContainerInterface $container container
+     * @param string|null $name name
+     */
+    public function __construct(ContainerInterface $container, string $name = null)
+    {
+        parent::__construct($name);
+        $this->container = $container;
+    }
+
     /**
      * Configure.
      */
@@ -76,7 +95,7 @@ class InstallCommand extends AbstractCommand
      *
      * @return void
      */
-    protected function createEnvFile(OutputInterface $output, string $configPath): void
+    private function createEnvFile(OutputInterface $output, string $configPath): void
     {
         $output->writeln('Create env.php');
         copy($configPath . '/env.example.php', $configPath . '/env.php');
@@ -92,7 +111,7 @@ class InstallCommand extends AbstractCommand
      *
      * @return void
      */
-    protected function generateRandomSecret(OutputInterface $output, string $configPath): void
+    private function generateRandomSecret(OutputInterface $output, string $configPath): void
     {
         $output->writeln('Generate random app secret');
         file_put_contents($configPath . '/defaults.php', str_replace('{{app_secret}}', bin2hex(random_bytes(20)), file_get_contents($configPath . '/defaults.php') ?: ''));
@@ -109,7 +128,7 @@ class InstallCommand extends AbstractCommand
      *
      * @return int
      */
-    protected function createNewDatabase(SymfonyStyle $io, OutputInterface $output, string $configPath, string $root, string $env = null): int
+    private function createNewDatabase(SymfonyStyle $io, OutputInterface $output, string $configPath, string $root, string $env = null): int
     {
         if ($env === 'ci') {
             $mySqlHost = '127.0.0.1';
@@ -163,7 +182,7 @@ class InstallCommand extends AbstractCommand
      *
      * @return PDO
      */
-    protected function createPdo(string $host, string $username, string $password): PDO
+    private function createPdo(string $host, string $username, string $password): PDO
     {
         $pdo = new PDO(
             "mysql:host=$host;charset=utf8",
@@ -187,7 +206,7 @@ class InstallCommand extends AbstractCommand
      *
      * @return void
      */
-    protected function createDatabase(PDO $pdo, string $dbName): void
+    private function createDatabase(PDO $pdo, string $dbName): void
     {
         $dbNameQuoted = $this->quoteName($dbName);
         $pdo->exec("CREATE DATABASE IF NOT EXISTS $dbNameQuoted;");
@@ -200,7 +219,7 @@ class InstallCommand extends AbstractCommand
      *
      * @return string
      */
-    protected function quoteName(string $name): string
+    private function quoteName(string $name): string
     {
         return '`' . str_replace('`', '``', $name) . '`';
     }
@@ -217,7 +236,7 @@ class InstallCommand extends AbstractCommand
      *
      * @return void
      */
-    protected function updateDevelopmentSettings(OutputInterface $output, string $dbHost, string $dbName, string $username, string $password, string $configPath): void
+    private function updateDevelopmentSettings(OutputInterface $output, string $dbHost, string $dbName, string $username, string $password, string $configPath): void
     {
         $output->writeln('Update development configuration');
         file_put_contents($configPath . '/development.php', str_replace('{{db_host}}', $dbHost, file_get_contents($configPath . '/development.php') ?: ''));
@@ -234,7 +253,7 @@ class InstallCommand extends AbstractCommand
      *
      * @return void
      */
-    protected function installDatabaseTables(OutputInterface $output, string $root): void
+    private function installDatabaseTables(OutputInterface $output, string $root): void
     {
         $output->writeln('Install database tables');
 
@@ -250,7 +269,7 @@ class InstallCommand extends AbstractCommand
      *
      * @return void
      */
-    protected function seedDatabaseTables(OutputInterface $output, string $root): void
+    private function seedDatabaseTables(OutputInterface $output, string $root): void
     {
         $output->writeln('Seed database tables');
 

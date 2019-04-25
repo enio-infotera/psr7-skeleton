@@ -5,12 +5,12 @@ namespace App\Repository;
 /**
  * Repository.
  */
-class TableRepository implements RepositoryInterface
+final class TableRepository implements RepositoryInterface
 {
     /**
      * @var QueryFactory
      */
-    protected $queryFactory;
+    private $queryFactory;
 
     /**
      * Constructor.

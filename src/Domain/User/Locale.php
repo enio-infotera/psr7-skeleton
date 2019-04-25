@@ -9,7 +9,7 @@ use Symfony\Component\Translation\Translator;
 /**
  * DTO.
  */
-class Locale implements ServiceInterface
+final class Locale implements ServiceInterface
 {
     /**
      * @var string Locale path

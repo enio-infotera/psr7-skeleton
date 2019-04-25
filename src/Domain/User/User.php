@@ -5,7 +5,7 @@ namespace App\Domain\User;
 /**
  * DTO.
  */
-class User
+final class User
 {
     /** @var int|null */
     private $id;

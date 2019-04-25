@@ -10,7 +10,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 /**
  * CORS preflight middleware.
  */
-class CorsMiddleware implements MiddlewareInterface
+final class CorsMiddleware implements MiddlewareInterface
 {
     /**
      * Invoke middleware.

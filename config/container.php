@@ -27,6 +27,7 @@ use Odan\Session\PhpSession;
 use Odan\Session\SessionInterface;
 use Odan\Twig\TwigAssetsExtension;
 use Odan\Twig\TwigTranslationExtension;
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -46,6 +47,10 @@ $container->delegate(new ReflectionContainer());
 //
 // Core
 //
+$container->share(ContainerInterface::class, function (Container $container) {
+    return $container;
+})->addArgument($container);
+
 $container->share(Router::class, function (Container $container) {
     $router = new Router();
 
@@ -167,12 +172,7 @@ $container->share(LanguageMiddleware::class, function (Container $container) {
 })->addArgument($container);
 
 $container->share(AuthenticationMiddleware::class, function (Container $container) {
-    return new AuthenticationMiddleware(
-        $container->get(ResponseFactoryInterface::class),
-        $container->get(Router::class),
-        $container->get(RouterUrl::class),
-        $container->get(Auth::class)
-    );
+    return new AuthenticationMiddleware($container->get(ResponseFactoryInterface::class), $container->get(Router::class), $container->get(RouterUrl::class), $container->get(Auth::class));
 })->addArgument($container);
 
 $container->share(Locale::class, function (Container $container) {
@@ -284,11 +284,7 @@ $container->share('globalText', function () {
 
 $container->share(Translator::class, function (Container $container) {
     $settings = $container->get('settings')['locale'];
-    $translator = new Translator(
-        $settings['locale'],
-        new MessageFormatter(new IdentityTranslator()),
-        $settings['cache']
-    );
+    $translator = new Translator($settings['locale'], new MessageFormatter(new IdentityTranslator()), $settings['cache']);
     $translator->addLoader('mo', new MoFileLoader());
 
     return $translator;

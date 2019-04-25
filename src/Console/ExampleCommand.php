@@ -2,6 +2,9 @@
 
 namespace App\Console;
 
+use League\Container\Container;
+use Psr\Container\ContainerInterface;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -9,8 +12,25 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Command.
  */
-class ExampleCommand extends AbstractCommand
+final class ExampleCommand extends Command
 {
+    /**
+     * @var ContainerInterface
+     */
+    private $container;
+
+    /**
+     * Constructor.
+     *
+     * @param ContainerInterface $container container
+     * @param string|null $name name
+     */
+    public function __construct(ContainerInterface $container, string $name = null)
+    {
+        parent::__construct($name);
+        $this->container = $container;
+    }
+
     /**
      * Configure.
      */

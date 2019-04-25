@@ -5,7 +5,7 @@ namespace App\Domain\User;
 /**
  * Type.
  */
-class UserRole
+final class UserRole
 {
     /**
      * Admin role.

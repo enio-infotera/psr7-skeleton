@@ -11,17 +11,17 @@ use InvalidArgumentException;
 /**
  * Repository.
  */
-class UserRepository implements RepositoryInterface
+final class UserRepository implements RepositoryInterface
 {
     /**
      * @var QueryFactory
      */
-    protected $queryFactory;
+    private $queryFactory;
 
     /**
      * @var TableRepository
      */
-    protected $tableRepository;
+    private $tableRepository;
 
     /**
      * Constructor.

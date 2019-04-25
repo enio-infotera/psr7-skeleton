@@ -9,12 +9,12 @@ use App\Repository\RepositoryInterface;
 /**
  * Repository.
  */
-class UserListRepository implements RepositoryInterface
+final class UserListRepository implements RepositoryInterface
 {
     /**
      * @var QueryFactory
      */
-    protected $queryFactory;
+    private $queryFactory;
 
     /**
      * @var DataTableRepository

@@ -11,24 +11,24 @@ use Psr\Http\Message\RequestInterface;
 /**
  * Creating URLs for a named route.
  */
-class RouterUrl
+final class RouterUrl
 {
     /**
      * @var RequestInterface
      */
-    protected $request;
+    private $request;
 
     /**
      * @var Router
      */
-    protected $router;
+    private $router;
 
     /**
      * Parser.
      *
      * @var RouteParser
      */
-    protected $routeParser;
+    private $routeParser;
 
     /**
      * Constructor.
@@ -47,7 +47,7 @@ class RouterUrl
      *
      * @var string
      */
-    protected $basePath = '';
+    private $basePath = '';
 
     /**
      * Set the base path used in pathFor().
@@ -82,7 +82,7 @@ class RouterUrl
      *
      * @return string
      */
-    protected function relativePathFor(string $name, array $data = [], array $queryParams = []): string
+    private function relativePathFor(string $name, array $data = [], array $queryParams = []): string
     {
         $pattern = $this->router->getNamedRoute($name)->getPath();
         $routeDatas = $this->routeParser->parse($pattern);

@@ -13,7 +13,7 @@ use Psr\Http\Message\ServerRequestInterface;
 /**
  * Action.
  */
-class UserLoginSubmitAction implements ActionInterface
+final class UserLoginSubmitAction implements ActionInterface
 {
     /**
      * @var ResponseFactoryInterface
@@ -23,17 +23,17 @@ class UserLoginSubmitAction implements ActionInterface
     /**
      * @var Auth
      */
-    protected $auth;
+    private $auth;
 
     /**
      * @var Locale
      */
-    protected $locale;
+    private $locale;
 
     /**
      * @var RouterUrl
      */
-    protected $routerUrl;
+    private $routerUrl;
 
     /**
      * Constructor.

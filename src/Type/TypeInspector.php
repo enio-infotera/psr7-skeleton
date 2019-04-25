@@ -9,7 +9,7 @@ use RuntimeException;
 /**
  * Type inspector.
  */
-class TypeInspector
+final class TypeInspector
 {
     /**
      * Check if code is valid.

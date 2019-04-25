@@ -11,12 +11,12 @@ use Psr\Http\Server\RequestHandlerInterface;
 /**
  * Middleware.
  */
-class LanguageMiddleware implements MiddlewareInterface
+final class LanguageMiddleware implements MiddlewareInterface
 {
     /**
      * @var Locale
      */
-    protected $locale;
+    private $locale;
 
     /**
      * Constructor.

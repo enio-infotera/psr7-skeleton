@@ -11,12 +11,12 @@ use Psr\Http\Server\RequestHandlerInterface;
 /**
  * Session Middleware.
  */
-class SessionMiddleware implements MiddlewareInterface
+final class SessionMiddleware implements MiddlewareInterface
 {
     /**
      * @var SessionInterface
      */
-    protected $session;
+    private $session;
 
     /**
      * Constructor.

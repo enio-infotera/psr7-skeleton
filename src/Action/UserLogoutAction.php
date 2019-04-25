@@ -12,7 +12,7 @@ use Psr\Http\Message\ServerRequestInterface;
 /**
  * Action.
  */
-class UserLogoutAction implements ActionInterface
+final class UserLogoutAction implements ActionInterface
 {
     /**
      * @var ResponseFactoryInterface
@@ -22,12 +22,12 @@ class UserLogoutAction implements ActionInterface
     /**
      * @var Auth
      */
-    protected $auth;
+    private $auth;
 
     /**
      * @var RouterUrl
      */
-    protected $routerUrl;
+    private $routerUrl;
 
     /**
      * Constructor.

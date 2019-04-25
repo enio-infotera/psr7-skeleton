@@ -8,10 +8,12 @@ use Gettext\Merge;
 use Gettext\Translations;
 use MultipleIterator;
 use Odan\Twig\TwigCompiler;
+use Psr\Container\ContainerInterface;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use RegexIterator;
 use SplFileInfo;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Twig\Environment as Twig;
@@ -19,32 +21,37 @@ use Twig\Environment as Twig;
 /**
  * Command.
  */
-class ParseTextCommand extends AbstractCommand
+final class ParseTextCommand extends Command
 {
+    /**
+     * @var ContainerInterface
+     */
+    private $container;
+
     /**
      * @var OutputInterface
      */
-    protected $output;
+    private $output;
 
     /**
      * @var MultipleIterator
      */
-    protected $iterator;
+    private $iterator;
 
     /**
      * @var array
      */
-    protected $targets = [];
+    private $targets = [];
 
     /**
      * @var string
      */
-    protected $regex;
+    private $regex;
 
     /**
      * @var array
      */
-    protected $suffixes = [
+    private $suffixes = [
         '.blade.php' => 'Blade',
         '.csv' => 'Csv',
         '.jed.json' => 'Jed',
@@ -62,12 +69,13 @@ class ParseTextCommand extends AbstractCommand
     /**
      * Constructor.
      *
-     * @param string|null $name
+     * @param ContainerInterface $container container
+     * @param string|null $name name
      */
-    public function __construct(string $name = null)
+    public function __construct(ContainerInterface $container, string $name = null)
     {
         parent::__construct($name);
-
+        $this->container = $container;
         $this->iterator = new MultipleIterator(MultipleIterator::MIT_NEED_ANY);
     }
 
@@ -118,7 +126,7 @@ class ParseTextCommand extends AbstractCommand
      *
      * @return int integer 0 on success, or an error code
      */
-    protected function compileTwig(): int
+    private function compileTwig(): int
     {
         $this->output->write('Compiling Twig templates... ');
 
@@ -146,7 +154,7 @@ class ParseTextCommand extends AbstractCommand
      *
      * @return int integer 0 on success, or an error code
      */
-    protected function scanText(): int
+    private function scanText(): int
     {
         $this->output->write('Scanning text...', true);
 
@@ -158,8 +166,7 @@ class ParseTextCommand extends AbstractCommand
             ->extract('templates/', '/.*\.js/')
             ->extract('public/js/', '/.*\.js/')
             ->generate('resources/locale/de_DE_messages.po')
-            ->generate('resources/locale/de_DE_messages.mo')
-            // Add more mo and po files here
+            ->generate('resources/locale/de_DE_messages.mo')// Add more mo and po files here
             ->process();
 
         $this->output->write('Done', true);
@@ -174,7 +181,7 @@ class ParseTextCommand extends AbstractCommand
      *
      * @return int
      */
-    protected function process(): int
+    private function process(): int
     {
         foreach ($this->targets as $targets) {
             /** @var SplFileInfo $target */
@@ -222,7 +229,7 @@ class ParseTextCommand extends AbstractCommand
      *
      * @return void
      */
-    protected function scan(Translations $translations): void
+    private function scan(Translations $translations): void
     {
         foreach ($this->iterator as $each) {
             /** @var SplFileInfo|null $file */
@@ -248,7 +255,7 @@ class ParseTextCommand extends AbstractCommand
      *
      * @return string|null
      */
-    protected function getFunctionName(string $prefix, string $file, string $suffix, int $key = 0): ?string
+    private function getFunctionName(string $prefix, string $file, string $suffix, int $key = 0): ?string
     {
         if (preg_match($this->getRegex(), strtolower($file), $matches)) {
             $format = $this->suffixes[$matches[1]];
@@ -267,7 +274,7 @@ class ParseTextCommand extends AbstractCommand
      *
      * @return string
      */
-    protected function getRegex(): string
+    private function getRegex(): string
     {
         if ($this->regex === null) {
             $this->regex = '/(' . str_replace('.', '\\.', implode('|', array_keys($this->suffixes))) . ')$/';
@@ -318,7 +325,7 @@ class ParseTextCommand extends AbstractCommand
      *
      * @return Translations
      */
-    protected function addFuzzyFlags(Translations $from, Translations $to): Translations
+    private function addFuzzyFlags(Translations $from, Translations $to): Translations
     {
         foreach ($to as $translation) {
             if (!$from->find($translation)) {

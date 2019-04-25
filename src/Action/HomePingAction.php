@@ -9,7 +9,7 @@ use Psr\Http\Message\ServerRequestInterface;
 /**
  * Action.
  */
-class HomePingAction implements ActionInterface
+final class HomePingAction implements ActionInterface
 {
     /**
      * @var JsonResponder

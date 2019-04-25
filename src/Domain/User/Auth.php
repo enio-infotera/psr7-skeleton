@@ -9,7 +9,7 @@ use RuntimeException;
 /**
  * Authentication and authorisation.
  */
-class Auth implements ServiceInterface
+final class Auth implements ServiceInterface
 {
     /**
      * SessionInterface.
@@ -143,7 +143,7 @@ class Auth implements ServiceInterface
      *
      * @return void
      */
-    protected function startUserSession(User $user): void
+    private function startUserSession(User $user): void
     {
         // Clear session data
         $this->session->destroy();
@@ -163,7 +163,7 @@ class Auth implements ServiceInterface
      *
      * @return void
      */
-    protected function setIdentity(User $user): void
+    private function setIdentity(User $user): void
     {
         $this->session->set('user', $user);
     }

@@ -22,17 +22,17 @@ final class UserEditAction implements ActionInterface
     /**
      * @var SessionInterface
      */
-    protected $session;
+    private $session;
 
     /**
      * @var LoggerInterface
      */
-    protected $logger;
+    private $logger;
 
     /**
      * @var UserService
      */
-    protected $userService;
+    private $userService;
 
     /**
      * Constructor.

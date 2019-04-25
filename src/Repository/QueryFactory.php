@@ -9,24 +9,24 @@ use RuntimeException;
 /**
  * Factory.
  */
-class QueryFactory
+final class QueryFactory
 {
     /**
      * Connection.
      *
      * @var Connection
      */
-    protected $connection;
+    private $connection;
 
     /**
      * @var callable
      */
-    protected $beforeUpdateCallback;
+    private $beforeUpdateCallback;
 
     /**
      * @var callable
      */
-    protected $beforeInsertCallback;
+    private $beforeInsertCallback;
 
     /**
      * Constructor.

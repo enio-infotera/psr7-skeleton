@@ -12,7 +12,7 @@ use Psr\Http\Message\ServerRequestInterface;
 /**
  * Action.
  */
-class HomeLoadAction implements ActionInterface
+final class HomeLoadAction implements ActionInterface
 {
     /**
      * @var JsonResponder
@@ -22,12 +22,12 @@ class HomeLoadAction implements ActionInterface
     /**
      * @var Auth
      */
-    protected $auth;
+    private $auth;
 
     /**
      * @var UserService
      */
-    protected $userService;
+    private $userService;
 
     /**
      * Constructor.
