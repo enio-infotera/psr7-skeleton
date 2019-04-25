@@ -4,11 +4,13 @@ namespace App\Action;
 
 use App\Domain\User\Auth;
 use App\Domain\User\Locale;
+use App\Factory\LoggerFactory;
 use App\Http\RouterUrl;
 use Fig\Http\Message\StatusCodeInterface as StatusCode;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Log\LoggerInterface;
 
 /**
  * Action.
@@ -36,23 +38,31 @@ final class UserLoginSubmitAction implements ActionInterface
     private $routerUrl;
 
     /**
+     * @var LoggerInterface
+     */
+    private $log;
+
+    /**
      * Constructor.
      *
      * @param ResponseFactoryInterface $responseFactory
      * @param RouterUrl $routerUrl
      * @param Auth $auth
      * @param Locale $locale
+     * @param LoggerFactory $loggerFactory
      */
     public function __construct(
         ResponseFactoryInterface $responseFactory,
         RouterUrl $routerUrl,
         Auth $auth,
-        Locale $locale
+        Locale $locale,
+        LoggerFactory $loggerFactory
     ) {
         $this->responseFactory = $responseFactory;
         $this->routerUrl = $routerUrl;
         $this->auth = $auth;
         $this->locale = $locale;
+        $this->log = $loggerFactory->createLogger('user_login_submit');
     }
 
     /**
@@ -74,6 +84,7 @@ final class UserLoginSubmitAction implements ActionInterface
             $this->locale->setLanguage($user->getLocale());
             $url = $this->routerUrl->pathFor('root');
         } else {
+            $this->log->warning(sprintf('Login failed for user: %s', $username));
             $url = $this->routerUrl->pathFor('login');
         }
 

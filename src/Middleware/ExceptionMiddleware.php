@@ -43,8 +43,8 @@ final class ExceptionMiddleware implements MiddlewareInterface
      *
      * @param ResponseFactoryInterface $responseFactory
      * @param StreamFactoryInterface $streamFactory
-     * @param LoggerInterface|null $logger
      * @param bool $verbose Verbose error output
+     * @param LoggerInterface|null $logger
      */
     public function __construct(
         ResponseFactoryInterface $responseFactory,

@@ -3,6 +3,7 @@
 use App\Domain\User\Auth;
 use App\Domain\User\AuthRepository;
 use App\Domain\User\Locale;
+use App\Factory\LoggerFactory;
 use App\Http\RouterUrl;
 use App\Middleware\AuthenticationMiddleware;
 use App\Middleware\CorsMiddleware;
@@ -19,6 +20,8 @@ use League\Container\ReflectionContainer;
 use League\Route\Http\Exception\NotFoundException;
 use League\Route\Router;
 use League\Route\Strategy\ApplicationStrategy;
+use Monolog\Handler\RotatingFileHandler;
+use Monolog\Logger;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Nyholm\Psr7Server\ServerRequestCreator;
 use Odan\Csrf\CsrfMiddleware;
@@ -33,6 +36,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Server\MiddlewareInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Translation\Formatter\MessageFormatter;
 use Symfony\Component\Translation\IdentityTranslator;
 use Symfony\Component\Translation\Loader\MoFileLoader;
@@ -155,24 +159,23 @@ $container->share('settings', function () {
     return require __DIR__ . '/settings.php';
 });
 
-$container->share(ExceptionMiddleware::class, function (Container $container) {
-    return new ExceptionMiddleware(
-        $container->get(ResponseFactoryInterface::class),
-        $container->get(StreamFactoryInterface::class),
-        true // verbose
-    );
+$container->share(LoggerInterface::class, function (Container $container) {
+    $settings = $container->get('settings')['logger'];
+    $logger = new Logger($settings['name']);
+
+    $level = isset($settings['level']) ?: Logger::ERROR;
+    $logFile = $settings['file'];
+
+    $handler = new RotatingFileHandler($logFile, 0, $level, true, 0775);
+    $logger->pushHandler($handler);
+
+    return $logger;
 })->addArgument($container);
 
-$container->share(CorsMiddleware::class, function (Container $container) {
-    return new CorsMiddleware();
-})->addArgument($container);
+$container->share(LoggerFactory::class, function (Container $container) {
+    $settings = $container->get('settings')['logger'];
 
-$container->share(LanguageMiddleware::class, function (Container $container) {
-    return new LanguageMiddleware($container->get(Locale::class));
-})->addArgument($container);
-
-$container->share(AuthenticationMiddleware::class, function (Container $container) {
-    return new AuthenticationMiddleware($container->get(ResponseFactoryInterface::class), $container->get(Router::class), $container->get(RouterUrl::class), $container->get(Auth::class));
+    return new LoggerFactory($settings);
 })->addArgument($container);
 
 $container->share(Locale::class, function (Container $container) {
@@ -288,6 +291,29 @@ $container->share(Translator::class, function (Container $container) {
     $translator->addLoader('mo', new MoFileLoader());
 
     return $translator;
+})->addArgument($container);
+
+//
+// Middleware
+//
+$container->share(ExceptionMiddleware::class, function (Container $container) {
+    return new ExceptionMiddleware(
+        $container->get(ResponseFactoryInterface::class),
+        $container->get(StreamFactoryInterface::class),
+        true // verbose
+    );
+})->addArgument($container);
+
+$container->share(CorsMiddleware::class, function (Container $container) {
+    return new CorsMiddleware();
+})->addArgument($container);
+
+$container->share(LanguageMiddleware::class, function (Container $container) {
+    return new LanguageMiddleware($container->get(Locale::class));
+})->addArgument($container);
+
+$container->share(AuthenticationMiddleware::class, function (Container $container) {
+    return new AuthenticationMiddleware($container->get(ResponseFactoryInterface::class), $container->get(Router::class), $container->get(RouterUrl::class), $container->get(Auth::class));
 })->addArgument($container);
 
 return $container;
