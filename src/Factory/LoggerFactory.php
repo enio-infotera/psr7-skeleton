@@ -51,7 +51,7 @@ final class LoggerFactory
 
         $basename = (string)pathinfo($filename, PATHINFO_FILENAME);
         $extension = (string)pathinfo($filename, PATHINFO_EXTENSION) ?: 'log';
-        $filename = sprintf('%s/%s.%s', (string)$path, (string)$basename, $extension);
+        $filename = sprintf('%s/%s.%s', (string)$path, $basename, $extension);
 
         if ($handler === RotatingFileHandler::class) {
             $handler = new RotatingFileHandler($filename, $maxFiles, $level, $bubble, $filePermission, $useLocking);
