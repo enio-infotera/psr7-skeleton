@@ -173,9 +173,7 @@ $container->share(LoggerInterface::class, function (Container $container) {
 })->addArgument($container);
 
 $container->share(LoggerFactory::class, function (Container $container) {
-    $settings = $container->get('settings')['logger'];
-
-    return new LoggerFactory($settings);
+    return new LoggerFactory($container->get('settings')['logger']);
 })->addArgument($container);
 
 $container->share(Locale::class, function (Container $container) {
