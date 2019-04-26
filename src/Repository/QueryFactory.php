@@ -31,7 +31,7 @@ final class QueryFactory
     /**
      * Constructor.
      *
-     * @param Connection $connection the database connection
+     * @param Connection $connection The database connection
      */
     public function __construct(Connection $connection)
     {
@@ -69,12 +69,12 @@ final class QueryFactory
     /**
      * Create an 'update' statement for the given table.
      *
-     * @param string $table the table to update rows from
-     * @param array $data values to be updated [optional]
+     * @param string $table The table to update rows from
+     * @param array $data The values to be updated
      *
-     * @return Query A new update query
+     * @return Query The new update query
      */
-    public function newUpdate(string $table, array $data = []): Query
+    public function newUpdate(string $table, array $data): Query
     {
         if (isset($this->beforeUpdateCallback)) {
             $data = (array)call_user_func($this->beforeUpdateCallback, $data, $table);
@@ -86,10 +86,10 @@ final class QueryFactory
     /**
      * Create an 'update' statement for the given table.
      *
-     * @param string $table the table to update rows from
-     * @param array $data values to be updated
+     * @param string $table The table to update rows from
+     * @param array $data The values to be updated
      *
-     * @return Query A new insert query
+     * @return Query The new insert query
      */
     public function newInsert(string $table, array $data): Query
     {

@@ -19,7 +19,7 @@ final class DataTableRepository implements RepositoryInterface
     /**
      * Constructor.
      *
-     * @param QueryFactory $queryFactory the query factory
+     * @param QueryFactory $queryFactory The query factory
      */
     public function __construct(QueryFactory $queryFactory)
     {
@@ -29,10 +29,10 @@ final class DataTableRepository implements RepositoryInterface
     /**
      * Load data table items.
      *
-     * @param Query $query the query
-     * @param array $params the parameters
+     * @param Query $query The query
+     * @param array $params The parameters
      *
-     * @return array the table data
+     * @return array The table data
      */
     public function load(Query $query, array $params): array
     {
@@ -68,10 +68,10 @@ final class DataTableRepository implements RepositoryInterface
      *
      * https://datatables.net/manual/server-side
      *
-     * @param array $params params
-     * @param Query $query query
+     * @param Query $query The query
+     * @param array $params The search paremeters
      *
-     * @return Query query
+     * @return Query The query
      */
     private function buildQuery(Query $query, array $params): Query
     {
@@ -123,11 +123,11 @@ final class DataTableRepository implements RepositoryInterface
     /**
      * Escape like string.
      *
-     * @param string $value the string to escape for a like query
+     * @param string $value The string to escape for a like query
      *
      * @throws RuntimeException
      *
-     * @return string the escaped string
+     * @return string The escaped string
      */
     private function escapeLike(string $value): string
     {
@@ -143,11 +143,11 @@ final class DataTableRepository implements RepositoryInterface
     /**
      * Get query field name.
      *
-     * @param string $table table name
-     * @param string $field field name
-     * @param array $fields table fields
+     * @param string $table The table name
+     * @param string $field The field name
+     * @param array $fields The table fields
      *
-     * @return string full field name
+     * @return string The full field name
      */
     private function getFieldName(string $table, string $field, array $fields): string
     {
@@ -161,11 +161,11 @@ final class DataTableRepository implements RepositoryInterface
     /**
      * Get table fields.
      *
-     * @param string $table Table name
+     * @param string $table The table name
      *
      * @throws RuntimeException
      *
-     * @return array Fields
+     * @return array The fields
      */
     private function getTableFields(string $table): array
     {

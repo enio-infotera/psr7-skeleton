@@ -15,7 +15,7 @@ final class TableRepository implements RepositoryInterface
     /**
      * Constructor.
      *
-     * @param QueryFactory $queryFactory the query factory
+     * @param QueryFactory $queryFactory The query factory
      */
     public function __construct(QueryFactory $queryFactory)
     {
@@ -25,8 +25,8 @@ final class TableRepository implements RepositoryInterface
     /**
      * Fetch row by id.
      *
-     * @param string $table Table name
-     * @param int $id ID
+     * @param string $table The table name
+     * @param int $id The primary key
      *
      * @return array Result set
      */
@@ -54,12 +54,12 @@ final class TableRepository implements RepositoryInterface
     /**
      * Check if the given ID exists in the table.
      *
-     * @param string $table Table name
-     * @param int|string $id the ID
+     * @param string $table The table name
+     * @param int $id The primary key
      *
-     * @return bool True if the id exists
+     * @return bool True If the id exists
      */
-    public function existsById(string $table, $id): bool
+    public function existsById(string $table, int $id): bool
     {
         return $this->queryFactory->newSelect($table)
             ->select('id')
