@@ -24,18 +24,22 @@ A very basic PSR-7 / PSR-15 application for PHP.
 
 This project comes configured with:
 
-* Dependency injection container (PSR-11)
+* Modern coding style (PSR-1, PSR-2, PSR-12)
+* PHPDoc Standard (PSR-5, PSR-19)
+* Autoloading (PSR-4)
 * HTTP request and response (PSR-7)
 * Middleware (PSR-15)
-* Routes with groups and middleware
-* Single action controllers
-* Logging (Monolog)
+* HTTP Factories (PSR-17)
+* Dependency injection container (PSR-11)
+* Routing
+* Single action controllers (ADR)
+* Logging (PSR-3)
 * Translations
 * Sessions
 * Authentication and Authorization
-* Database Query Builder (cakephp/database)
+* Database Query Builder
 * Database Migrations (Phinx)
-* Database Migration Generator
+* Database Migrations Generator
 * Date and time (Chronos)
 * Console Commands (Symfony)
 * Unit testing (phpunit)
@@ -59,7 +63,7 @@ This project comes configured with:
 * Tested on Travis CI and Scrutinizer CI
 * Unit tests
 * Integration tests (http and database)
-* PHPStan
+* PHPStan (level=max)
 * Code style checker and fixer (PSR-1, PSR-2, PSR-12)
 * DocBlock checker (PSR-5)
 * Ant scripts
