@@ -11,14 +11,10 @@ use App\Repository\RepositoryInterface;
  */
 final class UserListRepository implements RepositoryInterface
 {
-    /**
-     * @var QueryFactory
-     */
+    /** @var QueryFactory */
     private $queryFactory;
 
-    /**
-     * @var DataTableRepository
-     */
+    /** @var DataTableRepository */
     private $dataTable;
 
     /**

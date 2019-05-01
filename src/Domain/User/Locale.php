@@ -11,27 +11,21 @@ use Symfony\Component\Translation\Translator;
  */
 final class Locale implements ServiceInterface
 {
-    /**
-     * @var string Locale path
-     */
+    /** @var string Locale path */
     public $localePath;
-    /**
-     * @var SessionInterface
-     */
+
+    /** @var SessionInterface */
     private $session;
-    /**
-     * Translator.
-     *
-     * @var Translator
-     */
+
+    /** @var Translator */
     private $translator;
 
     /**
      * Constructor.
      *
-     * @param Translator $translator
-     * @param SessionInterface $session
-     * @param string $localePath
+     * @param Translator $translator The translator
+     * @param SessionInterface $session The session
+     * @param string $localePath The directory with the locals
      */
     public function __construct(Translator $translator, SessionInterface $session, string $localePath)
     {
@@ -80,7 +74,7 @@ final class Locale implements ServiceInterface
     /**
      * Set locale.
      *
-     * @param string $locale
+     * @param string $locale locale
      *
      * @return void
      */
@@ -92,7 +86,7 @@ final class Locale implements ServiceInterface
     /**
      * Set text domain.
      *
-     * @param string $domain
+     * @param string $domain domain
      *
      * @return void
      */
@@ -104,8 +98,8 @@ final class Locale implements ServiceInterface
     /**
      * Set locale.
      *
-     * @param string $locale
-     * @param string $domain
+     * @param string $locale locale
+     * @param string $domain domain
      *
      * @return void
      */

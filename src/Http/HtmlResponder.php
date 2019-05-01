@@ -11,14 +11,10 @@ use Twig\Environment as Twig;
  */
 final class HtmlResponder
 {
-    /**
-     * @var ResponseFactoryInterface
-     */
+    /** @var ResponseFactoryInterface */
     private $responseFactory;
 
-    /**
-     * @var Twig
-     */
+    /** @var Twig */
     private $twig;
 
     /**
@@ -36,10 +32,10 @@ final class HtmlResponder
     /**
      * Render template and return a html response.
      *
-     * @param string $name template file
-     * @param array $viewData viewData
+     * @param string $name The template file
+     * @param array $viewData The view data
      *
-     * @return ResponseInterface
+     * @return ResponseInterface The response
      */
     public function render(string $name, array $viewData = []): ResponseInterface
     {

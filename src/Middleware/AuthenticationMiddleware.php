@@ -5,7 +5,6 @@ namespace App\Middleware;
 use App\Domain\User\Auth;
 use App\Http\RouterUrl;
 use Fig\Http\Message\StatusCodeInterface as StatusCode;
-use League\Route\Router;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -17,42 +16,28 @@ use Psr\Http\Server\RequestHandlerInterface;
  */
 final class AuthenticationMiddleware implements MiddlewareInterface
 {
-    /**
-     * @var ResponseFactoryInterface
-     */
+    /** @var ResponseFactoryInterface */
     private $responseFactory;
 
-    /**
-     * @var Router
-     */
-    private $router;
-
-    /**
-     * @var RouterUrl
-     */
+    /** @var RouterUrl */
     private $routerUrl;
 
-    /**
-     * @var Auth
-     */
+    /** @var Auth */
     private $auth;
 
     /**
      * Constructor.
      *
-     * @param ResponseFactoryInterface $responseFactory
-     * @param Router $router
-     * @param RouterUrl $routerUrl
-     * @param Auth $auth
+     * @param ResponseFactoryInterface $responseFactory The repository factory
+     * @param RouterUrl $routerUrl The repository url
+     * @param Auth $auth The auth
      */
     public function __construct(
         ResponseFactoryInterface $responseFactory,
-        Router $router,
         RouterUrl $routerUrl,
         Auth $auth
     ) {
         $this->responseFactory = $responseFactory;
-        $this->router = $router;
         $this->routerUrl = $routerUrl;
         $this->auth = $auth;
     }

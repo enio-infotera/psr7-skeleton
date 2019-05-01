@@ -14,27 +14,21 @@ use Psr\Http\Message\ServerRequestInterface;
  */
 final class HomeLoadAction implements ActionInterface
 {
-    /**
-     * @var JsonResponder
-     */
+    /** @var JsonResponder */
     private $responder;
 
-    /**
-     * @var Auth
-     */
+    /** @var Auth */
     private $auth;
 
-    /**
-     * @var UserService
-     */
+    /** @var UserService */
     private $userService;
 
     /**
      * Constructor.
      *
-     * @param JsonResponder $responder
-     * @param Auth $auth
-     * @param UserService $userService
+     * @param JsonResponder $responder the responder
+     * @param Auth $auth auth
+     * @param UserService $userService the user service
      */
     public function __construct(JsonResponder $responder, Auth $auth, UserService $userService)
     {

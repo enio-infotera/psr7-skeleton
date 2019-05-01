@@ -11,9 +11,7 @@ use RuntimeException;
  */
 final class DataTableRepository implements RepositoryInterface
 {
-    /**
-     * @var QueryFactory
-     */
+    /** @var QueryFactory */
     private $queryFactory;
 
     /**
@@ -32,7 +30,7 @@ final class DataTableRepository implements RepositoryInterface
      * @param Query $query The query
      * @param array $params The parameters
      *
-     * @return array The table data
+     * @return mixed[] The table data
      */
     public function load(Query $query, array $params): array
     {
@@ -50,7 +48,7 @@ final class DataTableRepository implements RepositoryInterface
         $draw = (int)($params['draw'] ?? 1);
         $offset = (int)($params['start'] ?? 1);
         $limit = (int)($params['length'] ?? 10);
-        $offset = ($offset < 0 || empty($count)) ? 0 : $offset;
+        $offset = $offset < 0 || empty($count) ? 0 : $offset;
 
         $query->offset($offset);
         $query->limit($limit);
@@ -96,7 +94,7 @@ final class DataTableRepository implements RepositoryInterface
                 $orConditions[$searchField . ' LIKE'] = '%' . $searchValue . '%';
             }
 
-            $query->andWhere(function (QueryExpression $exp) use ($orConditions) {
+            $query->andWhere(static function (QueryExpression $exp) use ($orConditions) {
                 return $exp->or_($orConditions);
             });
         }
@@ -152,7 +150,7 @@ final class DataTableRepository implements RepositoryInterface
     private function getFieldName(string $table, string $field, array $fields): string
     {
         if (isset($fields[$field]) && strpos($field, '.') === false) {
-            $field = "$table.$field";
+            $field = sprintf('%s.%s', $table, $field);
         }
 
         return $field;
@@ -165,7 +163,7 @@ final class DataTableRepository implements RepositoryInterface
      *
      * @throws RuntimeException
      *
-     * @return array The fields
+     * @return mixed[] The fields
      */
     private function getTableFields(string $table): array
     {

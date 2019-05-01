@@ -7,9 +7,7 @@ namespace App\Repository;
  */
 final class TableRepository implements RepositoryInterface
 {
-    /**
-     * @var QueryFactory
-     */
+    /** @var QueryFactory */
     private $queryFactory;
 
     /**
@@ -28,7 +26,7 @@ final class TableRepository implements RepositoryInterface
      * @param string $table The table name
      * @param int $id The primary key
      *
-     * @return array Result set
+     * @return mixed[] Result set
      */
     public function fetchById(string $table, int $id): array
     {
@@ -44,7 +42,7 @@ final class TableRepository implements RepositoryInterface
      *
      * @param string $table Table name
      *
-     * @return array Result set
+     * @return mixed[] Result set
      */
     public function fetchAll(string $table): array
     {

@@ -1,9 +1,5 @@
 <?php
 
-//
-// Define the routes
-//
-
 use App\Middleware\AuthenticationMiddleware;
 use App\Middleware\LanguageMiddleware;
 use App\Middleware\SessionMiddleware;
@@ -11,12 +7,14 @@ use League\Route\RouteGroup;
 use League\Route\Router;
 use Odan\Csrf\CsrfMiddleware;
 
+// Define the routes
+
 $router = $container->get(Router::class);
 
 $router->post('/ping', \App\Action\HomePingAction::class);
 
 // Login, no auth check for this actions required
-$router->group('/users', function (RouteGroup $group) {
+$router->group('/users', static function (RouteGroup $group): void {
     $group->post('/login', \App\Action\UserLoginSubmitAction::class);
     $group->get('/login', \App\Action\UserLoginIndexAction::class)->setName('login');
     $group->get('/logout', \App\Action\UserLogoutAction::class);
@@ -25,7 +23,7 @@ $router->group('/users', function (RouteGroup $group) {
     ->middleware($container->get(CsrfMiddleware::class));
 
 // Routes with authentication
-$router->group('', function (RouteGroup $group) {
+$router->group('', static function (RouteGroup $group): void {
     // Default page
     $group->get('/', \App\Action\HomeIndexAction::class)->setName('root');
 

@@ -10,12 +10,10 @@ use RuntimeException;
 /**
  * Factory.
  */
-final class LoggerFactory
+final class LoggerFactory implements FactoryInterface
 {
-    /**
-     * @var array
-     */
-    private $defaults = [];
+    /** @var mixed[] */
+    private $defaults;
 
     /**
      * Constructor.
@@ -31,7 +29,7 @@ final class LoggerFactory
      * Create file logger.
      *
      * @param string $name The logging channel
-     * @param array $options The options
+     * @param mixed[] $options The options
      *
      * @throws RuntimeException
      *

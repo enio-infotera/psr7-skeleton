@@ -11,16 +11,10 @@ use RuntimeException;
  */
 final class Auth implements ServiceInterface
 {
-    /**
-     * SessionInterface.
-     *
-     * @var SessionInterface
-     */
+    /** @var SessionInterface */
     private $session;
 
-    /**
-     * @var AuthRepository
-     */
+    /** @var AuthRepository */
     private $authRepository;
 
     /**

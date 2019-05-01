@@ -30,10 +30,11 @@
         "zendframework/zend-httphandlerrunner": "^1.1"
     },
     "require-dev": {
+        "doctrine/coding-standard": "^6.0",
         "gettext/gettext": "^4.6",
         "odan/docblock-checker": "^1.1",
-        "phpunit/phpunit": "^7.0",
-        "phpstan/phpstan-shim": "^0.11"
+        "phpstan/phpstan-shim": "^0.11",
+        "phpunit/phpunit": "^7.0"
     },
     "autoload": {
         "psr-4": {
@@ -52,7 +53,10 @@
         "sort-packages": true
     },
     "scripts": {
-        "test": "phpunit --configuration ./phpunit.xml",
-        "test-coverage": "phpunit --configuration ./phpunit.xml --coverage-text --coverage-clover ./build/logs/clover.xml --coverage-html ./build/coverage"
+        "test": "phpunit --configuration phpunit.xml",
+        "test-coverage": "phpunit --configuration phpunit.xml --coverage-clover build/logs/clover.xml --coverage-html build/coverage",
+        "check-style": "phpcs --standard=phpcs.xml",
+        "fix-style": "phpcbf --standard=phpcs.xml",
+        "phpstan": "phpstan analyse src tests --level=max -c phpstan.neon --no-progress"
     }
 }

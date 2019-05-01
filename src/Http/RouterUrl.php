@@ -6,53 +6,37 @@ use FastRoute\RouteParser;
 use FastRoute\RouteParser\Std as StdParser;
 use InvalidArgumentException;
 use League\Route\Router;
-use Psr\Http\Message\RequestInterface;
 
 /**
  * Creating URLs for a named route.
  */
 final class RouterUrl
 {
-    /**
-     * @var RequestInterface
-     */
-    private $request;
-
-    /**
-     * @var Router
-     */
+    /** @var Router */
     private $router;
 
-    /**
-     * Parser.
-     *
-     * @var RouteParser
-     */
+    /** @var RouteParser */
     private $routeParser;
+
+    /** @var string Base path used in pathFor() */
+    private $basePath = '';
 
     /**
      * Constructor.
      *
-     * @param Router $router
-     * @param RouteParser|null $parser
+     * @param Router $router The router
+     * @param RouteParser|null $parser The route parser
      */
-    public function __construct(Router $router, RouteParser $parser = null)
+    public function __construct(Router $router, ?RouteParser $parser = null)
     {
         $this->router = $router;
         $this->routeParser = $parser ?: new StdParser();
     }
 
     /**
-     * Base path used in pathFor().
+     * Set the base path used in pathFor.
      *
-     * @var string
-     */
-    private $basePath = '';
-
-    /**
-     * Set the base path used in pathFor().
-     *
-     * @param string $basePath
+     * @param string $basePath The base path
      *
      * @return void
      */
@@ -78,9 +62,9 @@ final class RouterUrl
      * @param array $data Named argument replacement data
      * @param array $queryParams Optional query string parameters
      *
-     * @throws InvalidArgumentException If required data not provided
+     * @throws InvalidArgumentException
      *
-     * @return string
+     * @return string url
      */
     private function relativePathFor(string $name, array $data = [], array $queryParams = []): string
     {
@@ -140,13 +124,13 @@ final class RouterUrl
      *
      * @param string $name Route name
      * @param array $data Named argument replacement data
-     * @param array $queryParams Optional query string parameters
+     * @param mixed[] $queryParams Optional query string parameters
      *
-     * @throws InvalidArgumentException If required data not provided
+     * @throws InvalidArgumentException
      *
-     * @return string
+     * @return string url
      */
-    public function pathFor($name, array $data = [], array $queryParams = []): string
+    public function pathFor(string $name, array $data = [], array $queryParams = []): string
     {
         $url = $this->relativePathFor($name, $data, $queryParams);
 

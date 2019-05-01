@@ -4,63 +4,41 @@ namespace App\Action;
 
 use App\Domain\User\UserService;
 use App\Http\HtmlResponder;
-use Odan\Session\SessionInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Log\LoggerInterface;
 
 /**
  * Action.
  */
 final class UserEditAction implements ActionInterface
 {
-    /**
-     * @var HtmlResponder
-     */
+    /** @var HtmlResponder */
     private $responder;
 
-    /**
-     * @var SessionInterface
-     */
-    private $session;
-
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
-    /**
-     * @var UserService
-     */
+    /** @var UserService */
     private $userService;
 
     /**
      * Constructor.
      *
-     * @param HtmlResponder $responder
-     * @param SessionInterface $session
-     * @param LoggerInterface $logger
-     * @param UserService $userService
+     * @param HtmlResponder $responder The responder
+     * @param UserService $userService The user service
      */
     public function __construct(
         HtmlResponder $responder,
-        SessionInterface $session,
-        LoggerInterface $logger,
         UserService $userService
     ) {
         $this->responder = $responder;
-        $this->session = $session;
-        $this->logger = $logger;
         $this->userService = $userService;
     }
 
     /**
      * Action.
      *
-     * @param ServerRequestInterface $request
      * @param array $args
+     * @param ServerRequestInterface $request the request
      *
-     * @return ResponseInterface
+     * @return ResponseInterface the response
      */
     public function __invoke(ServerRequestInterface $request, array $args = []): ResponseInterface
     {

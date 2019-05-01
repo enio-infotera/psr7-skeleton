@@ -2,7 +2,6 @@
 
 namespace App\Middleware;
 
-use Exception;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -10,6 +9,7 @@ use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Psr\Log\LoggerInterface;
+use Throwable;
 
 /**
  * Error handling middleware.
@@ -18,39 +18,31 @@ use Psr\Log\LoggerInterface;
  */
 final class ExceptionMiddleware implements MiddlewareInterface
 {
-    /**
-     * @var ResponseFactoryInterface
-     */
+    /** @var ResponseFactoryInterface */
     private $responseFactory;
 
-    /**
-     * @var StreamFactoryInterface
-     */
+    /** @var StreamFactoryInterface */
     private $streamFactory;
 
-    /**
-     * @var LoggerInterface|null
-     */
+    /** @var LoggerInterface|null */
     private $logger;
 
-    /**
-     * @var bool
-     */
+    /** @var bool */
     private $verbose;
 
     /**
      * Set the Middleware instance.
      *
-     * @param ResponseFactoryInterface $responseFactory
-     * @param StreamFactoryInterface $streamFactory
-     * @param bool $verbose Verbose error output
-     * @param LoggerInterface|null $logger
+     * @param ResponseFactoryInterface $responseFactory The repository factory
+     * @param StreamFactoryInterface $streamFactory The stream factory
+     * @param bool $verbose Verbose error output Verbose logging or not
+     * @param LoggerInterface|null $logger The logger
      */
     public function __construct(
         ResponseFactoryInterface $responseFactory,
         StreamFactoryInterface $streamFactory,
         bool $verbose = false,
-        LoggerInterface $logger = null
+        ?LoggerInterface $logger = null
     ) {
         $this->responseFactory = $responseFactory;
         $this->streamFactory = $streamFactory;
@@ -70,7 +62,7 @@ final class ExceptionMiddleware implements MiddlewareInterface
     {
         try {
             return $handler->handle($request);
-        } catch (Exception $exception) {
+        } catch (Throwable $exception) {
             return $this->handleException($exception);
         }
     }
@@ -78,11 +70,11 @@ final class ExceptionMiddleware implements MiddlewareInterface
     /**
      * Handle an exception and generate an error response.
      *
-     * @param Exception $exception the exception to handle
+     * @param Throwable $exception the exception to handle
      *
      * @return ResponseInterface the response
      */
-    public function handleException(Exception $exception): ResponseInterface
+    public function handleException(Throwable $exception): ResponseInterface
     {
         $message = sprintf(
             "[%s] %s\n%s",

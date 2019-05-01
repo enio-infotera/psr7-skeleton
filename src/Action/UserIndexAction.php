@@ -12,21 +12,17 @@ use Psr\Http\Message\ServerRequestInterface;
  */
 final class UserIndexAction implements ActionInterface
 {
-    /**
-     * @var HtmlResponder
-     */
+    /** @var HtmlResponder */
     private $responder;
 
-    /**
-     * @var UserService
-     */
+    /** @var UserService */
     private $userService;
 
     /**
      * Constructor.
      *
-     * @param HtmlResponder $responder
-     * @param UserService $userService
+     * @param HtmlResponder $responder the responder
+     * @param UserService $userService the user service
      */
     public function __construct(HtmlResponder $responder, UserService $userService)
     {
@@ -37,7 +33,7 @@ final class UserIndexAction implements ActionInterface
     /**
      * Action.
      *
-     * @param ServerRequestInterface $request
+     * @param ServerRequestInterface $request the request
      *
      * @return ResponseInterface
      */

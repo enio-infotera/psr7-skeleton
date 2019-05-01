@@ -13,15 +13,13 @@ use Psr\Http\Server\RequestHandlerInterface;
  */
 final class SessionMiddleware implements MiddlewareInterface
 {
-    /**
-     * @var SessionInterface
-     */
+    /** @var SessionInterface */
     private $session;
 
     /**
      * Constructor.
      *
-     * @param SessionInterface $session
+     * @param SessionInterface $session The session handler
      */
     public function __construct(SessionInterface $session)
     {

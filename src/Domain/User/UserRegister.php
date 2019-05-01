@@ -9,9 +9,7 @@ use App\Service\ServiceInterface;
  */
 final class UserRegister implements ServiceInterface
 {
-    /**
-     * @var UserRegisterRepository
-     */
+    /** @var UserRegisterRepository */
     private $repository;
 
     /**

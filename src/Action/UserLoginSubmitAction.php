@@ -17,39 +17,29 @@ use Psr\Log\LoggerInterface;
  */
 final class UserLoginSubmitAction implements ActionInterface
 {
-    /**
-     * @var ResponseFactoryInterface
-     */
+    /** @var ResponseFactoryInterface */
     private $responseFactory;
 
-    /**
-     * @var Auth
-     */
+    /** @var Auth */
     private $auth;
 
-    /**
-     * @var Locale
-     */
+    /** @var Locale */
     private $locale;
 
-    /**
-     * @var RouterUrl
-     */
+    /** @var RouterUrl */
     private $routerUrl;
 
-    /**
-     * @var LoggerInterface
-     */
+    /** @var LoggerInterface */
     private $log;
 
     /**
      * Constructor.
      *
-     * @param ResponseFactoryInterface $responseFactory
-     * @param RouterUrl $routerUrl
-     * @param Auth $auth
-     * @param Locale $locale
-     * @param LoggerFactory $loggerFactory
+     * @param ResponseFactoryInterface $responseFactory the response factory
+     * @param RouterUrl $routerUrl router url
+     * @param Auth $auth auth
+     * @param Locale $locale locale
+     * @param LoggerFactory $loggerFactory logger factory
      */
     public function __construct(
         ResponseFactoryInterface $responseFactory,

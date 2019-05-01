@@ -13,9 +13,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 final class ResetDatabaseCommand extends Command
 {
-    /**
-     * @var ContainerInterface
-     */
+    /** @var ContainerInterface */
     private $container;
 
     /**
@@ -24,7 +22,7 @@ final class ResetDatabaseCommand extends Command
      * @param ContainerInterface $container container
      * @param string|null $name name
      */
-    public function __construct(ContainerInterface $container, string $name = null)
+    public function __construct(ContainerInterface $container, ?string $name = null)
     {
         parent::__construct($name);
         $this->container = $container;
@@ -32,8 +30,10 @@ final class ResetDatabaseCommand extends Command
 
     /**
      * Configure.
+     *
+     * @return void
      */
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
@@ -44,12 +44,12 @@ final class ResetDatabaseCommand extends Command
     /**
      * Clear database, drop all tables.
      *
-     * @param InputInterface $input
-     * @param OutputInterface $output
+     * @param InputInterface $input input
+     * @param OutputInterface $output output
      *
      * @return int integer 0 on success, or an error code
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $pdo = $this->container->get(PDO::class);
 

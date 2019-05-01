@@ -15,9 +15,7 @@ use RuntimeException;
  */
 trait AppTestTrait
 {
-    /**
-     * @var Container|null
-     */
+    /** @var Container|null */
     protected $container;
 
     /**
@@ -43,7 +41,7 @@ trait AppTestTrait
     /**
      * Get container.
      *
-     * @throws \ReflectionException
+     * @throws RuntimeException
      *
      * @return Container
      */
@@ -53,7 +51,7 @@ trait AppTestTrait
             throw new RuntimeException('Container must be initialized');
         }
 
-        $this->container->share(SessionInterface::class, function () {
+        $this->container->share(SessionInterface::class, static function () {
             $session = new PhpSession();
             $session->setOptions([
                 'cache_expire' => 60,
@@ -65,7 +63,7 @@ trait AppTestTrait
             return $session;
         });
 
-        $this->container->share(LoggerInterface::class, function () {
+        $this->container->share(LoggerInterface::class, static function () {
             $logger = new Logger('test');
 
             return $logger->pushHandler(new NullHandler());

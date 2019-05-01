@@ -13,15 +13,13 @@ use Psr\Http\Server\RequestHandlerInterface;
  */
 final class LanguageMiddleware implements MiddlewareInterface
 {
-    /**
-     * @var Locale
-     */
+    /** @var Locale */
     private $locale;
 
     /**
      * Constructor.
      *
-     * @param Locale $locale
+     * @param Locale $locale The local
      */
     public function __construct(Locale $locale)
     {

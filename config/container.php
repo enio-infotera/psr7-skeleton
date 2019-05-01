@@ -48,10 +48,8 @@ $container = new Container();
 
 $container->delegate(new ReflectionContainer());
 
-//
 // Core
-//
-$container->share(ContainerInterface::class, function (Container $container) {
+$container->share(ContainerInterface::class, static function (Container $container) {
     return $container;
 })->addArgument($container);
 
@@ -68,15 +66,15 @@ $container->share(Router::class, function (Container $container) {
     return $router;
 })->addArgument($container);
 
-$container->share(NotFoundMiddleware::class, function (Container $container) {
+$container->share(NotFoundMiddleware::class, static function (Container $container) {
     return new NotFoundMiddleware($container->get(ResponseFactoryInterface::class));
 })->addArgument($container);
 
-$container->share(SessionMiddleware::class, function (Container $container) {
+$container->share(SessionMiddleware::class, static function (Container $container) {
     return new SessionMiddleware($container->get(SessionInterface::class));
 })->addArgument($container);
 
-$container->share(CsrfMiddleware::class, function (Container $container) {
+$container->share(CsrfMiddleware::class, static function (Container $container) {
     $psr17Factory = $container->get(Psr17Factory::class);
     $session = $container->get(SessionInterface::class);
 
@@ -88,17 +86,17 @@ $container->share(CsrfMiddleware::class, function (Container $container) {
     return new CsrfMiddleware($psr17Factory, $session->getId());
 })->addArgument($container);
 
-$container->share(Psr17Factory::class, function () {
+$container->share(Psr17Factory::class, static function () {
     return new Psr17Factory();
 });
 
-$container->share(ServerRequestCreator::class, function (Container $container) {
+$container->share(ServerRequestCreator::class, static function (Container $container) {
     $psr17Factory = $container->get(Psr17Factory::class);
 
     return new ServerRequestCreator($psr17Factory, $psr17Factory, $psr17Factory, $psr17Factory);
 })->addArgument($container);
 
-$container->share(ServerRequestInterface::class, function (Container $container) {
+$container->share(ServerRequestInterface::class, static function (Container $container) {
     $creator = $container->get(ServerRequestCreator::class);
 
     if (PHP_SAPI === 'cli') {
@@ -126,7 +124,7 @@ $container->share(ServerRequestInterface::class, function (Container $container)
     return $creator->fromGlobals();
 })->addArgument($container);
 
-$container->share(RouterUrl::class, function (Container $container) {
+$container->share(RouterUrl::class, static function (Container $container) {
     $routeUrl = new RouterUrl($container->get(Router::class));
 
     // Detect base path
@@ -140,26 +138,24 @@ $container->share(RouterUrl::class, function (Container $container) {
     return $routeUrl;
 })->addArgument($container);
 
-$container->share(ResponseFactoryInterface::class, function (Container $container) {
+$container->share(ResponseFactoryInterface::class, static function (Container $container) {
     return $container->get(Psr17Factory::class);
 })->addArgument($container);
 
-$container->share(StreamFactoryInterface::class, function (Container $container) {
+$container->share(StreamFactoryInterface::class, static function (Container $container) {
     return $container->get(Psr17Factory::class);
 })->addArgument($container);
 
-$container->share(ResponseInterface::class, function (Container $container) {
+$container->share(ResponseInterface::class, static function (Container $container) {
     return $container->get(Psr17Factory::class)->createResponse('200');
 })->addArgument($container);
 
-//
 // Custom definitions
-//
-$container->share('settings', function () {
+$container->share('settings', static function () {
     return require __DIR__ . '/settings.php';
 });
 
-$container->share(LoggerInterface::class, function (Container $container) {
+$container->share(LoggerInterface::class, static function (Container $container) {
     $settings = $container->get('settings')['logger'];
     $logger = new Logger($settings['name']);
 
@@ -172,11 +168,11 @@ $container->share(LoggerInterface::class, function (Container $container) {
     return $logger;
 })->addArgument($container);
 
-$container->share(LoggerFactory::class, function (Container $container) {
+$container->share(LoggerFactory::class, static function (Container $container) {
     return new LoggerFactory($container->get('settings')['logger']);
 })->addArgument($container);
 
-$container->share(Locale::class, function (Container $container) {
+$container->share(Locale::class, static function (Container $container) {
     $translator = $container->get(Translator::class);
     $session = $container->get(SessionInterface::class);
     $localPath = $container->get('settings')['locale']['path'];
@@ -184,7 +180,7 @@ $container->share(Locale::class, function (Container $container) {
     return new Locale($translator, $session, $localPath);
 })->addArgument($container);
 
-$container->share(SessionInterface::class, function (Container $container) {
+$container->share(SessionInterface::class, static function (Container $container) {
     $settings = $container->get('settings');
     $session = PHP_SAPI === 'cli' ? new MemorySession() : new PhpSession();
     $session->setOptions((array)$settings['session']);
@@ -192,29 +188,29 @@ $container->share(SessionInterface::class, function (Container $container) {
     return $session;
 })->addArgument($container);
 
-$container->share(Auth::class, function (Container $container) {
+$container->share(Auth::class, static function (Container $container) {
     return new Auth($container->get(SessionInterface::class), $container->get(AuthRepository::class));
 })->addArgument($container);
 
-$container->share(AuthRepository::class, function (Container $container) {
+$container->share(AuthRepository::class, static function (Container $container) {
     return new AuthRepository($container->get(QueryFactory::class));
 })->addArgument($container);
 
-$container->share(Connection::class, function (Container $container) {
+$container->share(Connection::class, static function (Container $container) {
     $settings = $container->get('settings');
     $driver = new Mysql($settings['db']);
 
     return new Connection(['driver' => $driver]);
 })->addArgument($container);
 
-$container->share(PDO::class, function (Container $container) {
+$container->share(PDO::class, static function (Container $container) {
     $db = $container->get(Connection::class);
     $db->getDriver()->connect();
 
     return $db->getDriver()->getConnection();
 })->addArgument($container);
 
-$container->share(QueryFactory::class, function (Container $container) {
+$container->share(QueryFactory::class, static function (Container $container) {
     $queryFactory = new QueryFactory($container->get(Connection::class));
 
     $queryFactory->beforeUpdate(static function (array $row) use ($container) {
@@ -244,7 +240,7 @@ $container->share(QueryFactory::class, function (Container $container) {
     return $queryFactory;
 })->addArgument($container);
 
-$container->share(Twig::class, function (Container $container) {
+$container->share(Twig::class, static function (Container $container) {
     $settings = $container->get('settings');
     $viewPath = $settings['twig']['path'];
 
@@ -272,7 +268,7 @@ $container->share(Twig::class, function (Container $container) {
     return $twig;
 })->addArgument($container);
 
-$container->share('globalText', function () {
+$container->share('globalText', static function () {
     return [
         'Ok' => __('Ok'),
         'Cancel' => __('Cancel'),
@@ -283,18 +279,22 @@ $container->share('globalText', function () {
     ];
 });
 
-$container->share(Translator::class, function (Container $container) {
+$container->share(Translator::class, static function (Container $container) {
     $settings = $container->get('settings')['locale'];
-    $translator = new Translator($settings['locale'], new MessageFormatter(new IdentityTranslator()), $settings['cache']);
+    $translator = new Translator(
+        $settings['locale'],
+        new MessageFormatter(
+            new IdentityTranslator()
+        ),
+        $settings['cache']
+    );
     $translator->addLoader('mo', new MoFileLoader());
 
     return $translator;
 })->addArgument($container);
 
-//
 // Middleware
-//
-$container->share(ExceptionMiddleware::class, function (Container $container) {
+$container->share(ExceptionMiddleware::class, static function (Container $container) {
     return new ExceptionMiddleware(
         $container->get(ResponseFactoryInterface::class),
         $container->get(StreamFactoryInterface::class),
@@ -302,16 +302,20 @@ $container->share(ExceptionMiddleware::class, function (Container $container) {
     );
 })->addArgument($container);
 
-$container->share(CorsMiddleware::class, function (Container $container) {
+$container->share(CorsMiddleware::class, static function (Container $container) {
     return new CorsMiddleware();
 })->addArgument($container);
 
-$container->share(LanguageMiddleware::class, function (Container $container) {
+$container->share(LanguageMiddleware::class, static function (Container $container) {
     return new LanguageMiddleware($container->get(Locale::class));
 })->addArgument($container);
 
-$container->share(AuthenticationMiddleware::class, function (Container $container) {
-    return new AuthenticationMiddleware($container->get(ResponseFactoryInterface::class), $container->get(Router::class), $container->get(RouterUrl::class), $container->get(Auth::class));
+$container->share(AuthenticationMiddleware::class, static function (Container $container) {
+    return new AuthenticationMiddleware(
+        $container->get(ResponseFactoryInterface::class),
+        $container->get(RouterUrl::class),
+        $container->get(Auth::class)
+    );
 })->addArgument($container);
 
 return $container;

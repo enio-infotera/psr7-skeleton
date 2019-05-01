@@ -1,16 +1,17 @@
 <?php
 
-//
 // Start with: sudo php deploy.php file_to_deploy.zip
-//
+
 $version = substr(sha1_file(__FILE__), 0, 7);
 echo 'Deployment script version: ' . $version . "\n";
-if (posix_getuid() == 0) {
+
+if (posix_getuid() === 0) {
     echo "Check if root: OK\n";
 } else {
     echo 'Check if root: ERROR - Run: sudo php ' . basename(__FILE__) . " file.zip\n";
     exit;
 }
+
 if (empty($argv[1])) {
     echo "Parameter required\n";
     echo 'Run: sudo php ' . basename(__FILE__) . " file.zip\n";
@@ -24,14 +25,14 @@ $releaseDir = __DIR__ . '/release/';
 
 // Remove existing release directory
 if (file_exists($releaseDir)) {
-    echo "Remove $releaseDir\n";
+    echo sprintf("Remove %s\n", $releaseDir);
     system('rm -R ' . $releaseDir);
 }
 
 // Extract artifact (Zip file) to release directory
 $zip = new ZipArchive();
 if ($zip->open($zipFile) === true) {
-    echo "Extract ZIP file to: $releaseDir\n";
+    echo sprintf("Extract ZIP file to: %s\n", $releaseDir);
     $zip->extractTo(__DIR__ . '/release/');
     $zip->close();
     echo "Extract ZIP file: OK\n";
@@ -41,11 +42,11 @@ if ($zip->open($zipFile) === true) {
 
 if (file_exists($releaseDir)) {
     // Backup current live version
-    echo "Rename $liveDir to $liveBackupDir\n";
+    echo sprintf("Rename %s to %s\n", $liveDir, $liveBackupDir);
     rename($liveDir, $liveBackupDir);
 
     // Install new live version
-    echo "Rename $releaseDir to $liveDir\n";
+    echo sprintf("Rename %s to %s\n", $releaseDir, $liveDir);
     rename($releaseDir, $liveDir);
 }
 

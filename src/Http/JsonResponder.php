@@ -11,15 +11,13 @@ use RuntimeException;
  */
 final class JsonResponder
 {
-    /**
-     * @var ResponseFactoryInterface
-     */
+    /** @var ResponseFactoryInterface */
     private $responseFactory;
 
     /**
      * Constructor.
      *
-     * @param ResponseFactoryInterface $responseFactory the response factory
+     * @param ResponseFactoryInterface $responseFactory The response factory
      */
     public function __construct(ResponseFactoryInterface $responseFactory)
     {

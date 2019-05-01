@@ -13,14 +13,10 @@ use InvalidArgumentException;
  */
 final class UserRepository implements RepositoryInterface
 {
-    /**
-     * @var QueryFactory
-     */
+    /** @var QueryFactory */
     private $queryFactory;
 
-    /**
-     * @var TableRepository
-     */
+    /** @var TableRepository */
     private $tableRepository;
 
     /**
@@ -38,7 +34,7 @@ final class UserRepository implements RepositoryInterface
     /**
      * Find all users.
      *
-     * @return array Rows
+     * @return mixed[] Rows
      */
     public function findAll(): array
     {
@@ -50,7 +46,7 @@ final class UserRepository implements RepositoryInterface
      *
      * @param int $userId User id
      *
-     * @throws DomainException On error
+     * @throws DomainException
      *
      * @return array The row
      */
@@ -82,6 +78,8 @@ final class UserRepository implements RepositoryInterface
      *
      * @param int $userId The user ID
      * @param array $data The user data
+     *
+     * @throws InvalidArgumentException
      *
      * @return bool Success
      */

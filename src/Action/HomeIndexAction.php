@@ -12,14 +12,10 @@ use Psr\Http\Message\ServerRequestInterface;
  */
 final class HomeIndexAction implements ActionInterface
 {
-    /**
-     * @var HtmlResponder
-     */
+    /** @var HtmlResponder */
     private $responder;
 
-    /**
-     * @var SessionInterface
-     */
+    /** @var SessionInterface */
     private $session;
 
     /**

@@ -34,7 +34,7 @@ final class TypeInspector
      * @param string $class the type class name
      * @param int|string $typeValue Value
      *
-     * @throws ReflectionException
+     * @throws RuntimeException
      *
      * @return string Name
      */

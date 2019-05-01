@@ -10,9 +10,7 @@ use App\Repository\RepositoryInterface;
  */
 final class UserRegisterRepository implements RepositoryInterface
 {
-    /**
-     * @var QueryFactory
-     */
+    /** @var QueryFactory */
     private $queryFactory;
 
     /**

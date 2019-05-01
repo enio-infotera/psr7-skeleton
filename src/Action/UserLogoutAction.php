@@ -14,27 +14,21 @@ use Psr\Http\Message\ServerRequestInterface;
  */
 final class UserLogoutAction implements ActionInterface
 {
-    /**
-     * @var ResponseFactoryInterface
-     */
+    /** @var ResponseFactoryInterface */
     private $responseFactory;
 
-    /**
-     * @var Auth
-     */
+    /** @var Auth */
     private $auth;
 
-    /**
-     * @var RouterUrl
-     */
+    /** @var RouterUrl */
     private $routerUrl;
 
     /**
      * Constructor.
      *
-     * @param ResponseFactoryInterface $responseFactory
-     * @param RouterUrl $routerUrl
-     * @param Auth $auth
+     * @param ResponseFactoryInterface $responseFactory responseFactory
+     * @param RouterUrl $routerUrl routerUrl
+     * @param Auth $auth auth
      */
     public function __construct(ResponseFactoryInterface $responseFactory, RouterUrl $routerUrl, Auth $auth)
     {

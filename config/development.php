@@ -1,8 +1,6 @@
 <?php
 
-//
 // Development environment
-//
 $settings['env'] = 'development';
 
 // Error reporting

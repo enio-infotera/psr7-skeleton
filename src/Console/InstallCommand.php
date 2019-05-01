@@ -18,9 +18,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 final class InstallCommand extends Command
 {
-    /**
-     * @var ContainerInterface
-     */
+    /** @var ContainerInterface */
     private $container;
 
     /**
@@ -29,7 +27,7 @@ final class InstallCommand extends Command
      * @param ContainerInterface $container container
      * @param string|null $name name
      */
-    public function __construct(ContainerInterface $container, string $name = null)
+    public function __construct(ContainerInterface $container, ?string $name = null)
     {
         parent::__construct($name);
         $this->container = $container;
@@ -37,8 +35,10 @@ final class InstallCommand extends Command
 
     /**
      * Configure.
+     *
+     * @return void
      */
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
@@ -51,14 +51,14 @@ final class InstallCommand extends Command
     /**
      * Execute command.
      *
-     * @param InputInterface $input
-     * @param OutputInterface $output
+     * @param InputInterface $input input
+     * @param OutputInterface $output output
      *
-     * @throws Exception
+     * @throws RuntimeException
      *
      * @return int integer 0 on success, or an error code
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
 
@@ -90,8 +90,8 @@ final class InstallCommand extends Command
     /**
      * Create env.php file.
      *
-     * @param OutputInterface $output
-     * @param string $configPath
+     * @param OutputInterface $output output
+     * @param string $configPath config path
      *
      * @return void
      */
@@ -104,8 +104,8 @@ final class InstallCommand extends Command
     /**
      * Generate a random secret.
      *
-     * @param OutputInterface $output
-     * @param string $configPath
+     * @param OutputInterface $output output
+     * @param string $configPath config path
      *
      * @throws Exception
      *
@@ -114,22 +114,34 @@ final class InstallCommand extends Command
     private function generateRandomSecret(OutputInterface $output, string $configPath): void
     {
         $output->writeln('Generate random app secret');
-        file_put_contents($configPath . '/defaults.php', str_replace('{{app_secret}}', bin2hex(random_bytes(20)), file_get_contents($configPath . '/defaults.php') ?: ''));
+        file_put_contents(
+            $configPath . '/defaults.php',
+            str_replace(
+                '{{app_secret}}',
+                bin2hex(random_bytes(20)),
+                file_get_contents($configPath . '/defaults.php') ?: ''
+            )
+        );
     }
 
     /**
      * Create a new database.
      *
-     * @param SymfonyStyle $io
-     * @param OutputInterface $output
-     * @param string $configPath
-     * @param string $root
-     * @param string|null $env
+     * @param SymfonyStyle $io io
+     * @param OutputInterface $output output
+     * @param string $configPath configPath
+     * @param string $root root path
+     * @param string|null $env environment
      *
-     * @return int
+     * @return int error code
      */
-    private function createNewDatabase(SymfonyStyle $io, OutputInterface $output, string $configPath, string $root, string $env = null): int
-    {
+    private function createNewDatabase(
+        SymfonyStyle $io,
+        OutputInterface $output,
+        string $configPath,
+        string $root,
+        ?string $env = null
+    ): int {
         if ($env === 'ci') {
             $mySqlHost = '127.0.0.1';
             $mySqlDatabase = 'test';
@@ -137,19 +149,21 @@ final class InstallCommand extends Command
             $mySqlPassword = '';
         } else {
             // MySQL setup
-            if (!$mySqlHost = $io->ask('Enter MySQL host', 'localhost')) {
+            $mySqlHost = $io->ask('Enter MySQL host', 'localhost');
+            if (!$mySqlHost) {
                 $output->writeln('Aborted');
 
                 return 1;
             }
-            if (!$mySqlDatabase = $io->ask('Enter MySQL database name', 'prisma')) {
+            $mySqlDatabase = $io->ask('Enter MySQL database name', 'prisma');
+            if (!$mySqlDatabase) {
                 $output->writeln('Aborted');
 
                 return 1;
             }
 
             $mySqlUsername = $io->ask('Enter MySQL username:', 'root');
-            $mySqlPassword = $io->ask('Enter MySQL password:', '', function ($string) {
+            $mySqlPassword = $io->ask('Enter MySQL password:', '', static function ($string) {
                 return $string ?: '';
             });
         }
@@ -159,7 +173,14 @@ final class InstallCommand extends Command
 
             $pdo = $this->createPdo($mySqlHost, $mySqlUsername, $mySqlPassword);
             $this->createDatabase($pdo, $mySqlDatabase);
-            $this->updateDevelopmentSettings($output, $mySqlHost, $mySqlDatabase, $mySqlUsername, $mySqlPassword, $configPath);
+            $this->updateDevelopmentSettings(
+                $output,
+                $mySqlHost,
+                $mySqlDatabase,
+                $mySqlUsername,
+                $mySqlPassword,
+                $configPath
+            );
             $this->installDatabaseTables($output, $root);
             $this->seedDatabaseTables($output, $root);
 
@@ -176,16 +197,16 @@ final class InstallCommand extends Command
     /**
      * Create a PDO object.
      *
-     * @param string $host
-     * @param string $username
-     * @param string $password
+     * @param string $host host
+     * @param string $username username
+     * @param string $password password
      *
-     * @return PDO
+     * @return PDO The connection
      */
     private function createPdo(string $host, string $username, string $password): PDO
     {
-        $pdo = new PDO(
-            "mysql:host=$host;charset=utf8",
+        return new PDO(
+            sprintf('mysql:host=%s;charset=utf8', $host),
             $username,
             $password,
             [
@@ -194,30 +215,28 @@ final class InstallCommand extends Command
                 PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8 COLLATE utf8_unicode_ci',
             ]
         );
-
-        return $pdo;
     }
 
     /**
      * Create database.
      *
-     * @param PDO $pdo
-     * @param string $dbName
+     * @param PDO $pdo The connection
+     * @param string $dbName The database name
      *
      * @return void
      */
     private function createDatabase(PDO $pdo, string $dbName): void
     {
         $dbNameQuoted = $this->quoteName($dbName);
-        $pdo->exec("CREATE DATABASE IF NOT EXISTS $dbNameQuoted;");
+        $pdo->exec(sprintf('CREATE DATABASE IF NOT EXISTS %s;', $dbNameQuoted));
     }
 
     /**
      * Quote name.
      *
-     * @param string $name
+     * @param string $name table or field name
      *
-     * @return string
+     * @return string table or field name
      */
     private function quoteName(string $name): string
     {
@@ -227,29 +246,66 @@ final class InstallCommand extends Command
     /**
      * Update dev settings.
      *
-     * @param OutputInterface $output
-     * @param string $dbHost
-     * @param string $dbName
-     * @param string $username
-     * @param string $password
-     * @param string $configPath
+     * @param OutputInterface $output output
+     * @param string $dbHost host
+     * @param string $dbName database
+     * @param string $username username
+     * @param string $password password
+     * @param string $configPath config path
      *
      * @return void
      */
-    private function updateDevelopmentSettings(OutputInterface $output, string $dbHost, string $dbName, string $username, string $password, string $configPath): void
-    {
+    private function updateDevelopmentSettings(
+        OutputInterface $output,
+        string $dbHost,
+        string $dbName,
+        string $username,
+        string $password,
+        string $configPath
+    ): void {
         $output->writeln('Update development configuration');
-        file_put_contents($configPath . '/development.php', str_replace('{{db_host}}', $dbHost, file_get_contents($configPath . '/development.php') ?: ''));
-        file_put_contents($configPath . '/development.php', str_replace('{{db_database}}', $dbName, file_get_contents($configPath . '/development.php') ?: ''));
-        file_put_contents($configPath . '/env.php', str_replace('{{db_username}}', $username, file_get_contents($configPath . '/env.php') ?: ''));
-        file_put_contents($configPath . '/env.php', str_replace('{{db_password}}', $password, file_get_contents($configPath . '/env.php') ?: ''));
+        file_put_contents(
+            $configPath . '/development.php',
+            str_replace(
+                '{{db_host}}',
+                $dbHost,
+                file_get_contents($configPath . '/development.php') ?: ''
+            )
+        );
+
+        file_put_contents(
+            $configPath . '/development.php',
+            str_replace(
+                '{{db_database}}',
+                $dbName,
+                file_get_contents($configPath . '/development.php') ?: ''
+            )
+        );
+
+        file_put_contents(
+            $configPath . '/env.php',
+            str_replace(
+                '{{db_username}}',
+                $username,
+                file_get_contents($configPath . '/env.php') ?: ''
+            )
+        );
+
+        file_put_contents(
+            $configPath . '/env.php',
+            str_replace(
+                '{{db_password}}',
+                $password,
+                file_get_contents($configPath . '/env.php') ?: ''
+            )
+        );
     }
 
     /**
      * Install database.
      *
-     * @param OutputInterface $output
-     * @param string $root
+     * @param OutputInterface $output outout
+     * @param string $root root path
      *
      * @return void
      */
@@ -264,8 +320,8 @@ final class InstallCommand extends Command
     /**
      * Seed database tables.
      *
-     * @param OutputInterface $output
-     * @param string $root
+     * @param OutputInterface $output outout
+     * @param string $root root path
      *
      * @return void
      */

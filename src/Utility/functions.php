@@ -1,13 +1,13 @@
 <?php
 
-// Helper functions.
-
 use Symfony\Component\Translation\Translator;
 
 /**
  * Text translation (I18n).
  *
  * @param mixed|Translator $message
+ *
+ * @throws RuntimeException
  *
  * @return string
  *
@@ -18,7 +18,7 @@ use Symfony\Component\Translation\Translator;
  */
 function __($message): string
 {
-    /* @var Translator $translator */
+    /** @var Translator $translator */
     static $translator = null;
     if ($message instanceof Translator) {
         $translator = $message;

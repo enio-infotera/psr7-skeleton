@@ -15,15 +15,13 @@ use Psr\Http\Server\RequestHandlerInterface;
  */
 final class NotFoundMiddleware implements MiddlewareInterface
 {
-    /**
-     * @var ResponseFactoryInterface
-     */
+    /** @var ResponseFactoryInterface */
     private $responseFactory;
 
     /**
      * Set the Middleware instance.
      *
-     * @param ResponseFactoryInterface $responseFactory
+     * @param ResponseFactoryInterface $responseFactory The repository factory
      */
     public function __construct(ResponseFactoryInterface $responseFactory)
     {

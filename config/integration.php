@@ -1,8 +1,6 @@
 <?php
 
-//
 // Travis CI environment
-//
 $settings['env'] = 'integration';
 
 // Error reporting

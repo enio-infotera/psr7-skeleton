@@ -18,14 +18,10 @@ final class QueryFactory
      */
     private $connection;
 
-    /**
-     * @var callable
-     */
+    /** @var callable */
     private $beforeUpdateCallback;
 
-    /**
-     * @var callable
-     */
+    /** @var callable */
     private $beforeInsertCallback;
 
     /**
@@ -52,6 +48,8 @@ final class QueryFactory
      * Create a new 'select' query for the given table.
      *
      * @param string $table The table name
+     *
+     * @throws RuntimeException
      *
      * @return Query A new select query
      */

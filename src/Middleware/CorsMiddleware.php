@@ -30,8 +30,17 @@ final class CorsMiddleware implements MiddlewareInterface
 
         /** @var ResponseInterface $response */
         $response = $response->withHeader('Access-Control-Allow-Origin', '*');
-        $response = $response->withHeader('Access-Control-Allow-Methods', $request->getHeaderLine('Access-Control-Request-Method'));
-        $response = $response->withHeader('Access-Control-Allow-Headers', $request->getHeaderLine('Access-Control-Request-Headers'));
+
+        $response = $response->withHeader(
+            'Access-Control-Allow-Methods',
+            $request->getHeaderLine('Access-Control-Request-Method')
+        );
+
+        $response = $response->withHeader(
+            'Access-Control-Allow-Headers',
+            $request->getHeaderLine('Access-Control-Request-Headers')
+        );
+
         $response = $response->withStatus(200);
 
         return $response;

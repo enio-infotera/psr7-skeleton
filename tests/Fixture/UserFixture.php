@@ -7,9 +7,7 @@ namespace App\Test\Fixture;
  */
 class UserFixture
 {
-    /**
-     * @var string Table name
-     */
+    /** @var string Table name */
     public $table = 'users';
 
     /**

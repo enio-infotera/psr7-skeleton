@@ -11,15 +11,13 @@ use Psr\Http\Message\ServerRequestInterface;
  */
 final class HomePingAction implements ActionInterface
 {
-    /**
-     * @var JsonResponder
-     */
+    /** @var JsonResponder */
     private $responder;
 
     /**
      * Constructor.
      *
-     * @param JsonResponder $responder
+     * @param JsonResponder $responder The responder
      */
     public function __construct(JsonResponder $responder)
     {

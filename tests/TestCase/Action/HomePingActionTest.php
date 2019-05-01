@@ -15,6 +15,7 @@ class HomePingActionTest extends ApiTestCase
      * @throws \Exception
      *
      * @return void
+     *
      * @covers ::__invoke
      */
     public function testPing(): void

@@ -10,9 +10,7 @@ use App\Repository\RepositoryInterface;
  */
 final class AuthRepository implements RepositoryInterface
 {
-    /**
-     * @var QueryFactory
-     */
+    /** @var QueryFactory */
     private $queryFactory;
 
     /**
