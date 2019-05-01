@@ -14,14 +14,13 @@ addons:
     packages:
       - ant
   
-# Cache composer
 cache:
   directories:
     - $HOME/.composer/cache
 
 before_script:
-  - travis_retry composer self-update
-  - travis_retry composer install ${COMPOSER_FLAGS} --no-interaction --prefer-dist --no-progress
+  - composer self-update
+  - composer install --no-interaction --prefer-dist --no-progress
   - php bin/cli.php install --environment ci
   - cd $TRAVIS_BUILD_DIR
 

@@ -31,8 +31,8 @@ final class TypeInspector
     /**
      * Get name of constant by value.
      *
-     * @param string $class the type class name
-     * @param int|string $typeValue Value
+     * @param string $class The type class name
+     * @param int|string $typeValue The value
      *
      * @throws RuntimeException
      *
