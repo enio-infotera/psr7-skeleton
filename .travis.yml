@@ -9,11 +9,6 @@ services:
 
 dist: xenial
 
-addons:
-  apt:
-    packages:
-      - ant
-  
 cache:
   directories:
     - $HOME/.composer/cache
@@ -25,5 +20,5 @@ before_script:
   - cd $TRAVIS_BUILD_DIR
 
 script:
-  - ant check-all
+  - composer check-all
 
