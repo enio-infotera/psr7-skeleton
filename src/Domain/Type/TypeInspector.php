@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Type;
+namespace App\Domain\Type;
 
 use ReflectionClass;
 use ReflectionException;
@@ -9,7 +9,7 @@ use RuntimeException;
 /**
  * Type inspector.
  */
-final class TypeInspector
+final class TypeInspector implements TypeInterface
 {
     /**
      * Check if code is valid.

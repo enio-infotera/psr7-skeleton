@@ -2,14 +2,14 @@
 
 namespace App\Domain\User;
 
-use App\Service\ServiceInterface;
+use App\Domain\Service\DomainServiceInterface;
 use Odan\Session\SessionInterface;
 use RuntimeException;
 
 /**
  * Authentication and authorisation.
  */
-final class Auth implements ServiceInterface
+final class Auth implements DomainServiceInterface
 {
     /** @var SessionInterface */
     private $session;
@@ -208,6 +208,6 @@ final class Auth implements ServiceInterface
      */
     public function isAdmin(): bool
     {
-        return $this->hasRole(UserRole::ROLE_ADMIN);
+        return $this->hasRole(UserRoleType::ROLE_ADMIN);
     }
 }

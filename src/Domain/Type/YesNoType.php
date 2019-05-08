@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Type;
+namespace App\Domain\Type;
 
 /**
  * Type / Enum.
  */
-final class YesNoType
+final class YesNoType implements TypeInterface
 {
     public const YES = 1;
     public const NO = 2;

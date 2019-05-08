@@ -2,10 +2,12 @@
 
 namespace App\Domain\User;
 
+use App\Domain\Type\TypeInterface;
+
 /**
  * Type.
  */
-final class UserRole
+final class UserRoleType implements TypeInterface
 {
     /**
      * Admin role.

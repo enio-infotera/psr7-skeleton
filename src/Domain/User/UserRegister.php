@@ -2,14 +2,16 @@
 
 namespace App\Domain\User;
 
-use App\Service\ServiceInterface;
+use App\Domain\Service\DomainServiceInterface;
 
 /**
  * Service.
  */
-final class UserRegister implements ServiceInterface
+final class UserRegister implements DomainServiceInterface
 {
-    /** @var UserRegisterRepository */
+    /**
+     * @var UserRegisterRepository
+     */
     private $repository;
 
     /**

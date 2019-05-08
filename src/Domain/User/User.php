@@ -2,10 +2,12 @@
 
 namespace App\Domain\User;
 
+use App\Domain\Model\DomainModelInterface;
+
 /**
  * DTO.
  */
-final class User
+final class User implements DomainModelInterface
 {
     /** @var int|null */
     private $id;

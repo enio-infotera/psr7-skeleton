@@ -13,10 +13,14 @@ use InvalidArgumentException;
  */
 final class UserRepository implements RepositoryInterface
 {
-    /** @var QueryFactory */
+    /**
+     * @var QueryFactory
+     */
     private $queryFactory;
 
-    /** @var TableRepository */
+    /**
+     * @var TableRepository
+     */
     private $tableRepository;
 
     /**
