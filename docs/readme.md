@@ -223,10 +223,13 @@ Just rename the file `env.example.php` to `env.php`.
 │   ├── migrations          # Database migration files (Phinx)
 │   └── seeds               # Data seeds
 ├── src                     # PHP source code (The App namespace)
-│   ├── Action              # Controller actions
+│   ├── Action              # Controller actions (application layer)
 │   ├── Console             # Console commands for cli.php
 │   ├── Domain              # The business logic
-│   ├── Type                # Types, Enum Constants
+│   ├── Factory             # Application service factories
+│   ├── Http                # Responder and Url helper (application layer)
+│   ├── Middleware          # Middleware (application layer)
+│   ├── Repository          # Base repositories
 │   └── Utility             # Helper classes and functions
 ├── templates               # Twig and Vue templates + JS and CSS
 ├── tests                   # Automated tests
