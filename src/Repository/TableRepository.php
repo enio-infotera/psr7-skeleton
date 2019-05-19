@@ -7,7 +7,9 @@ namespace App\Repository;
  */
 final class TableRepository implements RepositoryInterface
 {
-    /** @var QueryFactory */
+    /**
+     * @var QueryFactory
+     */
     private $queryFactory;
 
     /**

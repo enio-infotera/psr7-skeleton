@@ -35,6 +35,7 @@ final class TypeInspector implements TypeInterface
      * @param int|string $typeValue The value
      *
      * @throws RuntimeException
+     * @throws ReflectionException
      *
      * @return string Name
      */

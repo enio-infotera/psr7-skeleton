@@ -13,7 +13,9 @@ use Psr\Http\Server\RequestHandlerInterface;
  */
 final class SessionMiddleware implements MiddlewareInterface
 {
-    /** @var SessionInterface */
+    /**
+     * @var SessionInterface
+     */
     private $session;
 
     /**

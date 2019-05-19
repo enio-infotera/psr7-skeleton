@@ -12,13 +12,19 @@ use League\Route\Router;
  */
 final class RouterUrl
 {
-    /** @var Router */
+    /**
+     * @var Router
+     */
     private $router;
 
-    /** @var RouteParser */
+    /**
+     * @var RouteParser
+     */
     private $routeParser;
 
-    /** @var string Base path used in pathFor() */
+    /**
+     * @var string Base path used in pathFor()
+     */
     private $basePath = '';
 
     /**

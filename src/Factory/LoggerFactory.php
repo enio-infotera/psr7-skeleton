@@ -12,7 +12,9 @@ use RuntimeException;
  */
 final class LoggerFactory implements FactoryInterface
 {
-    /** @var mixed[] */
+    /**
+     * @var array
+     */
     private $defaults;
 
     /**

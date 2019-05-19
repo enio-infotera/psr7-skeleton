@@ -18,16 +18,24 @@ use Throwable;
  */
 final class ExceptionMiddleware implements MiddlewareInterface
 {
-    /** @var ResponseFactoryInterface */
+    /**
+     * @var ResponseFactoryInterface
+     */
     private $responseFactory;
 
-    /** @var StreamFactoryInterface */
+    /**
+     * @var StreamFactoryInterface
+     */
     private $streamFactory;
 
-    /** @var LoggerInterface|null */
+    /**
+     * @var LoggerInterface|null
+     */
     private $logger;
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     private $verbose;
 
     /**

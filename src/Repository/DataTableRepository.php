@@ -11,7 +11,9 @@ use RuntimeException;
  */
 final class DataTableRepository implements RepositoryInterface
 {
-    /** @var QueryFactory */
+    /**
+     * @var QueryFactory
+     */
     private $queryFactory;
 
     /**
@@ -139,7 +141,7 @@ final class DataTableRepository implements RepositoryInterface
      */
     private function addOrderClause(Query $query, string $table, array $columns, array $fields, array $order): void
     {
-        if (!empty($order)) {
+        if (empty($order)) {
             return;
         }
 

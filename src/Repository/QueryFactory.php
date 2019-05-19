@@ -12,16 +12,18 @@ use RuntimeException;
 final class QueryFactory
 {
     /**
-     * Connection.
-     *
      * @var Connection
      */
     private $connection;
 
-    /** @var callable */
+    /**
+     * @var callable
+     */
     private $beforeUpdateCallback;
 
-    /** @var callable */
+    /**
+     * @var callable
+     */
     private $beforeInsertCallback;
 
     /**
@@ -37,7 +39,7 @@ final class QueryFactory
     /**
      * Create a new query.
      *
-     * @return Query the query
+     * @return Query The query
      */
     public function newQuery(): Query
     {

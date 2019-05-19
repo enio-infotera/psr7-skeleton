@@ -15,7 +15,9 @@ use Psr\Http\Server\RequestHandlerInterface;
  */
 final class NotFoundMiddleware implements MiddlewareInterface
 {
-    /** @var ResponseFactoryInterface */
+    /**
+     * @var ResponseFactoryInterface
+     */
     private $responseFactory;
 
     /**

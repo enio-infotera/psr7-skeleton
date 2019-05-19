@@ -13,7 +13,9 @@ use Psr\Http\Server\RequestHandlerInterface;
  */
 final class LanguageMiddleware implements MiddlewareInterface
 {
-    /** @var Locale */
+    /**
+     * @var Locale
+     */
     private $locale;
 
     /**

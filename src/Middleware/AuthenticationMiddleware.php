@@ -16,13 +16,19 @@ use Psr\Http\Server\RequestHandlerInterface;
  */
 final class AuthenticationMiddleware implements MiddlewareInterface
 {
-    /** @var ResponseFactoryInterface */
+    /**
+     * @var ResponseFactoryInterface
+     */
     private $responseFactory;
 
-    /** @var RouterUrl */
+    /**
+     * @var RouterUrl
+     */
     private $routerUrl;
 
-    /** @var Auth */
+    /**
+     * @var Auth
+     */
     private $auth;
 
     /**
