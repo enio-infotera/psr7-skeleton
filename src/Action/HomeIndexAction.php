@@ -12,17 +12,21 @@ use Psr\Http\Message\ServerRequestInterface;
  */
 final class HomeIndexAction implements ActionInterface
 {
-    /** @var HtmlResponder */
+    /**
+     * @var HtmlResponder
+     */
     private $responder;
 
-    /** @var SessionInterface */
+    /**
+     * @var SessionInterface
+     */
     private $session;
 
     /**
      * Constructor.
      *
-     * @param HtmlResponder $responder the responder
-     * @param SessionInterface $session the session handler
+     * @param HtmlResponder $responder The responder
+     * @param SessionInterface $session The session handler
      */
     public function __construct(HtmlResponder $responder, SessionInterface $session)
     {
@@ -33,9 +37,9 @@ final class HomeIndexAction implements ActionInterface
     /**
      * Action.
      *
-     * @param ServerRequestInterface $request the request
+     * @param ServerRequestInterface $request The request
      *
-     * @return ResponseInterface the response
+     * @return ResponseInterface The response
      */
     public function __invoke(ServerRequestInterface $request): ResponseInterface
     {

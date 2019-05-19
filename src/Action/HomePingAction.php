@@ -11,7 +11,9 @@ use Psr\Http\Message\ServerRequestInterface;
  */
 final class HomePingAction implements ActionInterface
 {
-    /** @var JsonResponder */
+    /**
+     * @var JsonResponder
+     */
     private $responder;
 
     /**
@@ -27,9 +29,9 @@ final class HomePingAction implements ActionInterface
     /**
      * Action.
      *
-     * @param ServerRequestInterface $request the request
+     * @param ServerRequestInterface $request The request
      *
-     * @return ResponseInterface the response
+     * @return ResponseInterface The response
      */
     public function __invoke(ServerRequestInterface $request): ResponseInterface
     {

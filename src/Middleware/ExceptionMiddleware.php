@@ -70,9 +70,9 @@ final class ExceptionMiddleware implements MiddlewareInterface
     /**
      * Handle an exception and generate an error response.
      *
-     * @param Throwable $exception the exception to handle
+     * @param Throwable $exception The exception to handle
      *
-     * @return ResponseInterface the response
+     * @return ResponseInterface The response
      */
     public function handleException(Throwable $exception): ResponseInterface
     {

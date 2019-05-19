@@ -27,9 +27,9 @@ final class UserRegister implements DomainServiceInterface
     /**
      * Create a new user.
      *
-     * @param array $data user data
+     * @param array $data The user data
      *
-     * @return int the new user ID
+     * @return int The new user ID
      */
     public function registerUser(array $data): int
     {

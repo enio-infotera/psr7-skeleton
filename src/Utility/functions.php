@@ -3,13 +3,11 @@
 use Symfony\Component\Translation\Translator;
 
 /**
- * Text translation (I18n).
+ * Text translation.
  *
- * @param mixed|Translator $message
+ * @param string|Translator $message The message or the translator instance
  *
- * @throws RuntimeException
- *
- * @return string
+ * @return string The translated message
  *
  * <code>
  * echo __('Hello');

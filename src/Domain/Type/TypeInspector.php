@@ -14,8 +14,8 @@ final class TypeInspector implements TypeInterface
     /**
      * Check if code is valid.
      *
-     * @param string $class the type class name
-     * @param mixed $typeValue the type value to check
+     * @param string $class The type class name
+     * @param mixed $typeValue The type value to check
      *
      * @throws ReflectionException
      *

@@ -11,7 +11,9 @@ use RuntimeException;
  */
 final class JsonResponder
 {
-    /** @var ResponseFactoryInterface */
+    /**
+     * @var ResponseFactoryInterface
+     */
     private $responseFactory;
 
     /**
@@ -27,7 +29,7 @@ final class JsonResponder
     /**
      * Generate a json response.
      *
-     * @param mixed $data data
+     * @param mixed $data The data
      *
      * @throws RuntimeException
      *

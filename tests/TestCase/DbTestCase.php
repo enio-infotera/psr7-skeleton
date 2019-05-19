@@ -54,8 +54,6 @@ class DbTestCase extends TestCase
     /**
      * Get Connection.
      *
-     * @throws ReflectionException
-     *
      * @return Connection The test database connection
      */
     public function getConnection(): Connection
@@ -78,11 +76,9 @@ class DbTestCase extends TestCase
     /**
      * Create a new instance.
      *
-     * @param string $class class name
+     * @param string $class The class name
      *
-     * @throws ReflectionException
-     *
-     * @return mixed object
+     * @return mixed The instance
      */
     protected function createInstance(string $class)
     {

@@ -23,22 +23,34 @@ use Twig\Environment as Twig;
  */
 final class ParseTextCommand extends Command
 {
-    /** @var ContainerInterface */
+    /**
+     * @var ContainerInterface
+     */
     private $container;
 
-    /** @var OutputInterface */
+    /**
+     * @var OutputInterface
+     */
     private $output;
 
-    /** @var MultipleIterator */
+    /**
+     * @var MultipleIterator
+     */
     private $iterator;
 
-    /** @var array */
+    /**
+     * @var array
+     */
     private $targets = [];
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $regex;
 
-    /** @var array */
+    /**
+     * @var array
+     */
     private $suffixes = [
         '.blade.php' => 'Blade',
         '.csv' => 'Csv',
@@ -57,8 +69,8 @@ final class ParseTextCommand extends Command
     /**
      * Constructor.
      *
-     * @param ContainerInterface $container container
-     * @param string|null $name name
+     * @param ContainerInterface $container The container
+     * @param string|null $name The name
      */
     public function __construct(ContainerInterface $container, ?string $name = null)
     {
@@ -83,8 +95,8 @@ final class ParseTextCommand extends Command
     /**
      * Execute command.
      *
-     * @param InputInterface $input input
-     * @param OutputInterface $output output
+     * @param InputInterface $input The input
+     * @param OutputInterface $output The output
      *
      * @throws Exception
      *
@@ -154,7 +166,8 @@ final class ParseTextCommand extends Command
             ->extract('templates/', '/.*\.js/')
             ->extract('public/js/', '/.*\.js/')
             ->generate('resources/locale/de_DE_messages.po')
-            ->generate('resources/locale/de_DE_messages.mo')// Add more mo and po files here
+            ->generate('resources/locale/de_DE_messages.mo')
+            // Add more mo and po files here
             ->process();
 
         $this->output->write('Done', true);
@@ -167,7 +180,7 @@ final class ParseTextCommand extends Command
     /**
      * Run the task.
      *
-     * @return int
+     * @return int Error level
      */
     private function process(): int
     {
@@ -213,7 +226,7 @@ final class ParseTextCommand extends Command
     /**
      * Execute the scan.
      *
-     * @param Translations $translations translations
+     * @param Translations $translations The translations
      *
      * @return void
      */
@@ -263,7 +276,7 @@ final class ParseTextCommand extends Command
     /**
      * Returns the regular expression to detect the file format.
      *
-     * @return string
+     * @return string The regex
      */
     private function getRegex(): string
     {
@@ -311,8 +324,8 @@ final class ParseTextCommand extends Command
     /**
      * Add fuzzy flag for new translations.
      *
-     * @param Translations $from from
-     * @param Translations $to to
+     * @param Translations $from From translations
+     * @param Translations $to To translations
      *
      * @return Translations The translations with fuzzy flag
      */

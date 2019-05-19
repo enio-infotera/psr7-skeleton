@@ -12,10 +12,14 @@ use Psr\Http\Message\ServerRequestInterface;
  */
 final class UserEditAction implements ActionInterface
 {
-    /** @var HtmlResponder */
+    /**
+     * @var HtmlResponder
+     */
     private $responder;
 
-    /** @var UserService */
+    /**
+     * @var UserService
+     */
     private $userService;
 
     /**
@@ -35,10 +39,10 @@ final class UserEditAction implements ActionInterface
     /**
      * Action.
      *
-     * @param array $args
-     * @param ServerRequestInterface $request the request
+     * @param array $args The arguments
+     * @param ServerRequestInterface $request The request
      *
-     * @return ResponseInterface the response
+     * @return ResponseInterface The response
      */
     public function __invoke(ServerRequestInterface $request, array $args = []): ResponseInterface
     {

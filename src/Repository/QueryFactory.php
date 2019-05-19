@@ -105,7 +105,7 @@ final class QueryFactory
     /**
      * Create a 'delete' query for the given table.
      *
-     * @param string $table the table to delete from
+     * @param string $table The table to delete from
      *
      * @return Query A new delete query
      */

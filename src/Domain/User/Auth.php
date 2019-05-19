@@ -11,10 +11,14 @@ use RuntimeException;
  */
 final class Auth implements DomainServiceInterface
 {
-    /** @var SessionInterface */
+    /**
+     * @var SessionInterface
+     */
     private $session;
 
-    /** @var AuthRepository */
+    /**
+     * @var AuthRepository
+     */
     private $authRepository;
 
     /**
@@ -32,7 +36,7 @@ final class Auth implements DomainServiceInterface
     /**
      * Check if a user is logged in.
      *
-     * @return bool status
+     * @return bool Status
      */
     public function check(): bool
     {
@@ -83,8 +87,9 @@ final class Auth implements DomainServiceInterface
     public function getUser(): User
     {
         $user = $this->session->get('user');
+
         if (!$user) {
-            throw new RuntimeException('No identity available');
+            throw new RuntimeException('No user available');
         }
 
         return $user;
@@ -93,10 +98,10 @@ final class Auth implements DomainServiceInterface
     /**
      * Performs an authentication attempt.
      *
-     * @param string $username username
-     * @param string $password password
+     * @param string $username The username
+     * @param string $password The password
      *
-     * @return User|null the user or null
+     * @return User|null The user or null
      */
     public function authenticate(string $username, string $password): ?User
     {
@@ -120,8 +125,8 @@ final class Auth implements DomainServiceInterface
     /**
      * Returns true if password and hash is valid.
      *
-     * @param string $password password
-     * @param string $hash stored hash
+     * @param string $password The password
+     * @param string $hash The stored password hash
      *
      * @return bool Success
      */
@@ -133,7 +138,7 @@ final class Auth implements DomainServiceInterface
     /**
      * Init user session.
      *
-     * @param User $user the user
+     * @param User $user The user
      *
      * @return void
      */
@@ -153,7 +158,7 @@ final class Auth implements DomainServiceInterface
     /**
      * Set the identity into storage or null if no identity is available.
      *
-     * @param User $user the user
+     * @param User $user The user
      *
      * @return void
      */
@@ -165,7 +170,7 @@ final class Auth implements DomainServiceInterface
     /**
      * Generate a secure password hash.
      *
-     * @param string $password password
+     * @param string $password The password
      *
      * @return string
      */
@@ -177,7 +182,7 @@ final class Auth implements DomainServiceInterface
     /**
      * Check whether the user has the given role.
      *
-     * @param string $role e.g. UserRole::ROLE_ADMIN
+     * @param string $role The role, e.g. UserRole::ROLE_ADMIN
      *
      * @return bool True if the given role is assigned to the user
      */
@@ -192,7 +197,7 @@ final class Auth implements DomainServiceInterface
      * Accepts an array with roles and returns true if at least one of the roles
      * in the array is assigned to the user.
      *
-     * @param array $roles e.g. [UserRole::ROLE_ADMIN, UserRole::ROLE_USER]
+     * @param array $roles The roles to check for, e.g. [UserRole::ROLE_ADMIN, UserRole::ROLE_USER]
      *
      * @return bool Status
      */

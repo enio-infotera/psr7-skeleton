@@ -10,13 +10,15 @@ use App\Repository\RepositoryInterface;
  */
 final class UserRegisterRepository implements RepositoryInterface
 {
-    /** @var QueryFactory */
+    /**
+     * @var QueryFactory
+     */
     private $queryFactory;
 
     /**
      * Constructor.
      *
-     * @param QueryFactory $queryFactory the query factory
+     * @param QueryFactory $queryFactory The query factory
      */
     public function __construct(QueryFactory $queryFactory)
     {
@@ -26,7 +28,7 @@ final class UserRegisterRepository implements RepositoryInterface
     /**
      * Insert new user.
      *
-     * @param array $data The user
+     * @param array $data The user data
      *
      * @return int The new ID
      */

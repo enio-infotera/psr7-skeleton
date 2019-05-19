@@ -79,43 +79,83 @@ final class DataTableRepository implements RepositoryInterface
         $table = (string)$query->clause('from')[0];
         $fields = $this->getTableFields($table);
 
-        if ($searchValue !== '') {
-            $orConditions = [];
-            $searchValue = $this->escapeLike($searchValue);
-
-            foreach ($columns as $columnItem) {
-                $searchField = (string)$columnItem['data'];
-
-                if ($searchField === '' || empty($columnItem['searchable'])) {
-                    continue;
-                }
-
-                $searchField = $this->getFieldName($table, $searchField, $fields);
-                $orConditions[$searchField . ' LIKE'] = '%' . $searchValue . '%';
-            }
-
-            $query->andWhere(static function (QueryExpression $exp) use ($orConditions) {
-                return $exp->or_($orConditions);
-            });
-        }
-
-        if (!empty($order)) {
-            foreach ($order as $orderItem) {
-                $columnIndex = $orderItem['column'];
-                $columnName = $columns[$columnIndex]['data'];
-                $columnName = $this->getFieldName($table, $columnName, $fields);
-                $dir = $orderItem['dir'];
-
-                if ($dir === 'asc') {
-                    $query->order($columnName);
-                }
-                if ($dir === 'desc') {
-                    $query->orderDesc($columnName);
-                }
-            }
-        }
+        $this->addSearchConditions($query, $table, $columns, $fields, $searchValue);
+        $this->addOrderClause($query, $table, $columns, $fields, $order);
 
         return $query;
+    }
+
+    /**
+     * Add search conditions.
+     *
+     * @param Query $query The query
+     * @param string $table The table name
+     * @param array $columns The columns
+     * @param array $fields The table fields
+     * @param string $searchValue The order items
+     *
+     * @return void
+     */
+    private function addSearchConditions(
+        Query $query,
+        string $table,
+        array $columns,
+        array $fields,
+        string $searchValue
+    ): void {
+        if ($searchValue === '') {
+            return;
+        }
+
+        $orConditions = [];
+        $searchValue = $this->escapeLike($searchValue);
+
+        foreach ($columns as $columnItem) {
+            $searchField = (string)$columnItem['data'];
+
+            if ($searchField === '' || empty($columnItem['searchable'])) {
+                continue;
+            }
+
+            $searchField = $this->getFieldName($table, $searchField, $fields);
+            $orConditions[$searchField . ' LIKE'] = '%' . $searchValue . '%';
+        }
+
+        $query->andWhere(static function (QueryExpression $exp) use ($orConditions) {
+            return $exp->or_($orConditions);
+        });
+    }
+
+    /**
+     * Add order clause to the query.
+     *
+     * @param Query $query The query
+     * @param string $table The table name
+     * @param array $columns The columns
+     * @param array $fields The table fields
+     * @param array $order The order items
+     *
+     * @return void
+     */
+    private function addOrderClause(Query $query, string $table, array $columns, array $fields, array $order): void
+    {
+        if (!empty($order)) {
+            return;
+        }
+
+        foreach ($order as $orderItem) {
+            $columnIndex = $orderItem['column'];
+            $columnName = $columns[$columnIndex]['data'];
+            $columnName = $this->getFieldName($table, $columnName, $fields);
+            $dir = $orderItem['dir'];
+
+            if ($dir === 'asc') {
+                $query->order($columnName);
+            }
+            if ($dir === 'desc') {
+                $query->orderDesc($columnName);
+            }
+        }
     }
 
     /**
@@ -161,9 +201,9 @@ final class DataTableRepository implements RepositoryInterface
      *
      * @param string $table The table name
      *
+     * @return mixed[] The fields
      * @throws RuntimeException
      *
-     * @return mixed[] The fields
      */
     private function getTableFields(string $table): array
     {

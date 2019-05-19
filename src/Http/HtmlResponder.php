@@ -11,17 +11,21 @@ use Twig\Environment as Twig;
  */
 final class HtmlResponder
 {
-    /** @var ResponseFactoryInterface */
+    /**
+     * @var ResponseFactoryInterface
+     */
     private $responseFactory;
 
-    /** @var Twig */
+    /**
+     * @var Twig
+     */
     private $twig;
 
     /**
      * Constructor.
      *
-     * @param ResponseFactoryInterface $responseFactory the response factory
-     * @param Twig $twig twig
+     * @param ResponseFactoryInterface $responseFactory The response factory
+     * @param Twig $twig The twig engine
      */
     public function __construct(ResponseFactoryInterface $responseFactory, Twig $twig)
     {

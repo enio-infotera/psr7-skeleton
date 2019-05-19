@@ -24,7 +24,7 @@ final class UserListRepository implements RepositoryInterface
     /**
      * Constructor.
      *
-     * @param QueryFactory $queryFactory query factory
+     * @param QueryFactory $queryFactory The query factory
      * @param DataTableRepository $dataTableRepository The repository
      */
     public function __construct(QueryFactory $queryFactory, DataTableRepository $dataTableRepository)

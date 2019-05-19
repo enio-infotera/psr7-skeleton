@@ -32,9 +32,9 @@ class ApiTestCase extends BaseTestCase
     /**
      * Create a server request.
      *
-     * @param string $method HTTP method
-     * @param string|UriInterface $uri URI
-     * @param array $serverParams
+     * @param string $method The HTTP method
+     * @param string|UriInterface $uri The URI
+     * @param array $serverParams The server parameters
      *
      * @return ServerRequestInterface
      */

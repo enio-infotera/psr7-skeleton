@@ -27,7 +27,7 @@ final class UserList implements DomainServiceInterface
     /**
      * Find all users.
      *
-     * @param array $params the parameters
+     * @param array $params The parameters
      *
      * @return array the result
      */

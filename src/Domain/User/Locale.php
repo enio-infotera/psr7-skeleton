@@ -11,13 +11,19 @@ use Symfony\Component\Translation\Translator;
  */
 final class Locale implements DomainServiceInterface
 {
-    /** @var string Locale path */
+    /**
+     * @var string Locale path
+     */
     public $localePath;
 
-    /** @var SessionInterface */
+    /**
+     * @var SessionInterface
+     */
     private $session;
 
-    /** @var Translator */
+    /**
+     * @var Translator
+     */
     private $translator;
 
     /**
@@ -37,7 +43,7 @@ final class Locale implements DomainServiceInterface
     /**
      * Get local.
      *
-     * @return string|null
+     * @return string|null The locale name (e.g. en_US)
      */
     public function getLocale(): ?string
     {
@@ -45,9 +51,21 @@ final class Locale implements DomainServiceInterface
     }
 
     /**
+     * Set locale.
+     *
+     * @param string $locale The locale
+     *
+     * @return void
+     */
+    private function setLocale(string $locale): void
+    {
+        $this->session->set('locale', $locale);
+    }
+
+    /**
      * Get text domain.
      *
-     * @return string|null
+     * @return string|null The domain
      */
     public function getDomain(): ?string
     {
@@ -57,8 +75,8 @@ final class Locale implements DomainServiceInterface
     /**
      * Change user session locale.
      *
-     * @param string $locale e.g. en_US
-     * @param string $domain e.g. messages
+     * @param string $locale The local
+     * @param string $domain The domain (e.g. messages)
      *
      * @return bool Status
      */
@@ -72,21 +90,9 @@ final class Locale implements DomainServiceInterface
     }
 
     /**
-     * Set locale.
-     *
-     * @param string $locale locale
-     *
-     * @return void
-     */
-    private function setLocale(string $locale): void
-    {
-        $this->session->set('locale', $locale);
-    }
-
-    /**
      * Set text domain.
      *
-     * @param string $domain domain
+     * @param string $domain The domain
      *
      * @return void
      */
@@ -98,8 +104,8 @@ final class Locale implements DomainServiceInterface
     /**
      * Set locale.
      *
-     * @param string $locale locale
-     * @param string $domain domain
+     * @param string $locale The locale
+     * @param string $domain The domain
      *
      * @return void
      */

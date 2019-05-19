@@ -37,7 +37,7 @@ final class User implements DomainModelInterface
     private $enabled = false;
 
     /**
-     * @return int|null
+     * @return int|null The value
      */
     public function getId(): ?int
     {
@@ -45,7 +45,7 @@ final class User implements DomainModelInterface
     }
 
     /**
-     * @param int|null $id
+     * @param int|null $id The value
      *
      * @return void
      */
@@ -55,7 +55,7 @@ final class User implements DomainModelInterface
     }
 
     /**
-     * @return string|null
+     * @return string|null The value
      */
     public function getUsername(): ?string
     {
@@ -63,7 +63,7 @@ final class User implements DomainModelInterface
     }
 
     /**
-     * @param string|null $username
+     * @param string|null $username The value
      *
      * @return void
      */
@@ -73,7 +73,7 @@ final class User implements DomainModelInterface
     }
 
     /**
-     * @return string|null
+     * @return string|null The value
      */
     public function getPassword(): ?string
     {
@@ -81,7 +81,7 @@ final class User implements DomainModelInterface
     }
 
     /**
-     * @param string|null $password
+     * @param string|null $password The value
      *
      * @return void
      */
@@ -91,7 +91,7 @@ final class User implements DomainModelInterface
     }
 
     /**
-     * @return string|null
+     * @return string|null The value
      */
     public function getEmail(): ?string
     {
@@ -99,7 +99,7 @@ final class User implements DomainModelInterface
     }
 
     /**
-     * @param string|null $email
+     * @param string|null $email The value
      *
      * @return void
      */
@@ -109,7 +109,7 @@ final class User implements DomainModelInterface
     }
 
     /**
-     * @return string|null
+     * @return string|null The value
      */
     public function getFirstName(): ?string
     {
@@ -117,7 +117,7 @@ final class User implements DomainModelInterface
     }
 
     /**
-     * @param string|null $firstName
+     * @param string|null $firstName The value
      *
      * @return void
      */
@@ -127,7 +127,7 @@ final class User implements DomainModelInterface
     }
 
     /**
-     * @return string|null
+     * @return string|null The value
      */
     public function getLastName(): ?string
     {
@@ -135,7 +135,7 @@ final class User implements DomainModelInterface
     }
 
     /**
-     * @param string|null $lastName
+     * @param string|null $lastName The value
      *
      * @return void
      */
@@ -145,7 +145,7 @@ final class User implements DomainModelInterface
     }
 
     /**
-     * @return string|null
+     * @return string|null The value
      */
     public function getRole(): ?string
     {
@@ -153,7 +153,7 @@ final class User implements DomainModelInterface
     }
 
     /**
-     * @param string|null $role
+     * @param string|null $role The value
      *
      * @return void
      */
@@ -163,7 +163,7 @@ final class User implements DomainModelInterface
     }
 
     /**
-     * @return string|null
+     * @return string|null The value
      */
     public function getLocale(): ?string
     {
@@ -171,7 +171,7 @@ final class User implements DomainModelInterface
     }
 
     /**
-     * @param string|null $locale
+     * @param string|null $locale The value
      *
      * @return void
      */
@@ -181,7 +181,7 @@ final class User implements DomainModelInterface
     }
 
     /**
-     * @return bool
+     * @return bool The value
      */
     public function getEnabled(): bool
     {
@@ -189,7 +189,7 @@ final class User implements DomainModelInterface
     }
 
     /**
-     * @param bool $enabled
+     * @param bool $enabled The value
      *
      * @return void
      */

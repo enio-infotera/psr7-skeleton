@@ -14,21 +14,27 @@ use Psr\Http\Message\ServerRequestInterface;
  */
 final class UserLogoutAction implements ActionInterface
 {
-    /** @var ResponseFactoryInterface */
+    /**
+     * @var ResponseFactoryInterface
+     */
     private $responseFactory;
 
-    /** @var Auth */
+    /**
+     * @var Auth
+     */
     private $auth;
 
-    /** @var RouterUrl */
+    /**
+     * @var RouterUrl
+     */
     private $routerUrl;
 
     /**
      * Constructor.
      *
-     * @param ResponseFactoryInterface $responseFactory responseFactory
-     * @param RouterUrl $routerUrl routerUrl
-     * @param Auth $auth auth
+     * @param ResponseFactoryInterface $responseFactory The  response factory
+     * @param RouterUrl $routerUrl The routerUrl
+     * @param Auth $auth The user auth
      */
     public function __construct(ResponseFactoryInterface $responseFactory, RouterUrl $routerUrl, Auth $auth)
     {
@@ -40,9 +46,9 @@ final class UserLogoutAction implements ActionInterface
     /**
      * Action.
      *
-     * @param ServerRequestInterface $request the request
+     * @param ServerRequestInterface $request The request
      *
-     * @return ResponseInterface the response
+     * @return ResponseInterface The response
      */
     public function __invoke(ServerRequestInterface $request): ResponseInterface
     {

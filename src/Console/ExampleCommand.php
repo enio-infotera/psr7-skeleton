@@ -13,14 +13,16 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 final class ExampleCommand extends Command
 {
-    /** @var ContainerInterface */
+    /**
+     * @var ContainerInterface
+     */
     private $container;
 
     /**
      * Constructor.
      *
-     * @param ContainerInterface $container container
-     * @param string|null $name name
+     * @param ContainerInterface $container The container
+     * @param string|null $name The name
      */
     public function __construct(ContainerInterface $container, ?string $name = null)
     {
@@ -46,10 +48,10 @@ final class ExampleCommand extends Command
     /**
      * Execute command.
      *
-     * @param InputInterface $input input
-     * @param OutputInterface $output output
+     * @param InputInterface $input The input
+     * @param OutputInterface $output The output
      *
-     * @return int integer 0 on success, or an error code
+     * @return int The error code, 0 on success
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {

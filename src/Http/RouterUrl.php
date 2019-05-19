@@ -58,13 +58,13 @@ final class RouterUrl
     /**
      * Build the path for a named route excluding the base path.
      *
-     * @param string $name Route name
-     * @param array $data Named argument replacement data
-     * @param array $queryParams Optional query string parameters
+     * @param string $name The route name
+     * @param array $data The named argument replacement data
+     * @param array $queryParams The optional query string parameters
      *
      * @throws InvalidArgumentException
      *
-     * @return string url
+     * @return string The url
      */
     private function relativePathFor(string $name, array $data = [], array $queryParams = []): string
     {

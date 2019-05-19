@@ -12,17 +12,21 @@ use Psr\Http\Message\ServerRequestInterface;
  */
 final class UserListAction implements ActionInterface
 {
-    /** @var JsonResponder */
+    /**
+     * @var JsonResponder
+     */
     private $responder;
 
-    /** @var UserList */
+    /**
+     * @var UserList
+     */
     private $service;
 
     /**
      * Constructor.
      *
-     * @param JsonResponder $responder the responder
-     * @param UserList $service the user list service
+     * @param JsonResponder $responder The responder
+     * @param UserList $service The user list service
      */
     public function __construct(JsonResponder $responder, UserList $service)
     {
@@ -33,9 +37,9 @@ final class UserListAction implements ActionInterface
     /**
      * Action.
      *
-     * @param ServerRequestInterface $request the request
+     * @param ServerRequestInterface $request The request
      *
-     * @return ResponseInterface the response
+     * @return ResponseInterface The response
      */
     public function __invoke(ServerRequestInterface $request): ResponseInterface
     {

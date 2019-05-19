@@ -13,14 +13,16 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 final class ResetDatabaseCommand extends Command
 {
-    /** @var ContainerInterface */
+    /**
+     * @var ContainerInterface
+     */
     private $container;
 
     /**
      * Constructor.
      *
-     * @param ContainerInterface $container container
-     * @param string|null $name name
+     * @param ContainerInterface $container The container
+     * @param string|null $name The name
      */
     public function __construct(ContainerInterface $container, ?string $name = null)
     {
@@ -44,8 +46,8 @@ final class ResetDatabaseCommand extends Command
     /**
      * Clear database, drop all tables.
      *
-     * @param InputInterface $input input
-     * @param OutputInterface $output output
+     * @param InputInterface $input The input
+     * @param OutputInterface $output The output
      *
      * @return int integer 0 on success, or an error code
      */

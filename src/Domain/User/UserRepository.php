@@ -26,8 +26,8 @@ final class UserRepository implements RepositoryInterface
     /**
      * Constructor.
      *
-     * @param QueryFactory $queryFactory the query factory
-     * @param TableRepository $tableRepository table repository
+     * @param QueryFactory $queryFactory The query factory
+     * @param TableRepository $tableRepository The table repository
      */
     public function __construct(QueryFactory $queryFactory, TableRepository $tableRepository)
     {
@@ -48,7 +48,7 @@ final class UserRepository implements RepositoryInterface
     /**
      * Get user by id.
      *
-     * @param int $userId User id
+     * @param int $userId The User ID
      *
      * @throws DomainException
      *
@@ -68,7 +68,7 @@ final class UserRepository implements RepositoryInterface
     /**
      * Find by id.
      *
-     * @param int $userId The ID
+     * @param int $userId The user ID
      *
      * @return array The row
      */

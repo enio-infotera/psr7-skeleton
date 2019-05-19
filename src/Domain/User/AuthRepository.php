@@ -10,13 +10,15 @@ use App\Repository\RepositoryInterface;
  */
 final class AuthRepository implements RepositoryInterface
 {
-    /** @var QueryFactory */
+    /**
+     * @var QueryFactory
+     */
     private $queryFactory;
 
     /**
      * Constructor.
      *
-     * @param QueryFactory $queryFactory the query factory
+     * @param QueryFactory $queryFactory The query factory
      */
     public function __construct(QueryFactory $queryFactory)
     {

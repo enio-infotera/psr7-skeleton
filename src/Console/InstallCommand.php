@@ -18,14 +18,16 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 final class InstallCommand extends Command
 {
-    /** @var ContainerInterface */
+    /**
+     * @var ContainerInterface
+     */
     private $container;
 
     /**
      * Constructor.
      *
-     * @param ContainerInterface $container container
-     * @param string|null $name name
+     * @param ContainerInterface $container The container
+     * @param string|null $name The name
      */
     public function __construct(ContainerInterface $container, ?string $name = null)
     {
@@ -51,8 +53,8 @@ final class InstallCommand extends Command
     /**
      * Execute command.
      *
-     * @param InputInterface $input input
-     * @param OutputInterface $output output
+     * @param InputInterface $input The input
+     * @param OutputInterface $output The output
      *
      * @throws RuntimeException
      *
@@ -90,8 +92,8 @@ final class InstallCommand extends Command
     /**
      * Create env.php file.
      *
-     * @param OutputInterface $output output
-     * @param string $configPath config path
+     * @param OutputInterface $output The output
+     * @param string $configPath The config path
      *
      * @return void
      */
@@ -104,8 +106,8 @@ final class InstallCommand extends Command
     /**
      * Generate a random secret.
      *
-     * @param OutputInterface $output output
-     * @param string $configPath config path
+     * @param OutputInterface $output The output
+     * @param string $configPath The config path
      *
      * @throws Exception
      *
@@ -127,13 +129,13 @@ final class InstallCommand extends Command
     /**
      * Create a new database.
      *
-     * @param SymfonyStyle $io io
-     * @param OutputInterface $output output
-     * @param string $configPath configPath
-     * @param string $root root path
-     * @param string|null $env environment
+     * @param SymfonyStyle $io The io
+     * @param OutputInterface $output The output
+     * @param string $configPath The config path
+     * @param string $root The root path
+     * @param string|null $env The environment
      *
-     * @return int error code
+     * @return int The error code
      */
     private function createNewDatabase(
         SymfonyStyle $io,
@@ -197,9 +199,9 @@ final class InstallCommand extends Command
     /**
      * Create a PDO object.
      *
-     * @param string $host host
-     * @param string $username username
-     * @param string $password password
+     * @param string $host The host
+     * @param string $username The username
+     * @param string $password The password
      *
      * @return PDO The connection
      */
@@ -234,9 +236,9 @@ final class InstallCommand extends Command
     /**
      * Quote name.
      *
-     * @param string $name table or field name
+     * @param string $name Table or field name
      *
-     * @return string table or field name
+     * @return string Table or field name
      */
     private function quoteName(string $name): string
     {
@@ -246,12 +248,12 @@ final class InstallCommand extends Command
     /**
      * Update dev settings.
      *
-     * @param OutputInterface $output output
-     * @param string $dbHost host
-     * @param string $dbName database
-     * @param string $username username
-     * @param string $password password
-     * @param string $configPath config path
+     * @param OutputInterface $output The output
+     * @param string $dbHost The host
+     * @param string $dbName The database
+     * @param string $username The username
+     * @param string $password The password
+     * @param string $configPath The config path
      *
      * @return void
      */
@@ -304,8 +306,8 @@ final class InstallCommand extends Command
     /**
      * Install database.
      *
-     * @param OutputInterface $output outout
-     * @param string $root root path
+     * @param OutputInterface $output The outout
+     * @param string $root The root path
      *
      * @return void
      */
@@ -320,8 +322,8 @@ final class InstallCommand extends Command
     /**
      * Seed database tables.
      *
-     * @param OutputInterface $output outout
-     * @param string $root root path
+     * @param OutputInterface $output The outout
+     * @param string $root The root path
      *
      * @return void
      */
