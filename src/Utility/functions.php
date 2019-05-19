@@ -26,10 +26,6 @@ function __($message): string
         return '';
     }
 
-    if ($translator === null) {
-        throw new RuntimeException('Translator not initialized');
-    }
-
     $translated = $translator->trans($message);
     $context = array_slice(func_get_args(), 1);
     if (!empty($context)) {
